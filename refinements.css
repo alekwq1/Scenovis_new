@@ -61,3 +61,44 @@ a:focus-visible,button:focus-visible,select:focus-visible{outline:2px solid #ffb
 @media(max-width:650px){.wrap{width:calc(100% - 36px)}.header-inner{height:68px;gap:8px}.brand img{width:118px}.header-actions{gap:6px}.head-wa{padding:10px;border-radius:50%;min-width:38px;min-height:38px}.lang-control{padding:3px;gap:0}.lang-control button{min-width:27px;min-height:28px;padding:6px;font-size:10px}.menu-toggle{width:36px;height:36px;border-radius:8px}.hero{padding-block:28px 38px}.hero h1{font-size:clamp(43px,10.5vw,65px)}.hero-layout{gap:28px}.hero-lead{font-size:16px}.hero-art{height:290px;min-height:0}.hero-cta{gap:18px}.hero .eyebrow{font-size:10px}.hero-bottom{font-size:12px;line-height:1.6}.section,#examples,#contact.contact-section{padding-block:38px}.section-heading h2,#contact .contact-header h2{font-size:clamp(33px,8.3vw,44px)}.section-heading>p{font-size:15px}.services-grid,.cases-grid,.steps-grid{grid-template-columns:1fr}.service-card{min-height:0;padding:22px}.service-icon{position:absolute;top:20px;right:22px;margin:0;width:36px;height:36px}.service-num{margin-bottom:26px;max-width:80%}.service-card h3{min-height:0;font-size:21px}.service-card p{max-width:100%;margin-bottom:20px}.service-link{padding-top:15px}.service-foot{padding:16px;gap:10px}.service-foot .orange-line{display:none}.service-foot p{flex-basis:100%}.service-foot a{margin:0}.case-body{padding:20px!important}#examples .case-media{height:auto;aspect-ratio:1.55}.team-member{grid-template-columns:30% 70%;min-height:245px}.team-photo{height:auto;min-height:245px}.team-info{padding:20px 16px}.team-info h3{font-size:20px}.team-info p{font-size:14px;line-height:1.65}.team-info>span{font-size:9px}.team-monogram{font-size:80px}.about-note{font-size:13px}#contact .form-panel{padding:23px 18px}#contact .form-row,#contact .form-actions{grid-template-columns:1fr}#contact .contact-method strong{font-size:16px}#contact .form-heading h3{font-size:26px}.footer-inner{align-items:flex-start}.rail-inner span{font-size:10px}.art-bottom{left:20px;right:20px}.motion-item{transform:none}}
 @media(max-width:365px){.wrap{width:calc(100% - 28px)}.brand img{width:96px}.header-inner{gap:4px}.header-actions{gap:4px}.team-member{grid-template-columns:1fr}.team-photo{height:230px;min-height:230px}.team-photo img{object-fit:contain!important;background:#292c2e}.team-placeholder{height:110px;min-height:110px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.motion-item{opacity:1;transition:none}.service-card.motion-item.in-view:hover{transform:none}}
+
+/* Team portraits: matching graphite backgrounds and head-and-shoulders framing. */
+#about .team-grid{gap:22px;align-items:stretch}
+#about .team-member{grid-template-columns:minmax(0,40%) minmax(0,60%);min-height:310px}
+#about .team-photo{min-height:310px;height:auto;background:#353535}
+#about .team-photo img{filter:none;object-fit:cover;object-position:center 29%}
+#about .team-photo-liza img{transform:scale(1.45);transform-origin:50% 23%;object-position:center top}
+#about .team-info{align-self:center;padding:26px;min-width:0}
+#about .team-info h3{font-size:clamp(20px,1.7vw,24px);line-height:1.3;letter-spacing:-.025em}
+#about .team-info>span{font-size:10px;letter-spacing:.08em}
+#about .team-info p{font-size:15px;line-height:1.75}
+#about .team-member:hover{border-color:#ff936466}
+#contact .contact-method strong{overflow-wrap:anywhere}
+#contact .chip{min-height:40px;font-size:12px}
+@media(min-width:651px) and (max-width:1050px){
+ #about .team-member{grid-template-columns:1fr}
+ #about .team-photo{height:auto;min-height:0;aspect-ratio:1/1}
+ #about .team-info{padding:24px;align-self:start}
+}
+@media(max-width:650px){
+ #about .team-grid{gap:20px}
+ #about .team-member{grid-template-columns:1fr;min-height:0}
+ #about .team-photo{height:auto;min-height:0;aspect-ratio:1/1}
+ #about .team-info{padding:24px;align-self:start}
+ #about .team-info h3{font-size:23px}
+ #about .team-info p{font-size:15px}
+ #about .team-photo img{object-fit:cover!important}
+}
+
+/* Profile links remain distinct from the role label. */
+#about .team-linkedin{display:inline-flex;align-items:center;gap:9px;min-height:44px;margin-top:16px;color:#c5cecb;font-size:13px;font-weight:500;border-bottom:1px solid #ffffff25;transition:color .2s,border-color .2s}
+#about .team-linkedin svg{width:17px;height:17px;flex:none}
+#about .team-linkedin:hover{color:#ffb18a;border-color:#ffb18a}
+#about .team-linkedin:focus-visible{outline:2px solid #ffb18a;outline-offset:5px}
+
+/* Local event support for teams in Poland and abroad. */
+.event-poland{display:flex;align-items:center;justify-content:space-between;gap:28px;margin-top:24px;padding:26px 28px;border:1px solid #ff936440;border-radius:14px;background:linear-gradient(120deg,#ff93640b,#ffffff03)}
+.event-poland h3{font-size:24px;line-height:1.3;margin-bottom:10px}
+.event-poland p{max-width:710px;color:var(--muted);font-size:15px;line-height:1.75}
+.event-poland .button{flex-shrink:0;white-space:normal;text-align:left}
+@media(max-width:900px){.event-poland{align-items:flex-start;flex-direction:column;gap:20px;padding:24px}.event-poland h3{font-size:22px}}
