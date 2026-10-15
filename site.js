@@ -1,8 +1,24 @@
 const DICT = {
   pl: {
-    eventPolandTitle:'Planujesz wydarzenie w Polsce?',eventPolandText:'Pomożemy zorganizować je na miejscu — również gdy Twój zespół działa za granicą. Uzgodnimy zakres, skoordynujemy dostawców i przygotujemy obsługę. Rozmawiamy po polsku, angielsku i rosyjsku.',eventPolandAction:'Porozmawiajmy o wydarzeniu',optEvent:'Organizacja całego wydarzenia',
+    formSending:"Wysyłanie...",
+    formPreview:"To podgląd lokalny. Wysyłka formularza zadziała dopiero po publikacji na Netlify z włączoną obsługą formularzy.",
+    formFailure:"Nie udało się wysłać. Spróbuj ponownie lub napisz do nas bezpośrednio.",
+    formSuccess:"Dziękujemy! Twoje zapytanie zostało wysłane. Skontaktujemy się z Tobą.",
+    privacyNote:"Projekt do uzupełnienia i sprawdzenia przed publikacją.",
+    privacyTitle:"Polityka prywatności",
+    privacyLink:"Polityka prywatności",
+    sendInquiry:"Wyślij zapytanie",
+    formDisclaimer:"Dane wykorzystamy tylko do odpowiedzi na zapytanie. <a class=\"privacy-open\" href=\"privacy.html\">Polityka prywatności</a>.",
+    messagePlaceholder:"W kilku słowach napisz, o co chodzi...",
+    messageLabel:"Wiadomość <span class=\"optional\">(opcjonalnie)</span>",
+    contactPlaceholder:"np. +48 500 000 000 lub kontakt@firma.pl",
+    contactLabel:"Telefon lub e-mail <span class=\"required\">*</span>",
+    formIntro:"Telefon lub e-mail — to wystarczy. Odeślemy odpowiedź albo oddzwonimy.",
+    formTitle:"Zostaw kontakt.",
+    videoSoonTitle:'Tu pojawi się Twój film 3D',videoSoonText:'Miejsce na wideo produktu lub interaktywny model.',
+    eventPolandTitle:'Planujesz wydarzenie w Polsce?',eventPolandText:'Pomożemy zorganizować je na miejscu — również gdy Twój zespół działa za granicą. Uzgodnimy zakres, skoordynujemy dostawców i przygotujemy obsługę. Rozmawiamy po polsku i angielsku.',eventPolandAction:'Porozmawiajmy o wydarzeniu',optEvent:'Organizacja całego wydarzenia',
     skip:'Przejdź do treści',navServices:'Oferta',navExamples:'Przykłady',navApproach:'Jak pracujemy',navAbout:'O nas',navContact:'Kontakt',
-    heroEyebrow:'PREZENTACJE PRODUKTÓW • MULTIMEDIA • EXPO',heroTitle:'Pokaż, jak działa <em>Twój produkt.</em>',heroText:'Interaktywne prezentacje 3D, obsługa targów i organizacja wydarzeń. Wybierz jedną usługę lub powierz nam przygotowanie całości.',ctaTalk:'Porozmawiajmy o projekcie',ctaExplore:'Zobacz ofertę',heroFooter:'Gdańsk · Projekty w Polsce i za granicą · PL / EN / RU',artTitle:'Technologia, którą można zrozumieć.',artText:'Prezentacje, które przyciągają uwagę i wyjaśniają produkt.',conceptLabel:'KONCEPCJA AI · NIE REALIZACJA KLIENTA',
+    heroEyebrow:'PREZENTACJE PRODUKTÓW • MULTIMEDIA • EXPO',heroTitle:'Pokaż, jak działa <em>Twój produkt.</em>',heroText:'Interaktywne prezentacje 3D, obsługa targów i organizacja wydarzeń. Wybierz jedną usługę lub powierz nam przygotowanie całości.',ctaTalk:'Porozmawiajmy o projekcie',ctaExplore:'Zobacz ofertę',heroFooter:'Gdańsk · Projekty w Polsce i za granicą · PL / EN',artTitle:'Technologia, którą można zrozumieć.',artText:'Prezentacje, które przyciągają uwagę i wyjaśniają produkt.',conceptLabel:'KONCEPCJA AI · NIE REALIZACJA KLIENTA',
     rail1:'INTERAKTYWNE 3D',rail2:'EKRANY I MULTIMEDIA',rail3:'HOSTESSY I PERSONEL',rail4:'ORGANIZACJA WYDARZEŃ',
     servicesIndex:'OFERTA',servicesTitle:'Od pojedynczej usługi <br>do całego wydarzenia.',servicesLead:'Od modelu 3D i obsługi stoiska po organizację całego wydarzenia. Ustalamy zakres dopasowany do Twojego celu, terminu i budżetu.',service1Title:'Prezentacje produktów 3D',service1Desc:'Modele techniczne, przekroje, animacje i interaktywne prezentacje pokazujące, jak działa produkt.',service2Title:'Ekrany i multimedia',service2Desc:'Ekrany dotykowe, konfiguracja stanowisk i przygotowanie treści do działania na miejscu.',service3Title:'Hostessy i obsługa prezentacji',service3Desc:'Personel do powitania gości, wsparcia stanowiska i prowadzenia pokazów na wydarzeniu.',service4Title:'Organizacja wydarzeń',service4Desc:'Miejsce, harmonogram, dostawcy, technika i obsługa na miejscu. Organizujemy całe wydarzenie lub wybraną część, zgodnie z ustalonym zakresem.',serviceAction:'Zapytaj o usługę',servicesFoot:'Masz już stoisko, ekran lub model? Zamów tylko potrzebną usługę albo połącz kilka — dopasujemy się do Ciebie.',servicesFootAction:'Ustalmy zakres ↗',
     examplesIndex:'PRZYKŁADY ZASTOSOWAŃ',examplesTitle:'Złożony produkt.<br><em>Prosta prezentacja.</em>',examplesLead:'Pokazujemy, jak działa produkt i co kryje się w środku. Gotowa prezentacja może też służyć po targach — w sprzedaży, showroomie i online.',caseTag1:'KONCEPCJA AI / EXPO',caseTag2:'KONCEPCJA AI / PRODUKT 3D',case1Title:'Stoisko, które pokazuje więcej.',case1Desc:'Duży ekran przyciąga uwagę, a interaktywna prezentacja pomaga zagłębić się w szczegóły produktu.',case2Title:'Pokaż to, czego nie widać.',case2Desc:'Przekroje, widoki rozłożone i animacje pomagają wyjaśnić budowę i działanie urządzenia.',conceptDisclaimer:'Powyższe ilustracje są koncepcjami przygotowanymi z użyciem AI, a nie zrealizowanymi projektami klientów Scenovis.',
@@ -10,12 +26,28 @@ const DICT = {
     reuseIndex:'WARTOŚĆ PO WYDARZENIU',reuseTitle:'Targi się kończą.<br><em>Prezentacja zostaje.</em>',reuseDesc:'Model i materiały przygotowane na wydarzenie mogą później pracować dla Twojego zespołu sprzedaży, na stronie internetowej lub w showroomie.',reuse1:'TARGI',reuse2:'SPRZEDAŻ',reuse3:'SHOWROOM',reuse4:'WWW',
     stepsIndex:'JAK PRACUJEMY',stepsTitle:'Prosty proces.<br><em>Jasne ustalenia.</em>',stepsLead:'Od pierwszego kontaktu wiesz, co obejmuje projekt, kto za co odpowiada i na kiedy wszystko będzie gotowe.',step1Title:'Krótka rozmowa',step1Desc:'Poznajemy produkt lub wydarzenie, termin i cel. Możesz zacząć od jednego zdania.',step2Title:'Zakres i wycena',step2Desc:'Dobieramy usługi, wykonawców i harmonogram. Przed rozpoczęciem wiesz, za co płacisz.',step3Title:'Realizacja i wsparcie',step3Desc:'Przygotowujemy materiały lub personel i koordynujemy uzgodniony zakres.',
     aboutIndex:'O NAS',aboutTitle:'Dwie osoby.<br><em>Jedno podejście.</em>',aboutLead:'Technologia i organizacja w jednym miejscu. Wiesz, z kim rozmawiasz i kto prowadzi Twój projekt.',aleksRole:'INTERAKTYWNE 3D I TECHNOLOGIA',aleksDesc:'Pomagam pokazać, jak działa Twój produkt — za pomocą modeli 3D, wizualizacji i interaktywnych prezentacji. Korzystam przy tym z doświadczenia w BIM i pracy z dokumentacją techniczną.',lizaRole:'ORGANIZACJA WYDARZEŃ',lizaDesc:'Pomagam zorganizować całe wydarzenie lub wybraną część. Koordynuję przygotowania, dostawców i obsługę na miejscu — od pierwszych ustaleń do zakończenia wydarzenia.',lizaPhotoNote:'MIEJSCE NA ZDJĘCIE LIZY',teamNote:'W zależności od zakresu projektu współpracujemy z dobranymi specjalistami od techniki, zabudowy i obsługi wydarzeń.',
-    contactIndex:'KONTAKT',contactTitle:'Masz pomysł?<br><em>Porozmawiajmy.</em>',contactLead:'Napisz dwa zdania albo zostaw numer telefonu lub e-mail. Wspólnie ustalimy, jaki zakres ma sens.',contactDirect:'WYBIERZ NAJWYGODNIEJSZY SPOSÓB',waSub:'Szybka wiadomość do Scenovis',phoneSub:'Zadzwoń i opowiedz o projekcie',emailSub:'Wyślij opis lub materiały',contactExtra:'Współpraca po polsku, angielsku i rosyjsku.',formEyebrow:'SZYBKIE ZAPYTANIE',formTitle:'W czym możemy pomóc?',formIntro:'Wybierz temat, zostaw kontakt i krótko opisz potrzebę. Resztę ustalimy podczas rozmowy.',nameLabel:'Imię <span class="optional">(opcjonalnie)</span>',contactLabel:'Telefon lub e-mail <span class="required">*</span>',serviceLabel:'Czego potrzebujesz?',messageLabel:'Krótka wiadomość <span class="optional">(opcjonalnie)</span>',namePlaceholder:'Jak mamy się zwracać?',contactPlaceholder:'+48... lub e-mail',messagePlaceholder:'Napisz, co planujesz i na kiedy...',optNotSure:'Jeszcze nie wiem / potrzebuję porady',opt3d:'Prezentacja 3D produktu',optAv:'Ekran lub multimedia',optPeople:'Hostessy / obsługa prezentacji',optExpo:'Obsługa stoiska targowego',optOther:'Inny temat',chipPricing:'Proszę o wycenę',chipCall:'Proszę o kontakt',chipEvent:'Mam wydarzenie',sendWa:'Wyślij przez WhatsApp',sendEmail:'Przygotuj e-mail',formDisclaimer:'Kliknięcie otwiera gotową wiadomość w WhatsApp lub aplikacji pocztowej. Wysłanie potwierdzasz tam — ta strona nie zapisuje Twoich danych.',footerText:'Interaktywne 3D · Targi · Organizacja wydarzeń',errContact:'Podaj numer telefonu (min. 7 cyfr) albo poprawny adres e-mail.',messagePricing:'Proszę o orientacyjną wycenę.',messageCall:'Proszę o kontakt w sprawie możliwej współpracy.',messageEvent:'Planuję wydarzenie i potrzebuję wsparcia.',waHello:'Dzień dobry, kontaktuję się przez stronę Scenovis.',fName:'Imię',fContact:'Kontakt',fService:'Temat',fMessage:'Wiadomość',fNoMsg:'Proszę o kontakt i ustalenie szczegółów.',mailSubject:'Zapytanie ze strony Scenovis',contactTitleMeta:'Scenovis — prezentacje 3D i organizacja wydarzeń',contactDescMeta:'Interaktywne prezentacje 3D, multimedia, obsługa targów i organizacja całych wydarzeń. Wsparcie na miejscu w Polsce. Współpraca PL / EN / RU.'
+    contactIndex:'KONTAKT',contactTitle:'Masz pomysł?<br><em>Porozmawiajmy.</em>',contactLead:'Zostaw numer telefonu lub e-mail albo napisz do nas bezpośrednio. Ustalimy szczegóły w rozmowie.',contactDirect:'WYBIERZ NAJWYGODNIEJSZY SPOSÓB',waSub:'Szybka wiadomość do Scenovis',phoneSub:'Zadzwoń i opowiedz o projekcie',emailSub:'Wyślij opis lub materiały',contactExtra:'Współpraca po polsku i angielsku.',formEyebrow:'SZYBKIE ZAPYTANIE',nameLabel:'Imię <span class="optional">(opcjonalnie)</span>',serviceLabel:'Czego potrzebujesz?',namePlaceholder:'Jak mamy się zwracać?',optNotSure:'Jeszcze nie wiem / potrzebuję porady',opt3d:'Prezentacja 3D produktu',optAv:'Ekran lub multimedia',optPeople:'Hostessy / obsługa prezentacji',optExpo:'Obsługa stoiska targowego',optOther:'Inny temat',chipPricing:'Proszę o wycenę',chipCall:'Proszę o kontakt',chipEvent:'Mam wydarzenie',sendWa:'Wyślij przez WhatsApp',sendEmail:'Przygotuj e-mail',footerText:'Interaktywne 3D · Targi · Organizacja wydarzeń',errContact:'Podaj numer telefonu (min. 7 cyfr) albo poprawny adres e-mail.',messagePricing:'Proszę o orientacyjną wycenę.',messageCall:'Proszę o kontakt w sprawie możliwej współpracy.',messageEvent:'Planuję wydarzenie i potrzebuję wsparcia.',waHello:'Dzień dobry, kontaktuję się przez stronę Scenovis.',fName:'Imię',fContact:'Kontakt',fService:'Temat',fMessage:'Wiadomość',fNoMsg:'Proszę o kontakt i ustalenie szczegółów.',mailSubject:'Zapytanie ze strony Scenovis',contactTitleMeta:'Scenovis — prezentacje 3D i organizacja wydarzeń',contactDescMeta:'Interaktywne prezentacje 3D, multimedia, obsługa targów i organizacja całych wydarzeń. Wsparcie na miejscu w Polsce. Współpraca PL / EN.'
   },
   en: {
-    eventPolandTitle:'Planning an event in Poland?',eventPolandText:'We help organise it locally, even if your team is based abroad. We agree on the scope, coordinate suppliers and arrange on-site support. We speak Polish, English and Russian.',eventPolandAction:'Let’s discuss your event',optEvent:'Complete event organisation',
+    formSending:"Sending...",
+    formPreview:"This is a local preview. Form submissions work after the site is deployed to Netlify and form detection is enabled.",
+    formFailure:"Could not send your enquiry. Please try again or contact us directly.",
+    formSuccess:"Thank you! Your enquiry has been submitted. We will be in touch.",
+    privacyNote:"Draft. Please complete and verify before publication.",
+    privacyTitle:"Privacy policy",
+    privacyLink:"Privacy policy",
+    sendInquiry:"Send enquiry",
+    formDisclaimer:"We use your details only to reply to your enquiry. <a class=\"privacy-open\" href=\"privacy.html\">Privacy policy</a>.",
+    messagePlaceholder:"Tell us briefly what you need...",
+    messageLabel:"Message <span class=\"optional\">(optional)</span>",
+    contactPlaceholder:"e.g. +48 500 000 000 or hello@company.com",
+    contactLabel:"Phone or email <span class=\"required\">*</span>",
+    formIntro:"A phone number or email is enough. We will reply or call you back.",
+    formTitle:"Leave your contact.",
+    videoSoonTitle:'Your 3D video goes here',videoSoonText:'Space for product footage or an interactive model.',
+    eventPolandTitle:'Planning an event in Poland?',eventPolandText:'We help organise it locally, even if your team is based abroad. We agree on the scope, coordinate suppliers and arrange on-site support. We speak Polish and English.',eventPolandAction:'Let’s discuss your event',optEvent:'Complete event organisation',
     skip:'Skip to content',navServices:'Services',navExamples:'Examples',navApproach:'Our process',navAbout:'About us',navContact:'Contact',
-    heroEyebrow:'PRODUCT PRESENTATIONS • MULTIMEDIA • EXPO',heroTitle:'Show how <em>your product works.</em>',heroText:'Interactive 3D presentations, trade fair support and event organisation. Choose one service or let us organise the whole event.',ctaTalk:'Let’s discuss your project',ctaExplore:'Explore services',heroFooter:'Gdańsk · Projects in Poland and internationally · PL / EN / RU',artTitle:'Technology made clear.',artText:'Presentations that attract attention and explain your product.',conceptLabel:'AI CONCEPT · NOT A CLIENT PROJECT',
+    heroEyebrow:'PRODUCT PRESENTATIONS • MULTIMEDIA • EXPO',heroTitle:'Show how <em>your product works.</em>',heroText:'Interactive 3D presentations, trade fair support and event organisation. Choose one service or let us organise the whole event.',ctaTalk:'Let’s discuss your project',ctaExplore:'Explore services',heroFooter:'Gdańsk · Projects in Poland and internationally · PL / EN',artTitle:'Technology made clear.',artText:'Presentations that attract attention and explain your product.',conceptLabel:'AI CONCEPT · NOT A CLIENT PROJECT',
     rail1:'INTERACTIVE 3D',rail2:'SCREENS & MULTIMEDIA',rail3:'HOSTESSES & EVENT STAFF',rail4:'EVENT ORGANISATION',
     servicesIndex:'SERVICES',servicesTitle:'From a single service <br>to a complete event.',servicesLead:'From a 3D model and booth support to a complete event. We agree on the scope to fit your goals, schedule and budget.',service1Title:'Interactive product 3D',service1Desc:'Technical models, cutaways, animations and interactive experiences that explain how products work.',service2Title:'Screens and multimedia',service2Desc:'Touchscreens, display setups and multimedia prepared and tested for your event.',service3Title:'Hostesses and presenters',service3Desc:'Staff to welcome visitors, support your booth and help demonstrate your products.',service4Title:'Event organisation',service4Desc:'Venue, schedule, suppliers, equipment and on-site staff. We organise the whole event or selected parts, based on the agreed scope.',serviceAction:'Ask about this service',servicesFoot:'Already have a booth, screen or model? Choose a single service or combine several — we will adapt to your needs.',servicesFootAction:'Discuss the scope ↗',
     examplesIndex:'WHAT WE CAN SHOW',examplesTitle:'Complex product.<br><em>Clear presentation.</em>',examplesLead:'Show how your product works and what is inside. Reuse the presentation after the event — in sales meetings, showrooms and online.',caseTag1:'AI CONCEPT / EXPO',caseTag2:'AI CONCEPT / 3D PRODUCT',case1Title:'A booth that shows more.',case1Desc:'A large display attracts attention while an interactive presentation lets visitors explore product details.',case2Title:'Show what is hidden.',case2Desc:'Cutaways, exploded views and animations help explain how a machine is built and how it operates.',conceptDisclaimer:'Images above are AI-assisted concepts, not completed Scenovis client projects.',
@@ -23,21 +55,8 @@ const DICT = {
     reuseIndex:'VALUE BEYOND THE EVENT',reuseTitle:'The event ends.<br><em>Your presentation stays.</em>',reuseDesc:'A model built for an event can continue supporting your sales team, website or showroom long after the exhibition.',reuse1:'EXPO',reuse2:'SALES',reuse3:'SHOWROOM',reuse4:'WEB',
     stepsIndex:'HOW WE WORK',stepsTitle:'Simple process.<br><em>Clear expectations.</em>',stepsLead:'From the first conversation, you know the project scope, responsibilities and delivery timeline.',step1Title:'Quick discussion',step1Desc:'We learn about your product or event, timing and goals. One sentence is enough to start.',step2Title:'Scope and quote',step2Desc:'We agree on services, partners and a timeline. You know what is included before we start.',step3Title:'Delivery and support',step3Desc:'We prepare the presentation or staff and coordinate the agreed scope.',
     aboutIndex:'ABOUT US',aboutTitle:'Two people.<br><em>One approach.</em>',aboutLead:'Technology and organisation under one roof. You know who you are speaking to and who leads your project.',aleksRole:'INTERACTIVE 3D & TECHNOLOGY',aleksDesc:'I help you show how your product works through 3D models, visualisations and interactive presentations. I draw on my experience with BIM and technical documentation.',lizaRole:'EVENT COORDINATION',lizaDesc:'I help organise the whole event or selected parts. I coordinate preparations, suppliers and on-site staff, from the first discussion to the end of the event.',lizaPhotoNote:'LIZA PHOTO COMING SOON',teamNote:'Depending on the project, we work with trusted specialists in AV, booth construction and event staffing.',
-    contactIndex:'CONTACT',contactTitle:'Have an idea?<br><em>Let’s talk.</em>',contactLead:'Send two sentences or leave your phone number or email. We will discuss a sensible project scope.',contactDirect:'CHOOSE WHAT WORKS FOR YOU',waSub:'Send Scenovis a quick message',phoneSub:'Call to discuss your project',emailSub:'Send your brief or files',contactExtra:'We work in Polish, English and Russian.',formEyebrow:'QUICK ENQUIRY',formTitle:'How can we help?',formIntro:'Choose a topic, leave your contact details and tell us a little about your needs. We can discuss the rest later.',nameLabel:'Name <span class="optional">(optional)</span>',contactLabel:'Phone or email <span class="required">*</span>',serviceLabel:'What do you need?',messageLabel:'Short message <span class="optional">(optional)</span>',namePlaceholder:'What should we call you?',contactPlaceholder:'Phone number or email',messagePlaceholder:'What are you planning, and when?',optNotSure:'Not sure yet / need advice',opt3d:'3D product presentation',optAv:'Screen or multimedia',optPeople:'Hostesses / presentation staff',optExpo:'Trade fair booth support',optOther:'Something else',chipPricing:'Please send a quote',chipCall:'Please contact me',chipEvent:'I have an event',sendWa:'Send via WhatsApp',sendEmail:'Prepare an email',formDisclaimer:'This opens a pre-filled message in WhatsApp or your email app. You confirm sending there. No details are stored by this page.',footerText:'Interactive 3D · Trade fairs · Event organisation',errContact:'Enter a valid email address or a phone number with at least 7 digits.',messagePricing:'Please send me an estimated quote.',messageCall:'Please contact me to discuss a possible project.',messageEvent:'I am planning an event and need support.',waHello:'Hello, I am contacting you through the Scenovis website.',fName:'Name',fContact:'Contact',fService:'Topic',fMessage:'Message',fNoMsg:'Please contact me to discuss the details.',mailSubject:'Scenovis website enquiry',contactTitleMeta:'Scenovis — 3D presentations and event organisation',contactDescMeta:'Interactive 3D presentations, multimedia, trade fair support and complete event organisation. Local support in Poland. We work in Polish, English and Russian.'
+    contactIndex:'CONTACT',contactTitle:'Have an idea?<br><em>Let’s talk.</em>',contactLead:'Leave your phone number or email, or contact us directly. We will discuss the details together.',contactDirect:'CHOOSE WHAT WORKS FOR YOU',waSub:'Send Scenovis a quick message',phoneSub:'Call to discuss your project',emailSub:'Send your brief or files',contactExtra:'We work in Polish and English.',formEyebrow:'QUICK ENQUIRY',nameLabel:'Name <span class="optional">(optional)</span>',serviceLabel:'What do you need?',namePlaceholder:'What should we call you?',optNotSure:'Not sure yet / need advice',opt3d:'3D product presentation',optAv:'Screen or multimedia',optPeople:'Hostesses / presentation staff',optExpo:'Trade fair booth support',optOther:'Something else',chipPricing:'Please send a quote',chipCall:'Please contact me',chipEvent:'I have an event',sendWa:'Send via WhatsApp',sendEmail:'Prepare an email',footerText:'Interactive 3D · Trade fairs · Event organisation',errContact:'Enter a valid email address or a phone number with at least 7 digits.',messagePricing:'Please send me an estimated quote.',messageCall:'Please contact me to discuss a possible project.',messageEvent:'I am planning an event and need support.',waHello:'Hello, I am contacting you through the Scenovis website.',fName:'Name',fContact:'Contact',fService:'Topic',fMessage:'Message',fNoMsg:'Please contact me to discuss the details.',mailSubject:'Scenovis website enquiry',contactTitleMeta:'Scenovis — 3D presentations and event organisation',contactDescMeta:'Interactive 3D presentations, multimedia, trade fair support and complete event organisation. Local support in Poland. We work in Polish and English.'
   },
-  ru: {
-    eventPolandTitle:'Планируете мероприятие в Польше?',eventPolandText:'Поможем организовать его на месте, даже если ваша команда находится за границей. Согласуем задачи, скоординируем поставщиков и подготовим персонал. Говорим на польском, английском и русском.',eventPolandAction:'Обсудим ваше мероприятие',optEvent:'Организация всего мероприятия',
-    skip:'Перейти к содержимому',navServices:'Услуги',navExamples:'Примеры',navApproach:'Как мы работаем',navAbout:'О нас',navContact:'Контакты',
-    heroEyebrow:'ПРЕЗЕНТАЦИИ ПРОДУКТОВ • МУЛЬТИМЕДИА • EXPO',heroTitle:'Покажите, как работает <em>ваш продукт.</em>',heroText:'Интерактивные 3D-презентации, поддержка на выставках и организация мероприятий. Выберите отдельную услугу или доверьте нам подготовку всего мероприятия.',ctaTalk:'Обсудить проект',ctaExplore:'Посмотреть услуги',heroFooter:'Гданьск · Проекты в Польше и за рубежом · PL / EN / RU',artTitle:'Технология, которую легко понять.',artText:'Презентации, которые привлекают внимание и объясняют продукт.',conceptLabel:'AI-КОНЦЕПЦИЯ · НЕ РЕАЛИЗОВАННЫЙ ПРОЕКТ',
-    rail1:'ИНТЕРАКТИВНОЕ 3D',rail2:'ЭКРАНЫ И МУЛЬТИМЕДИА',rail3:'ХОСТЕС И ПЕРСОНАЛ',rail4:'ОРГАНИЗАЦИЯ МЕРОПРИЯТИЙ',
-    servicesIndex:'УСЛУГИ',servicesTitle:'От отдельной услуги <br>до целого мероприятия.',servicesLead:'От 3D-модели и обслуживания стенда до организации всего мероприятия. Согласуем объём работ с учётом ваших целей, сроков и бюджета.',service1Title:'3D-презентации продуктов',service1Desc:'Технические модели, разрезы, анимации и интерактивные презентации, объясняющие работу продукта.',service2Title:'Экраны и мультимедиа',service2Desc:'Сенсорные экраны, оборудование и подготовка материалов для работы на мероприятии.',service3Title:'Хостес и презентационный персонал',service3Desc:'Персонал для встречи гостей, работы на стенде и помощи в демонстрации продукции.',service4Title:'Организация мероприятий',service4Desc:'Площадка, график, поставщики, техника и персонал на месте. Организуем всё мероприятие или отдельную часть по согласованному плану.',serviceAction:'Узнать об услуге',servicesFoot:'У вас уже есть стенд, экран или модель? Закажите одну услугу или несколько — подстроимся под ваши задачи.',servicesFootAction:'Обсудить задачи ↗',
-    examplesIndex:'ПРИМЕРЫ ПРИМЕНЕНИЯ',examplesTitle:'Сложный продукт.<br><em>Понятная презентация.</em>',examplesLead:'Показываем, как работает продукт и что находится внутри. Презентацию можно использовать и после выставки — в продажах, шоуруме и онлайн.',caseTag1:'AI-КОНЦЕПЦИЯ / EXPO',caseTag2:'AI-КОНЦЕПЦИЯ / 3D-ПРОДУКТ',case1Title:'Стенд, который показывает больше.',case1Desc:'Большой экран привлекает внимание, а интерактивная презентация помогает изучить устройство продукта.',case2Title:'Покажите скрытые детали.',case2Desc:'Разрезы, схемы сборки и анимация помогают объяснить устройство и принцип работы оборудования.',conceptDisclaimer:'Изображения выше — концепции, созданные с применением ИИ, а не выполненные проекты клиентов Scenovis.',
-    flexIndex:'ГИБКИЙ ФОРМАТ',flexTitle:'Столько поддержки,<br><em>сколько вам нужно.</em>',flexLead:'Без навязанных пакетов. Можно заказать только персонал, только 3D-презентацию или объединить несколько услуг.',flexAction:'Расскажите о ваших задачах',flex1Title:'Одна услуга',flex1Desc:'Например, хостес или презентатор на выставке',flex2Title:'Несколько услуг',flex2Desc:'Например, 3D-приложение, сенсорный экран и техподдержка',flex3Title:'Под ключ',flex3Desc:'Концепция экспозиции, мультимедиа, партнёры и координация',
-    reuseIndex:'ПОЛЬЗА ПОСЛЕ МЕРОПРИЯТИЯ',reuseTitle:'Выставка заканчивается.<br><em>Презентация остаётся.</em>',reuseDesc:'3D-модель и материалы с выставки могут и дальше помогать отделу продаж, работать на сайте или в шоуруме.',reuse1:'ВЫСТАВКИ',reuse2:'ПРОДАЖИ',reuse3:'ШОУРУМ',reuse4:'САЙТ',
-    stepsIndex:'КАК МЫ РАБОТАЕМ',stepsTitle:'Простой процесс.<br><em>Понятные договорённости.</em>',stepsLead:'С первого разговора понятно, что входит в проект, кто за что отвечает и какие сроки предусмотрены.',step1Title:'Короткий разговор',step1Desc:'Узнаём о продукте, мероприятии, сроках и целях. Для начала хватит одного предложения.',step2Title:'Объём работ и цена',step2Desc:'Согласуем услуги, подрядчиков и сроки. Вы заранее знаете, что входит в стоимость.',step3Title:'Реализация и поддержка',step3Desc:'Готовим материалы или персонал и координируем согласованные задачи.',
-    aboutIndex:'О НАС',aboutTitle:'Два человека.<br><em>Один подход.</em>',aboutLead:'Технологии и организация — вместе. Вы знаете, с кем общаетесь и кто ведёт проект.',aleksRole:'ИНТЕРАКТИВНОЕ 3D И ТЕХНОЛОГИИ',aleksDesc:'Помогаю показать, как работает ваш продукт, с помощью 3D-моделей, визуализаций и интерактивных презентаций. Опираюсь на опыт работы с BIM и технической документацией.',lizaRole:'ОРГАНИЗАЦИЯ МЕРОПРИЯТИЙ',lizaDesc:'Помогаю организовать всё мероприятие или отдельную часть. Координирую подготовку, поставщиков и персонал на месте — от первых договорённостей до завершения мероприятия.',lizaPhotoNote:'МЕСТО ДЛЯ ФОТО ЛИЗЫ',teamNote:'В зависимости от проекта привлекаем специалистов по мультимедиа, строительству стендов и обслуживанию мероприятий.',
-    contactIndex:'КОНТАКТЫ',contactTitle:'Есть идея?<br><em>Давайте обсудим.</em>',contactLead:'Напишите пару предложений или оставьте телефон либо e-mail. Вместе определим подходящий объём работ.',contactDirect:'ВЫБЕРИТЕ УДОБНЫЙ СПОСОБ',waSub:'Быстрое сообщение Scenovis',phoneSub:'Позвоните и расскажите о проекте',emailSub:'Отправьте описание или файлы',contactExtra:'Общаемся на польском, английском и русском.',formEyebrow:'БЫСТРЫЙ ЗАПРОС',formTitle:'Чем можем помочь?',formIntro:'Выберите тему, оставьте контакт и коротко опишите задачу. Детали обсудим позже.',nameLabel:'Имя <span class="optional">(необязательно)</span>',contactLabel:'Телефон или e-mail <span class="required">*</span>',serviceLabel:'Что вам нужно?',messageLabel:'Короткое сообщение <span class="optional">(необязательно)</span>',namePlaceholder:'Как к вам обращаться?',contactPlaceholder:'Телефон или e-mail',messagePlaceholder:'Что и на когда вы планируете?',optNotSure:'Пока не знаю / нужна консультация',opt3d:'3D-презентация продукта',optAv:'Экран или мультимедиа',optPeople:'Хостес / персонал для презентации',optExpo:'Обслуживание выставочного стенда',optOther:'Другое',chipPricing:'Нужна стоимость',chipCall:'Свяжитесь со мной',chipEvent:'Планирую мероприятие',sendWa:'Отправить в WhatsApp',sendEmail:'Подготовить письмо',formDisclaimer:'Откроется готовое сообщение в WhatsApp или почтовой программе. Отправку вы подтверждаете там. Эта страница не сохраняет данные.',footerText:'Интерактивное 3D · Выставки · Организация мероприятий',errContact:'Укажите корректный e-mail или номер телефона минимум из 7 цифр.',messagePricing:'Прошу сообщить ориентировочную стоимость.',messageCall:'Свяжитесь со мной для обсуждения сотрудничества.',messageEvent:'Планирую мероприятие и мне нужна поддержка.',waHello:'Здравствуйте! Пишу через сайт Scenovis.',fName:'Имя',fContact:'Контакт',fService:'Тема',fMessage:'Сообщение',fNoMsg:'Прошу связаться со мной для обсуждения деталей.',mailSubject:'Запрос с сайта Scenovis',contactTitleMeta:'Scenovis — 3D-презентации и организация мероприятий',contactDescMeta:'Интерактивные 3D-презентации, мультимедиа, обслуживание выставок и организация мероприятий. Поддержка на месте в Польше. Работаем на польском, английском и русском.'
-  }
 };
 let lang = 'pl';
 const $ = id => document.getElementById(id);
@@ -53,12 +72,13 @@ function setLang(next) {
   document.querySelectorAll('[data-placeholder]').forEach(el=>{const k=el.dataset.placeholder;if(tr[k]!==undefined)el.placeholder=tr[k]});
   document.querySelectorAll('[data-lang]').forEach(el=>el.setAttribute('aria-pressed',el.dataset.lang===next?'true':'false'));
   document.querySelectorAll('[data-chip]').forEach(el=>el.classList.remove('active'));
-  $('menu-toggle').setAttribute('aria-label',next==='pl'?'Otwórz lub zamknij menu':next==='en'?'Toggle navigation':'Открыть или закрыть меню');
-  $('nav').setAttribute('aria-label',next==='pl'?'Nawigacja główna':next==='en'?'Main navigation':'Главная навигация');
+  $('menu-toggle').setAttribute('aria-label',next==='pl'?'Otwórz lub zamknij menu':'Toggle navigation');
+  $('nav').setAttribute('aria-label',next==='pl'?'Nawigacja główna':'Main navigation');
   $('form-error').textContent='';
+  document.querySelectorAll('[data-privacy-lang]').forEach(el=>{el.hidden=el.dataset.privacyLang!==next});
   const url=new URL(window.location.href);url.searchParams.set('lang',next);try{window.history.replaceState(null,'',url)}catch{}
   try{window.localStorage.setItem('scenovis_lang',next)}catch{}
-  const headerMessage=next==='ru'?'Здравствуйте! Хочу обсудить проект Scenovis.':next==='en'?'Hello! I would like to discuss a Scenovis project.':'Dzień dobry! Chcę porozmawiać o projekcie ze Scenovis.';
+  const headerMessage=next==='en'?'Hello! I would like to discuss a Scenovis project.':'Dzień dobry! Chcę porozmawiać o projekcie ze Scenovis.';
   $('whatsapp-header').href='https://wa.me/48666895060?text='+encodeURIComponent(headerMessage);
   $('wa-contact').href=$('whatsapp-header').href;
 }
@@ -67,32 +87,48 @@ function validContact(s) {
   const phone=/^[+\d\s().-]+$/.test(v)&&v.replace(/\D/g,'').length>=7&&v.replace(/\D/g,'').length<=15;
   return email||phone;
 }
-function enquiryText() {
-  const tr=DICT[lang];
-  const opts=$('service');
-  return [tr.waHello,'',...( $('name').value.trim() ? [tr.fName+': '+$('name').value.trim()] : [] ),tr.fContact+': '+$('contact-value').value.trim(),tr.fService+': '+opts.selectedOptions[0].textContent.trim(),tr.fMessage+': '+($('message').value.trim()||tr.fNoMsg)].join('\n');
-}
-function validateEnquiry() {
-  $('form-error').textContent='';$('contact-value').classList.remove('invalid');$('contact-value').removeAttribute('aria-invalid');
-  if(!validContact($('contact-value').value)) { $('form-error').textContent=DICT[lang].errContact;$('contact-value').classList.add('invalid');$('contact-value').setAttribute('aria-invalid','true');$('contact-value').focus();return false; }
+function validateEnquiry(){
+  const input=$('contact-value'), error=$('form-error');
+  error.textContent='';error.classList.remove('success');input.classList.remove('invalid');input.removeAttribute('aria-invalid');
+  if(!validContact(input.value)){
+    error.textContent=DICT[lang].errContact;
+    input.classList.add('invalid');input.setAttribute('aria-invalid','true');input.focus();return false;
+  }
   return true;
 }
-function openDraft(channel) {
+async function submitEnquiry(event){
+  event.preventDefault();
   if(!validateEnquiry())return;
-  const text=enquiryText();
-  if(channel==='wa') { const url='https://wa.me/48666895060?text='+encodeURIComponent(text); window.open(url,'_blank','noopener,noreferrer'); }
-  else { const url='mailto:malyshkogrodno@gmail.com?subject='+encodeURIComponent(DICT[lang].mailSubject)+'&body='+encodeURIComponent(text);location.href=url; }
+  const error=$('form-error');const button=$('send-inquiry');const label=button.querySelector('span');
+  // A local HTML preview or test server has no Netlify Forms endpoint.
+  if(!['http:','https:'].includes(location.protocol)||['localhost','127.0.0.1'].includes(location.hostname)){
+    error.textContent=DICT[lang].formPreview;return;
+  }
+  const form=$('inquiry');const contact=$('contact-value').value.trim();
+  $('netlify-reply').value=contact.includes('@')?contact:'';
+  const payload=new URLSearchParams(new FormData(form));
+  button.disabled=true;label.textContent=DICT[lang].formSending;
+  try{
+    const response=await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:payload.toString()});
+    if(!response.ok) throw new Error('Form submission: HTTP '+response.status);
+    error.textContent=DICT[lang].formSuccess;error.classList.add('success');
+    form.reset();$('service-topic').value='';$('netlify-reply').value='';
+  }catch(err){
+    error.textContent=DICT[lang].formFailure;
+  }finally{
+    button.disabled=false;label.textContent=DICT[lang].sendInquiry;
+  }
 }
 window.addEventListener('DOMContentLoaded',()=>{
   const queryLang=new URLSearchParams(window.location.search).get('lang');
   let saved='pl';try{saved=window.localStorage.getItem('scenovis_lang')||'pl'}catch{}
   setLang(queryLang||saved);
   document.querySelectorAll('[data-lang]').forEach(btn=>btn.addEventListener('click',()=>setLang(btn.dataset.lang)));
-  document.querySelectorAll('[data-service]').forEach(btn=>btn.addEventListener('click',()=>{ $('service').value=btn.dataset.service; navigateSection('contact'); }));
-  const chips={pricing:'messagePricing',call:'messageCall',event:'messageEvent'};
-  document.querySelectorAll('[data-chip]').forEach(btn=>btn.addEventListener('click',()=>{ const msg=DICT[lang][chips[btn.dataset.chip]];const area=$('message'); if(!area.value.includes(msg)) area.value=(area.value.trim()?area.value.trim()+'\n':'')+msg;btn.classList.add('active'); }));
-  $('send-wa').addEventListener('click',()=>openDraft('wa'));$('send-mail').addEventListener('click',()=>openDraft('mail'));
-  $('inquiry').addEventListener('submit',e=>{e.preventDefault();openDraft('wa')});
+  document.querySelectorAll('[data-service]').forEach(btn=>btn.addEventListener('click',()=>{ $('service-topic').value=btn.dataset.service; navigateSection('contact'); }));
+  $('inquiry').addEventListener('submit',submitEnquiry);
+  document.addEventListener('click',e=>{const a=e.target.closest('a.privacy-open');if(a){e.preventDefault();$('privacy-modal').showModal()}});
+  $('privacy-close').addEventListener('click',()=>$('privacy-modal').close());
+  $('privacy-modal').addEventListener('click',e=>{if(e.target===$('privacy-modal'))$('privacy-modal').close()});
   $('contact-value').addEventListener('input',()=>{$('form-error').textContent='';$('contact-value').classList.remove('invalid');$('contact-value').removeAttribute('aria-invalid')});
   const menu=$('menu-toggle');const nav=$('nav');menu.addEventListener('click',()=>{const expanded=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!expanded));nav.classList.toggle('open',!expanded)});
   document.querySelectorAll('#nav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false')}));
@@ -100,7 +136,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   // Update a tiny reading indicator and highlight the nearest menu section.
   // No mandatory scroll snap: longer sections and forms stay fully reachable.
   const sectLinks=new Map([...document.querySelectorAll('#nav a')].map(a=>[a.getAttribute('href').substring(1),a]));
-  const order=['services','examples','approach','about','contact'];
+  const order=['services','about','contact'];
   const progress=$('scroll-progress').querySelector('span');
   let frame=false;
   const updateScrollUI=()=>{
@@ -109,7 +145,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     progress.style.transform='scaleX('+Math.min(1,Math.max(0,window.scrollY/max))+')';
     let active=null;
     const limit=window.scrollY+document.querySelector('.site-header').offsetHeight+Math.min(170,innerHeight*.24);
-    for(const id of order){if($(id).offsetTop<=limit) active=id;}
+    for(const id of order){if($(id)&&$(id).offsetTop<=limit) active=id;}
     sectLinks.forEach((a,id)=>{a.classList.toggle('current',id===active);if(id===active)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')});
   };
   const queueScrollUI=()=>{if(!frame){frame=true;window.requestAnimationFrame(updateScrollUI)}};
@@ -166,3 +202,12 @@ function navigateSection(id){
  if(!focusTarget.hasAttribute('tabindex'))focusTarget.setAttribute('tabindex','-1');
  focusTarget.focus({preventScroll:true});
 }
+
+// Hero carousel: manual controls; no automatic motion while reading.
+window.addEventListener('DOMContentLoaded',()=>{
+ const slides=[...document.querySelectorAll('.hero-slide')],buttons=[...document.querySelectorAll('.hero-dot')];
+ const title=document.getElementById('hero-media-title'),desc=document.getElementById('hero-media-desc');
+ const copy={pl:[['Prezentacja produktu na targach','Duży ekran, interaktywne doświadczenie.'],['Zajrzyj do wnętrza produktu','Przekroje, detale i animacje techniczne.'],['Twój produkt w ruchu','Tutaj wstawimy gotowe wideo lub prezentację 3D.']],en:[['Product presentation at a trade fair','Large screens and interactive experiences.'],['Explore how a product works','Technical sections, details and animations.'],['Your product in motion','Your video or 3D presentation will appear here.']]};
+ let current=0;function show(i){current=(i+slides.length)%slides.length;slides.forEach((s,n)=>s.classList.toggle('is-active',n===current));buttons.forEach((b,n)=>{b.classList.toggle('active',n===current);b.setAttribute('aria-pressed',String(n===current))});const lng=document.documentElement.lang==='en'?'en':'pl';[title.textContent,desc.textContent]=copy[lng][current]}
+ buttons.forEach((b,i)=>b.addEventListener('click',()=>show(i)));document.querySelector('.hero-next')?.addEventListener('click',()=>show(current+1));document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>show(current)));show(0);
+});
