@@ -601,6 +601,7 @@ def contact(lang, page, topic="general"):
 <input id="f-contact" name="contact" type="text" required maxlength="140" autocomplete="on" spellcheck="false" autocapitalize="off" autocorrect="off" enterkeyhint="next" aria-describedby="f-contact-hint f-error">
 <p class="hint" id="f-contact-hint">{esc(t['f_contact_hint'])}</p>
 </div>
+<div class="field-row">
 <div class="field">
 <label for="f-topic">{esc(t['f_topic'])}</label>
 <select id="f-topic" name="topic">{topics}</select>
@@ -608,6 +609,7 @@ def contact(lang, page, topic="general"):
 <div class="field">
 <label for="f-name">{esc(t['f_name'])} {opt}</label>
 <input id="f-name" name="name" type="text" maxlength="80" autocomplete="name">
+</div>
 </div>
 <div class="field">
 <label for="f-message">{esc(t['f_message'])} {opt}</label>

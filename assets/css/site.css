@@ -649,3 +649,105 @@ p { text-wrap: pretty; }
   .contact-grid > .form-panel { order: 1; margin-bottom: 36px; }
   .contact-grid > .contact-copy > :not(.section-head) { order: 2; }
 }
+
+/* ==========================================================================
+   Dopasowanie do ekranów laptopa i telefonu (17.10.2026)
+   Cel: każda sekcja czytelna w jednym oknie, nagłówki bez zawijania w EN.
+   ========================================================================== */
+.section { padding: clamp(52px, 6vw, 92px) 0; }
+.section-head { margin-bottom: 36px; }
+
+/* Hero — rozmiar nagłówka liczony od szerokości kolumny tekstu, osobno dla PL i EN,
+   tak aby każda linia (rozdzielona <br>) mieściła się w jednym wierszu. */
+.hero { padding: clamp(32px, 6vh, 64px) 0 clamp(40px, 7vh, 72px); }
+.hero-copy { container-type: inline-size; }
+.hero h1 { font-size: clamp(2.3rem, 11.2cqi, 4.5rem); margin: 22px 0 20px; }
+.hero h1:lang(en) { font-size: clamp(2rem, 9.1cqi, 4.1rem); }
+.hero--landing h1, .hero--landing h1:lang(en) { font-size: clamp(2.1rem, 8.2cqi, 3.7rem); }
+.hero .lead { max-width: 34em; }
+
+/* Oferta: dwie równorzędne usługi obok siebie, koordynacja jako pasek pod nimi */
+@media (min-width: 1000px) {
+  .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .services-grid > .service--partners {
+    grid-column: 1 / -1; grid-row: auto; margin-top: 18px;
+    display: grid; grid-template-rows: none; row-gap: 0;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 40px;
+    grid-template-areas: "code list" "title list" "desc list" "who actions";
+    padding: 24px 28px;
+  }
+  .service--partners .service-code { grid-area: code; margin-bottom: 10px; }
+  .service--partners h3 { grid-area: title; }
+  .service--partners .service-desc { grid-area: desc; }
+  .service--partners .service-list { grid-area: list; display: flex; flex-wrap: wrap; gap: 8px; margin: 0; align-self: center; align-content: center; }
+  .service--partners .service-list li { padding: 6px 12px; border: 1px solid var(--line-2); border-radius: 999px; font-size: .93rem; color: var(--ink-2); }
+  .service--partners .service-list .icon { display: none; }
+  .service--partners .who { grid-area: who; align-self: center; justify-self: start; margin-top: 18px; }
+  .service--partners .service-actions { grid-area: actions; margin-top: 18px; padding-top: 0; border-top: 0; justify-content: flex-end; }
+  .service-list { margin: 18px 0 22px; }
+}
+
+/* Przykład: dopóki nie ma filmu, placeholder jest niższy; prawdziwy film nie wyższy niż okno */
+.player.is-placeholder { aspect-ratio: 21 / 9; }
+.player:not(.is-placeholder) { max-width: calc((100svh - var(--header-h) - 140px) * 16 / 9); }
+
+/* Koszty: szersze zestawienie — opisy w jednej linii, niższe wiersze */
+.costs-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 48px; }
+.sheet table { font-size: .93rem; }
+.sheet th, .sheet td { padding: 11px 14px; }
+.costs .legend { gap: 8px; }
+
+/* O mnie: mniejsze zdjęcie, bliżej podział ról */
+.about-grid { grid-template-columns: minmax(200px, 280px) minmax(0, 1fr); gap: 48px; }
+.roles { margin-top: 40px; }
+
+/* Kontakt: temat i imię obok siebie */
+.field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 14px; }
+.form-panel { padding: 28px; }
+.form-title { margin-bottom: 18px; }
+.field { margin-bottom: 16px; }
+
+/* Niskie okna laptopów (np. 1366×768, 1536×864) */
+@media (min-width: 1000px) and (max-height: 880px) {
+  .section { padding: 56px 0; }
+  .section-head { margin-bottom: 28px; }
+  .hero { padding: 28px 0 40px; }
+  .hero h1 { margin: 16px 0 16px; }
+  .hero .cta-row { margin-top: 22px; }
+  .hero-note { margin-top: 16px; }
+  .annotated { aspect-ratio: 4 / 3; }
+  .hero-figure--plain .annotated { aspect-ratio: 3 / 2; }
+  h2 { font-size: clamp(2rem, 1.3rem + 1.9vw, 2.9rem); }
+}
+
+@media (max-width: 999px) {
+  .about-grid { grid-template-columns: 200px minmax(0, 1fr); gap: 28px; }
+}
+@media (max-width: 700px) {
+  .hero { padding: 20px 0 40px; }
+  .hero h1 { margin: 16px 0 14px; }
+  .player.is-placeholder { aspect-ratio: 4 / 3; }
+  .field-row { grid-template-columns: minmax(0, 1fr); }
+  .about-grid { grid-template-columns: minmax(0, 1fr); }
+  .form-panel { padding: 22px 18px; }
+}
+@media (min-width: 701px) and (max-width: 999px) {
+  .hero h1 { font-size: clamp(2.4rem, 8.4cqi, 3.8rem); }
+  .hero h1:lang(en) { font-size: clamp(2.2rem, 7.4cqi, 3.5rem); }
+}
+@media (min-width: 1000px) {
+  .chapters ol { columns: 3; }
+}
+/* Przykład na desktopie: nagłówek obok filmu, reszta pod spodem */
+@media (min-width: 1000px) {
+  .case > .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 48px; align-items: center; }
+  .case > .wrap > .section-head { grid-column: 1; grid-row: 1; margin-bottom: 0; }
+  .case > .wrap > .case-stage { grid-column: 2; grid-row: 1; }
+  .case > .wrap > :not(.section-head):not(.case-stage) { grid-column: 1 / -1; }
+  .case .player.is-placeholder { aspect-ratio: 16 / 9; }
+  .case .player:not(.is-placeholder) { max-width: none; }
+  .costs h2 { font-size: clamp(2rem, 1.2rem + 1.7vw, 2.7rem); }
+  .costs .section-lead { margin-top: 14px; font-size: 1.02rem; }
+  .costs .small-h { margin-top: 22px; }
+  .costs .check-list { gap: 6px; margin-top: 12px; }
+}
