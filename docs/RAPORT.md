@@ -97,3 +97,28 @@ Testy: axe-core (WCAG 2.0/2.1/2.2 AA + best practices) — 0 naruszeń na 9 stro
 - Nie wpisałem cen, liczby projektów, lat doświadczenia, klientów ani opinii.
 - Nie podmieniłem ilustracji AI na „realizacje” — nadal są oznaczone jako koncepcja.
 - Nie skonfigurowałem wysyłki e-mail (wymaga Twojego konta / domeny).
+
+
+## Aktualizacja 17.10.2026 — „Scenovis 2026” (ulepszenie, nie nowa strona)
+
+Wygląd, grafiki, zdjęcia, placeholder filmu, paleta i typografia — bez zmian. Zmiany w źródłach generatora, nie w HTML.
+
+| Obszar | Zmiana | Pliki |
+|---|---|---|
+| Pozycjonowanie | Dwie równorzędne usługi (projekt stoiska / prezentacje 3D) w hero, menu, ofercie, stopce; „Realizacja” jako opcjonalna koordynacja przez wykonawców | `content.py`, `build.py` |
+| Hero | Krótszy lead (obie usługi), jedno główne CTA „Opowiedz o swoim projekcie” + dwa linki do usług | `content.py`, `build.py`, `site.css` |
+| Podstrona 3D | Sekcja „Przykład” opisuje prezentację produktu (nie koszty stoiska), uczciwie: nagranie w przygotowaniu, projekt koncepcyjny | `build.py` (`case(kind="3d")`) |
+| Podstrony usług | Odnośnik do drugiej usługi („osobno lub razem”) | `build.py` (`cross`) |
+| O mnie | Bio: BIM, koordynacja modeli 3D, wizualizacja; wyraźny podział: co robię sam / co robią wykonawcy | `content.py` |
+| FAQ | Osobne zestawy: EXPO (proces, wycena, wykonawcy, terminy) i 3D (formy, dane, urządzenia, ponowne użycie, „czy musi być z targami”) | `content.py`, `build.py` |
+| CTA | Kontekstowe: „Omów projekt stoiska”, „Porozmawiajmy o prezentacji produktu”, „Opowiedz o swoim projekcie”; nagłówek kontaktu zależny od podstrony | `content.py`, `build.py` |
+| Formularz | Widoczne pole „Temat” (ustawiane przez CTA, domyślne na podstronach), brak limitu cyfr telefonu, walidacja e-maila, osobne komunikaty; honeypot bez napisu „Website”, odporny na brak CSS | `build.py`, `site.js`, `site.css` |
+| Worker | Wspólna reguła `contactKind`, sukces dopiero po `id` z Resend, `reply_to` tylko dla e-maila, `LEAD_TO_EMAIL`/`LEAD_FROM_EMAIL`, diagnostyka `missing`, logi bez danych osobowych | `worker/index.js` |
+| Wdrożenie | `keep_vars`, `observability`; stare pliki V5 i `*.md` wykluczone z publikacji | `wrangler.jsonc`, `.assetsignore` |
+| Kontakt | +48 734 215 791 (tel:, wa.me, JSON-LD, stopka, 404) | `config.py` |
+| Prywatność | Opis faktycznego przepływu (Worker bez bazy danych, Turnstile, Resend, Namecheap, metadane wiadomości); placeholdery dla danych administratora i retencji; baner „wersja robocza” do czasu ich uzupełnienia | `build.py` |
+| UX | Wyrównanie kart oferty (subgrid), kompaktowe linki usług na mobile | `site.css` |
+
+Diagnoza `not_configured`: sekrety wpisane w Cloudflare „Build → Variables and secrets” (zmienne budowania), a nie jako zmienne runtime Workera.
+
+Testy: `node tools/test_form_worker.mjs` (15 przypadków kontaktu + Turnstile/Resend/konfiguracja), test przeglądarkowy formularza PL/EN z symulowanym API, zrzuty 360/390/430/768/1024/1440/1920 px bez poziomego przewijania, `wrangler deploy --dry-run`. Prawdziwa wysyłka przez Resend — niepotwierdzona (wymaga sekretów runtime).

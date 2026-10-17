@@ -79,7 +79,7 @@ function setLang(next) {
   const url=new URL(window.location.href);url.searchParams.set('lang',next);try{window.history.replaceState(null,'',url)}catch{}
   try{window.localStorage.setItem('scenovis_lang',next)}catch{}
   const headerMessage=next==='en'?'Hello! I would like to discuss a Scenovis project.':'Dzień dobry! Chcę porozmawiać o projekcie ze Scenovis.';
-  $('whatsapp-header').href='https://wa.me/48666895060?text='+encodeURIComponent(headerMessage);
+  $('whatsapp-header').href='https://wa.me/48734215791?text='+encodeURIComponent(headerMessage);
   $('wa-contact').href=$('whatsapp-header').href;
 }
 function validContact(s) {

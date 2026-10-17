@@ -167,13 +167,19 @@
   var captchaUnavailable = false;
   var local = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
 
-  function validContact(v) {
-    v = v.trim();
-    var email = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
-    var digits = v.replace(/\D/g, '');
-    var phone = /^[+\d\s().\-\/]+$/.test(v) && digits.length >= 7 && digits.length <= 15;
-    return email || phone;
+  /* contact-rule:start — ta sama reguła w assets/js/site.js i worker/index.js (pilnuje tego tools/test_form_worker.mjs) */
+  // Telefon: dowolny zapis z co najmniej jedną cyfrą — bez limitu liczby cyfr, bez wymaganego numeru
+  // kierunkowego; spacje, nawiasy, myślniki, "+" i dopiski (np. "wew. 12") są dozwolone.
+  // E-mail: wszystko, co zawiera "@", musi wyglądać jak adres: nazwa@domena.końcówka.
+  function contactKind(value) {
+    var v = typeof value === 'string' ? value.trim() : '';
+    if (!v) return 'empty';
+    if (v.indexOf('@') !== -1) {
+      return /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[^\s@.]{2,}$/.test(v) ? 'email' : 'bad_email';
+    }
+    return /\d/.test(v) ? 'phone' : 'bad';
   }
+  /* contact-rule:end */
   function data() {
     var out = {};
     ['contact', 'name', 'message', 'topic', 'event', 'city', 'date', 'area', 'budget', 'reuse', 'lang', 'page', 'website']
@@ -205,6 +211,18 @@
     track('lead_form_fallback_shown');
   }
   function clearErr() { err.textContent = ''; input.removeAttribute('aria-invalid'); }
+  function showContactError(kind) {
+    err.textContent = kind === 'empty' ? T.f_err_empty : kind === 'bad_email' ? T.f_err_email : T.f_err_contact;
+    input.setAttribute('aria-invalid', 'true');
+    input.focus();
+  }
+  // Komunikat po opuszczeniu pola — tylko dla wyraźnie błędnego e-maila (nie przeszkadza przy pisaniu).
+  input.addEventListener('blur', function () {
+    if (input.value.trim() && contactKind(input.value) === 'bad_email') {
+      err.textContent = T.f_err_email;
+      input.setAttribute('aria-invalid', 'true');
+    }
+  });
   function resetCaptcha() {
     if (captchaReady && captchaId !== null && window.turnstile) {
       window.turnstile.reset(captchaId);
@@ -248,12 +266,8 @@
     e.preventDefault();
     clearErr();
     status.className = 'form-status'; status.textContent = '';
-    if (!validContact(input.value)) {
-      err.textContent = T.f_err_contact;
-      input.setAttribute('aria-invalid', 'true');
-      input.focus();
-      return;
-    }
+    var kind = contactKind(input.value);
+    if (kind !== 'phone' && kind !== 'email') { showContactError(kind); return; }
     var d = data();
     if (local) { fallback(T.f_preview, d); return; }
     if (captchaUnavailable) { fallback(T.f_turnstile_unavailable, d); return; }
@@ -263,6 +277,7 @@
     d.turnstileToken = token;
 
     submit.disabled = true; submit.textContent = T.f_sending;
+    form.setAttribute('aria-busy', 'true');
     fetch(form.getAttribute('action'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -281,12 +296,15 @@
       if (e.message === 'turnstile') {
         err.textContent = T.f_turnstile_check;
         status.focus();
+      } else if (e.message === 'contact') {
+        showContactError(contactKind(input.value));
       } else {
         fallback(T.f_fail, d);
       }
     }).then(function () {
       resetCaptcha(); // Tokens are single use, including after an API error.
       submit.disabled = false; submit.textContent = T.f_submit;
+      form.removeAttribute('aria-busy');
     });
   });
 })();

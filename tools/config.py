@@ -11,10 +11,10 @@ SITE_URL = "https://scenovis.malyshkogrodno.workers.dev"
 # Przed publikacją produkcyjną ustaw False (i uzupełnij TODO.md).
 DRAFT = True
 
-# [TODO: NEW PHONE] Potwierdź numer telefonu / WhatsApp. E-mail jest firmowy.
-PHONE_DISPLAY = "+48 666 895 060"
-PHONE_TEL = "+48666895060"
-WHATSAPP = "48666895060"          # numer w formacie międzynarodowym, bez +
+# Telefon / WhatsApp (zaktualizowane 17.10.2026). E-mail jest firmowy.
+PHONE_DISPLAY = "+48 734 215 791"
+PHONE_TEL = "+48734215791"        # link tel:
+WHATSAPP = "48734215791"          # numer w formacie międzynarodowym, bez +
 EMAIL = "contact@scenovis.com"
 
 LINKEDIN_ALEKS = "https://www.linkedin.com/in/aleks-malyshka/"

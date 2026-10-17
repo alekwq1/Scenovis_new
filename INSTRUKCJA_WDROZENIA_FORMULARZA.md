@@ -1,76 +1,139 @@
-# SCENOVIS — formularz: instrukcja wdrożenia
+# SCENOVIS — wdrożenie i formularz (Windows PowerShell)
 
-Stan: 17.10.2026 | Cloudflare Workers Free + Namecheap Private Email + Resend + Turnstile
+Stan: 17.10.2026 | Cloudflare Workers + Resend + Turnstile | odbiorca: `contact@scenovis.com`
 
-## Co już jest skonfigurowane w panelach
+---
 
-- Namecheap: odbiór na `contact@scenovis.com` (alias → `aleks@scenovis.com`).
-- Resend: domena wysyłkowa `forms.scenovis.com` zweryfikowana; **receiving OFF**.
-- Cloudflare Worker `scenovis`: sekrety `RESEND_API_KEY` oraz `TURNSTILE_SECRET` zapisane.
-- Turnstile: dozwolone `scenovis.malyshkogrodno.workers.dev` oraz `scenovis.com`.
-- Główna domena `scenovis.com` pozostaje **celowo odłączona** od Workera.
+## 0. Dlaczego formularz zwracał `{"ok":false,"error":"not_configured"}`
 
-## Krok 1. Dodaj tylko publiczny Site Key Turnstile
+Na zrzucie z panelu Cloudflare (`Workers & Pages → scenovis → Settings`) klucze
+`RESEND_API_KEY`, `TURNSTILE_SECRET` i `TURNSTILE_SITE_KEY` są wpisane w sekcji
+**Build → Variables and secrets**. To są zmienne **środowiska budowania** — istnieją tylko
+w trakcie polecenia `npx wrangler deploy` w Cloudflare Builds. **Działający Worker ich nie widzi**,
+więc `/api/contact-config` i `/api/lead` odpowiadają `not_configured`.
 
-1. Cloudflare → Turnstile → otwórz widget **Scenovis Contact Form** → skopiuj **Site Key**, a NIE Secret Key.
-2. Cloudflare → Workers & Pages → **scenovis** → **Settings → Variables and Secrets → Add**.
-3. Dodaj **Type: Text**; **Name: TURNSTILE_SITE_KEY**; **Value: skopiowany Site Key**.
-4. Zapisz / Deploy. Sprawdź, że `RESEND_API_KEY` i `TURNSTILE_SECRET` nadal widnieją jako **Secret / Value encrypted**.
+Sekcja **Runtime → Variables and secrets** u góry tej samej strony jest wyszarzona z komunikatem
+„cannot be added to a Worker that only has static assets”. To znaczy, że w chwili zrzutu aktywna
+wersja Workera nie zawierała skryptu `worker/index.js` (np. ostatnie wdrożenie było sprzed
+dodania Workera albo się nie powiodło). Po wdrożeniu tej wersji kodu sekcja Runtime się odblokuje.
 
-Site Key jest publiczny, ale **nie przekazuj** nikomu `RESEND_API_KEY` ani `TURNSTILE_SECRET`.
+Naprawa = (1) wdrożyć ten kod, (2) ustawić te same trzy wartości jako zmienne **runtime** Workera
+(krok 3 poniżej). Wpisy w „Build → Variables and secrets” możesz potem usunąć — kod ich nie używa.
 
-## Krok 2. Wdroż kod na istniejącego Workera
+Po wdrożeniu nowej wersji adres `/api/contact-config` dodatkowo pokazuje **nazwy** brakujących zmiennych
+(nigdy wartości), np. `{"ok":false,"error":"not_configured","missing":["TURNSTILE_SITE_KEY"]}`.
 
-1. Rozpakuj paczkę. Jej pliki (`wrangler.jsonc`, `worker/`, `assets/`, `tools/`, `pl/`, `en/` itd.) są przygotowane **bezpośrednio do katalogu głównego repozytorium**.
-2. W istniejącym repozytorium strony zastąp nimi odpowiednie pliki (nie twórz nowego Workera).
-3. Jeżeli repo ma już połączenie z Cloudflare, commit/push wywoła dotychczasowy deploy `npx wrangler deploy`. Jeśli robisz wdrożenie z lokalnego katalogu, użyj `npx wrangler deploy` w katalogu zawierającym `wrangler.jsonc`.
-4. W Cloudflare → Workers & Pages → scenovis → **Deployments** sprawdź status **Success**. Nie podłączaj jeszcze domeny `scenovis.com`.
+---
 
-**Uwaga:** `DRAFT=True` oraz adres strony `workers.dev` są celowo zachowane. Nie przełączaj na `scenovis.com`, póki strona jest w budowie.
+## 1. Uruchomienie lokalnie
 
-## Krok 3. Test konfiguracji
+Wymagany Python 3.9+ i Node.js 20+.
 
-W przeglądarce otwórz:
+```powershell
+cd C:\ścieżka\do\Scenovis_new
+python tools\build.py
+python -m http.server 8080
+# otwórz w przeglądarce: http://localhost:8080/pl/  oraz  http://localhost:8080/en/
+```
 
-`https://scenovis.malyshkogrodno.workers.dev/api/contact-config`
+Lokalnie formularz celowo nie wysyła — pokazuje gotową wiadomość e-mail / WhatsApp.
 
-Oczekiwany wynik to JSON `{"ok":true,"siteKey":"..."}` — Site Key jest publiczny. Jeżeli widzisz `503`, sprawdź `TURNSTILE_SITE_KEY` i czy nowa wersja Workera jest wdrożona.
+Podgląd z działającym Workerem (bez prawdziwej wysyłki, sekrety lokalne w `.dev.vars`, plik jest w `.gitignore`):
 
-## Krok 4. Test wiadomości
+```powershell
+npx wrangler dev
+# http://localhost:8787/pl/
+```
 
-1. Wejdź na `https://scenovis.malyshkogrodno.workers.dev/pl/#kontakt`.
-2. Wypełnij formularz swoim prawdziwym adresem e-mail i napisz `Test formularza Scenovis`.
-3. Wyślij. Po pozytywnej odpowiedzi API powinien pojawić się komunikat o wysłaniu.
-4. Sprawdź w Namecheap Private Email (`aleks@scenovis.com`), czy dotarła wiadomość na alias `contact@scenovis.com`.
-5. Odpowiedz na tę wiadomość: `Reply-To` powinien wskazywać e-mail wpisany w formularzu, a nie `form@forms.scenovis.com`.
-6. Powtórz test na `/en/#contact` i opcjonalnie z telefonem zamiast e-maila. Przy błędach sprawdź **Resend → Emails / Logs** i **Cloudflare → Workers → Observability**.
+## 2. Przebudowa i testy
 
-## Co zostało zmienione
+```powershell
+python tools\build.py
+node --check assets\js\site.js
+node --check worker\index.js
+node tools\test_form_worker.mjs
+```
 
-- `worker/index.js` — walidacja tokena Turnstile na serwerze (hostname, action), wysyłka Resend, `Reply-To`, kontrola żądań i błędów.
-- `assets/js/site.js` — widget Turnstile i komunikaty PL/EN; formularz nie pokazuje sukcesu, gdy API zwróci błąd.
-- `tools/config.py` — publiczny adres kontaktowy `contact@scenovis.com`.
-- `tools/build.py`, `tools/content.py` — integracja widgetu, lokalizacja komunikatów i informacja o dostawcach w projekcie polityki prywatności.
-- `_headers` — CSP pozwalający wczytać zasoby Turnstile.
-- `assets/css/site.css` — drobny styl pola zabezpieczeń. Reszta wyglądu bez zmian.
-- Wygenerowane strony `/pl/` i `/en/` — przebudowane z oryginalnego generatora.
+`test_form_worker.mjs` sprawdza m.in., że reguła walidacji w przeglądarce i w Workerze jest identyczna,
+oraz 15 przypadków pola „Telefon lub e-mail”. Testy **symulują** Turnstile i Resend — nie zastępują
+testu prawdziwej wiadomości (krok 5).
 
-## Ważne przed publicznym startem
+## 3. Sekrety runtime Workera (jednorazowo)
 
-- Uzupełnij `TODO.md`: dane administratora, retencję, weryfikację DPA/RODO oraz docelową domenę.
-- Potwierdź numer telefonu/WhatsApp w `tools/config.py`.
-- Wykonaj realny test wysyłki oraz zabezpieczeń na `workers.dev`.
-- Dopiero potem podłącz `scenovis.com` i zdecyduj o przekierowaniu `www`.
-- W razie większej liczby zgłoszeń dołóż regułę Cloudflare Rate Limiting dla `POST /api/lead`.
+Wartości bierzesz z paneli, **nie** z repozytorium:
 
-## Testy wykonane przed przekazaniem paczki
+- `RESEND_API_KEY` — Resend → API Keys → klucz „Scenovis Contact Form” (Sending access, `forms.scenovis.com`).
+  Pełna wartość `re_…` jest widoczna tylko przy tworzeniu klucza. Jeśli jej nie masz, utwórz nowy klucz z tym samym zakresem.
+- `TURNSTILE_SECRET` — Cloudflare → Turnstile → „Scenovis Contact Form” → **Secret Key**.
+- `TURNSTILE_SITE_KEY` — ten sam widget → **Site Key** (publiczny, zaczyna się od `0x4AAAA…`).
 
-`node --check assets/js/site.js`
+Najpierw wdroż kod (krok 4), potem w PowerShell, w katalogu repozytorium:
 
-`node --check worker/index.js`
+```powershell
+npx wrangler login
+npx wrangler secret put RESEND_API_KEY
+npx wrangler secret put TURNSTILE_SECRET
+npx wrangler secret put TURNSTILE_SITE_KEY
+npx wrangler secret list
+```
 
-`node tools/test_form_worker.mjs`
+Każde `secret put` poprosi o wklejenie wartości (nie pojawi się na ekranie ani w historii poleceń).
+Alternatywa w panelu: `Workers & Pages → scenovis → Settings → Variables and Secrets` (sekcja **Runtime**, nie Build) → Add → Type: **Secret**.
 
-`python tools/build.py`
+Opcjonalnie (domyślne wartości są w kodzie, nie musisz ich ustawiać):
 
-Testy symulują wysyłkę — **nie zastępują testu wiadomości z prawdziwej strony.**
+```powershell
+npx wrangler secret put LEAD_TO_EMAIL     # domyślnie contact@scenovis.com
+npx wrangler secret put LEAD_FROM_EMAIL   # domyślnie Scenovis <form@forms.scenovis.com>
+```
+
+`wrangler.jsonc` ma `"keep_vars": true`, więc kolejne wdrożenia nie skasują zmiennych ustawionych w panelu.
+Sekrety są zachowywane zawsze.
+
+## 4. Wdrożenie przez GitHub i Cloudflare
+
+Repozytorium `alekwq1/Scenovis_new` jest połączone z Workerem (Build: puste, Deploy: `npx wrangler deploy`, Root: `/`).
+
+```powershell
+git status
+git add -A
+git commit -m "Scenovis 2026: dwie usługi, formularz, Worker/Resend, nowy telefon"
+git push origin main
+```
+
+Albo ręcznie z komputera: `npx wrangler deploy`.
+
+Potem: Cloudflare → `Workers & Pages → scenovis → Deployments` → ostatnia wersja ma status **Success**
+i pochodzi z najnowszego commita. W `Settings` sekcja **Runtime → Variables and secrets** powinna być aktywna.
+
+## 5. Sprawdzenie konfiguracji i dostarczenia zapytania
+
+```powershell
+Invoke-RestMethod https://scenovis.malyshkogrodno.workers.dev/api/contact-config
+```
+
+Oczekiwane: `ok : True` i `siteKey : 0x4AAAA…`. Jeśli `not_configured` — pole `missing` mówi, czego brakuje.
+
+Test właściwy (tylko w przeglądarce — Turnstile wymaga prawdziwej przeglądarki):
+
+1. `https://scenovis.malyshkogrodno.workers.dev/pl/#kontakt` — wpisz swój e-mail, temat „Projekt stoiska”, wiadomość `Test formularza PL`.
+2. Po wysłaniu ma się pojawić „Dziękuję — zapytanie zostało wysłane”. Ten komunikat pojawia się **wyłącznie**, gdy Resend potwierdzi przyjęcie wiadomości.
+3. Sprawdź skrzynkę `contact@scenovis.com` (Namecheap). „Odpowiedz” powinno wskazywać e-mail z formularza.
+4. Powtórz na `/en/#contact` z numerem telefonu (np. `+49 (0) 123 456789`) — wiadomość dotrze, bez Reply-To, telefon w treści.
+5. Resend → **Emails / Logs**: obie wiadomości ze statusem *Delivered*.
+6. Przy błędzie: Cloudflare → Workers → scenovis → **Observability / Logs** (Worker loguje tylko kod błędu Resend, bez danych klienta).
+
+Szybki test odrzucenia bez tokenu Turnstile (nie wysyła e-maila, ma zwrócić błąd 403 `turnstile`):
+
+```powershell
+$body = '{"contact":"test@example.com","message":"test"}'
+try { Invoke-RestMethod -Method Post -Uri https://scenovis.malyshkogrodno.workers.dev/api/lead -ContentType 'application/json' -Body $body }
+catch { $_.ErrorDetails.Message }
+```
+
+## 6. Czego NIE robić
+
+- Nie wpisuj kluczy do `wrangler.jsonc`, `tools/config.py`, frontendu ani GitHuba.
+- Nie zmieniaj rekordów MX Namecheap ani DNS `forms.scenovis.com` — wysyłka działa bez tego.
+- Nie podłączaj domeny `scenovis.com` do Workera, zanim nie zdecydujesz o docelowej domenie (`SITE_URL`).
+- Nie ustawiaj `DRAFT = False`, dopóki polityka prywatności ma niewypełnione pola (TODO.md, B1–B3).

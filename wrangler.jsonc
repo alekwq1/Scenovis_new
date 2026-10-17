@@ -4,6 +4,11 @@
   "name": "scenovis",
   "main": "worker/index.js",
   "compatibility_date": "2026-09-01",
+  // Nie usuwaj przy deployu zmiennych (Text) ustawionych w panelu Cloudflare (np. TURNSTILE_SITE_KEY).
+  // Sekrety (RESEND_API_KEY, TURNSTILE_SECRET) są zawsze zachowywane. Wartości NIE wpisujemy do repozytorium.
+  "keep_vars": true,
+  // Logi Workera (Cloudflare → Workers → scenovis → Observability). Worker loguje tylko statusy błędów, bez danych osobowych.
+  "observability": { "enabled": true },
   "assets": {
     "directory": ".",
     "binding": "ASSETS",

@@ -178,7 +178,10 @@ def header(lang, page, alternates, nav=True):
     prefix = "" if page == "home" else home
     nav_html = ""
     if nav:
-        items = "".join(f'<li><a href="{prefix}{href}">{esc(label)}</a></li>' for href, label in t["nav"])
+        def nav_href(href):
+            # "@expo" / "@3d" = podstrona usługi, "#..." = sekcja strony głównej
+            return page_path(lang, href[1:]) if href.startswith("@") else prefix + href
+        items = "".join(f'<li><a href="{nav_href(href)}">{esc(label)}</a></li>' for href, label in t["nav"])
         nav_html = (f'<nav class="nav" id="site-nav" aria-label="{esc(t["nav_label"])}">'
                     f'<ul>{items}</ul></nav>')
     contact_href = f"#{ids['contact']}" if page != "privacy" else f"{home}#{ids['contact']}"
@@ -220,6 +223,8 @@ def footer(lang):
 <p>{esc(t['footer_tagline'])}</p>
 </div>
 <ul class="footer-links">
+<li><a href="{page_path(lang, 'expo')}">{esc(t['expo_crumb'])}</a></li>
+<li><a href="{page_path(lang, '3d')}">{esc(t['p3d_crumb'])}</a></li>
 <li><a href="tel:{C.PHONE_TEL}" data-track="phone_click">{esc(C.PHONE_DISPLAY)}</a></li>
 <li><a href="mailto:{C.EMAIL}" data-track="email_click">{esc(C.EMAIL)}</a></li>
 <li><a href="{page_path(lang, 'privacy')}">{esc(t['footer_privacy'])}</a></li>
@@ -249,6 +254,8 @@ def hero_home(lang):
                 "usługa": "service", "service": "service"}[typ]
         tags.append(f'<li class="tag tag--{key}"><span class="tag-label"><span class="tag-name">{esc(name)}</span>'
                     f'<span class="chip chip--{tkey}">{esc(typ)}</span></span></li>')
+    paths = "".join(f'<li><a class="hero-path" href="{page_path(lang, key)}" data-track="hero_service_{key}">'
+                    f'<span>{esc(label)}</span>{icon("arrow")}</a></li>' for key, label in t["hero_paths"])
     return f"""<section class="hero" aria-labelledby="hero-title">
 <div class="wrap hero-grid">
 <div class="hero-copy">
@@ -256,9 +263,9 @@ def hero_home(lang):
 <h1 id="hero-title">{t['hero_h1']}</h1>
 <p class="lead">{esc(t['hero_lead'])}</p>
 <div class="cta-row">
-<a class="button button-primary" href="#{ids['case']}" data-track="hero_cta_case">{esc(t['hero_cta_primary'])}</a>
-<a class="button button-ghost" href="#{ids['contact']}" data-track="hero_cta_contact">{esc(t['hero_cta_secondary'])}</a>
+<a class="button button-primary" href="#{ids['contact']}" data-topic="general" data-track="hero_cta_contact">{esc(t['hero_cta_primary'])}</a>
 </div>
+<nav class="hero-paths" aria-label="{esc(t['hero_paths_label'])}"><ul>{paths}</ul></nav>
 <p class="hero-note">{todo(esc(t['hero_note']).replace('{todo:', '{todo:'))}</p>
 </div>
 <figure class="hero-figure">
@@ -297,7 +304,7 @@ def hero_landing(lang, kind):
 <p class="lead">{esc(t[p + '_lead'])}</p>
 <ul class="check-list">{points}</ul>
 <div class="cta-row">
-<a class="button button-primary" href="#{ids['contact']}" data-track="hero_cta_contact">{esc(t[p + '_cta'])}</a>
+<a class="button button-primary" href="#{ids['contact']}" data-topic="{kind}" data-track="hero_cta_contact">{esc(t[p + '_cta'])}</a>
 <a class="button button-ghost" href="#{ids['case']}" data-track="hero_cta_case">{esc(t[p + '_cta2'])}</a>
 </div>
 </div>
@@ -350,31 +357,42 @@ def player(lang):
 <p class="player-meta">{esc(t['video_duration'])}: {esc(dur)} · {esc(t['video_captions_note'])}</p>"""
 
 
-def case(lang):
+def case(lang, kind="expo"):
+    """Sekcja „Przykład”. kind="expo" — demonstrator stoiska (strona główna, projekt stoiska);
+    kind="3d" — ten sam projekt demonstracyjny opisany z perspektywy prezentacji produktu."""
     t = CONTENT[lang]
     ids = IDS[lang]
-    benefits = "".join(f'<li><h3>{esc(a)}</h3><p>{esc(b)}</p></li>' for a, b in t["case_benefits"])
-    chapters = "".join(f'<li>{esc(c)}</li>' for c in t["case_chapters"])
-    tag = f'<p class="demo-tag">{esc(t["case_tag"])}</p>'
-    return f"""<section class="section case" id="{ids['case']}" aria-labelledby="case-title">
-<div class="wrap">
-{section_head(t['case_label'], esc(t['case_h2']), t['case_lead'], 'case-title', tag)}
-<div class="case-stage">
-{player(lang)}
-</div>
-<p class="case-intro">{esc(t['case_intro'])}</p>
-<ul class="benefits">{benefits}</ul>
-<div class="case-bottom">
+    k = "case3d" if kind == "3d" else "case"
+    intro = t[k + "_intro"] if C.VIDEO else t[k + "_intro_pending"]
+    benefits = "".join(f'<li><h3>{esc(a)}</h3><p>{esc(b)}</p></li>' for a, b in t[k + "_benefits"])
+    tag = f'<p class="demo-tag">{esc(t[k + "_tag"])}</p>'
+    cta = f"""<div class="case-cta">
+<p>{esc(t[k + '_cta_q'])}</p>
+<a class="button button-primary" href="#{ids['contact']}" data-topic="{kind}" data-track="case_cta_click">{esc(t[k + '_cta'])}</a>
+</div>"""
+    if kind == "3d":
+        bottom = f'<div class="case-bottom case-bottom--single">{cta}</div>'
+    else:
+        chapters = "".join(f'<li>{esc(c)}</li>' for c in t["case_chapters"])
+        transcript = (f'<details class="transcript"><summary>{esc(t["case_transcript"])}</summary>'
+                      f'{todo(t["case_transcript_body"])}</details>') if C.VIDEO else ""
+        bottom = f"""<div class="case-bottom">
 <div class="chapters">
 <h3>{esc(t['case_chapters_title'])}</h3>
 <ol>{chapters}</ol>
-<details class="transcript"><summary>{esc(t['case_transcript'])}</summary>{todo(t['case_transcript_body'])}</details>
+{transcript}
 </div>
-<div class="case-cta">
-<p>{esc(t['case_cta_q'])}</p>
-<a class="button button-primary" href="#{ids['contact']}" data-topic="expo" data-track="case_cta_click">{esc(t['case_cta'])}</a>
+{cta}
+</div>"""
+    return f"""<section class="section case" id="{ids['case']}" aria-labelledby="case-title">
+<div class="wrap">
+{section_head(t['case_label'], esc(t[k + '_h2']), t[k + '_lead'], 'case-title', tag)}
+<div class="case-stage">
+{player(lang)}
 </div>
-</div>
+<p class="case-intro">{esc(intro)}</p>
+<ul class="benefits">{benefits}</ul>
+{bottom}
 </div>
 </section>"""
 
@@ -529,13 +547,30 @@ def after_fair(lang):
 </section>"""
 
 
+def cross(lang, kind):
+    """Odnośnik do drugiej, równorzędnej usługi (na podstronach usług)."""
+    t = CONTENT[lang]
+    k = "cross_expo" if kind == "expo" else "cross_3d"
+    target = "3d" if kind == "expo" else "expo"
+    return f"""<section class="section after cross" aria-labelledby="cross-title">
+<div class="wrap after-inner">
+<h2 id="cross-title">{esc(t[k + '_h2'])}</h2>
+<div><p>{esc(t[k + '_text'])}</p>
+<a class="text-link" href="{page_path(lang, target)}">{esc(t[k + '_link'])}{icon('arrow')}</a></div>
+</div>
+</section>"""
+
+
 def contact(lang, page, topic="general"):
     t = CONTENT[lang]
     ids = IDS[lang]
     reuse = "".join(f'<option value="{esc(v)}">{esc(l)}</option>' for v, l in t["f_reuse_opts"])
+    topics = "".join(f'<option value="{k}"{" selected" if k == topic else ""}>{esc(v)}</option>'
+                     for k, v in t["topics"].items())
+    h2 = t.get(f"contact_h2_{page}", t["contact_h2"])
     privacy = page_path(lang, "privacy")
     brief = esc(t["contact_brief"]).replace("{email}", f'<a href="mailto:{C.EMAIL}" data-track="email_click">{esc(C.EMAIL)}</a>')
-    i18n = {k: t[k] for k in ("f_err_contact", "f_success", "f_fail", "f_fail_email", "f_fail_wa",
+    i18n = {k: t[k] for k in ("f_err_contact", "f_err_empty", "f_err_email", "f_success", "f_fail", "f_fail_email", "f_fail_wa",
                               "f_preview", "f_sending", "f_submit", "f_turnstile_wait", "f_turnstile_check", "f_turnstile_unavailable", "mail_subject", "wa_hello")}
     i18n["topics"] = t["topics"]
     i18n["fields"] = t["field_names"]
@@ -543,7 +578,7 @@ def contact(lang, page, topic="general"):
     return f"""<section class="section contact" id="{ids['contact']}" aria-labelledby="contact-title">
 <div class="wrap contact-grid">
 <div class="contact-copy">
-{section_head(t['contact_label'], esc(t['contact_h2']), t['contact_lead'], 'contact-title')}
+{section_head(t['contact_label'], esc(h2), t['contact_lead'], 'contact-title')}
 <p class="direct-title">{esc(t['contact_direct'])}</p>
 <ul class="direct">
 <li><a href="tel:{C.PHONE_TEL}" data-track="phone_click">{icon('phone')}<span><strong>{esc(C.PHONE_DISPLAY)}</strong><small>{esc(t['contact_phone_sub'])}</small></span></a></li>
@@ -551,19 +586,21 @@ def contact(lang, page, topic="general"):
 </ul>
 <p class="wa-line"><a class="text-link" href="https://wa.me/{C.WHATSAPP}?text={html.escape(__import__('urllib.parse').parse.quote(t['wa_hello']))}" rel="noopener" target="_blank" data-track="whatsapp_click">{icon('wa')}{esc(t['contact_wa'])}</a></p>
 <p class="contact-small">{brief}<br>{esc(t['contact_lang'])}</p>
-<p class="contact-small">{todo('{todo:PHONE — potwierdź numer telefonu / WhatsApp (config.py)}')}</p>
 </div>
 <div class="form-panel">
 <h3 class="form-title">{esc(t['form_title'])}</h3>
 <form id="lead-form" class="lead-form" action="/api/lead" method="post" novalidate>
-<input type="hidden" name="topic" value="{topic}">
 <input type="hidden" name="lang" value="{lang}">
 <input type="hidden" name="page" value="{page}">
-<div class="hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+<div class="hp" aria-hidden="true" inert><input type="text" name="website" id="f-website" tabindex="-1" autocomplete="off" aria-hidden="true"></div>
 <div class="field">
 <label for="f-contact">{esc(t['f_contact'])} <span class="req">({esc(t['f_required'])})</span></label>
-<input id="f-contact" name="contact" type="text" required maxlength="140" autocomplete="email" spellcheck="false" autocapitalize="off" aria-describedby="f-contact-hint f-error">
+<input id="f-contact" name="contact" type="text" required maxlength="140" autocomplete="on" spellcheck="false" autocapitalize="off" autocorrect="off" enterkeyhint="next" aria-describedby="f-contact-hint f-error">
 <p class="hint" id="f-contact-hint">{esc(t['f_contact_hint'])}</p>
+</div>
+<div class="field">
+<label for="f-topic">{esc(t['f_topic'])}</label>
+<select id="f-topic" name="topic">{topics}</select>
 </div>
 <div class="field">
 <label for="f-name">{esc(t['f_name'])} {opt}</label>
@@ -620,7 +657,7 @@ def org_node():
 
 def person_node():
     return {"@type": "Person", "@id": abs_url("/#aleks"), "name": "Aleks",
-            "jobTitle": "3D / BIM, exhibition stand design", "worksFor": {"@id": abs_url("/#organization")},
+            "jobTitle": "3D / BIM — exhibition stand design and 3D product presentations", "worksFor": {"@id": abs_url("/#organization")},
             "sameAs": [C.LINKEDIN_ALEKS]}
 
 
@@ -682,9 +719,9 @@ def build_home(lang):
     ld = graph(lang, "home", t["home_title"], t["home_desc"], [video_node(lang, "home")])
     return (head(lang, "home", t["home_title"], t["home_desc"], a, jsonld=ld)
             + header(lang, "home", a)
-            + hero_home(lang) + tldr(lang) + case(lang) + services(lang) + costs(lang)
+            + hero_home(lang) + tldr(lang) + services(lang) + case(lang, "expo") + costs(lang)
             + about(lang) + process(lang)
-            + faq(lang, ["price", "factors", "buyrent", "reuse", "materials", "delivery", "area", "time"])
+            + faq(lang, ["price", "expo_process", "delivery", "3d_forms", "3d_data", "3d_nofair", "area", "time"])
             + contact(lang, "home") + footer(lang))
 
 
@@ -695,8 +732,9 @@ def build_expo(lang):
                [service_node(lang, "expo"), breadcrumb_node(lang, "expo"), video_node(lang, "expo")])
     return (head(lang, "expo", t["expo_title"], t["expo_desc"], a, jsonld=ld)
             + header(lang, "expo", a, nav=False)
-            + hero_landing(lang, "expo") + get_grid(lang, "expo") + case(lang) + costs(lang) + process(lang)
-            + faq(lang, ["price", "factors", "buyrent", "reuse", "materials", "delivery", "time"])
+            + hero_landing(lang, "expo") + get_grid(lang, "expo") + case(lang, "expo") + costs(lang) + process(lang)
+            + cross(lang, "expo")
+            + faq(lang, ["expo_process", "price", "factors", "buyrent", "reuse", "materials", "delivery", "time"])
             + contact(lang, "expo", topic="expo") + footer(lang))
 
 
@@ -707,46 +745,49 @@ def build_3d(lang):
                [service_node(lang, "3d"), breadcrumb_node(lang, "3d"), video_node(lang, "3d")])
     return (head(lang, "3d", t["p3d_title"], t["p3d_desc"], a, jsonld=ld)
             + header(lang, "3d", a, nav=False)
-            + hero_landing(lang, "3d") + get_grid(lang, "3d") + case(lang) + after_fair(lang)
-            + faq(lang, ["3d_data", "3d_hw", "3d_reuse", "price", "delivery"])
+            + hero_landing(lang, "3d") + get_grid(lang, "3d") + case(lang, "3d") + after_fair(lang)
+            + cross(lang, "3d")
+            + faq(lang, ["3d_forms", "3d_data", "3d_hw", "3d_reuse", "3d_nofair", "price"])
             + contact(lang, "3d", topic="3d") + footer(lang))
 
 
 PRIVACY = {
     "pl": """
 <h2>1. Administrator danych</h2>
-<p>{todo:ADMINISTRATOR — pełna nazwa firmy lub imię i nazwisko, adres działalności, NIP (jeśli jest)}. Kontakt w sprawach danych osobowych: <a href="mailto:{email}">{email}</a>.</p>
+<p>{todo:ADMINISTRATOR — pełna nazwa firmy lub imię i nazwisko, adres działalności, NIP (jeśli jest)}. Kontakt w sprawach danych osobowych: <a href="mailto:{email}">{email}</a>, tel. {phone}.</p>
 <h2>2. Jakie dane przetwarzam i po co</h2>
-<p>Gdy wysyłasz zapytanie przez formularz, przetwarzam podany telefon lub e-mail, a jeśli je podasz — imię, treść wiadomości i informacje o targach (wydarzenie, miasto, termin, powierzchnia, budżet, ponowne użycie stoiska). Gdy piszesz e-mail, dzwonisz lub korzystasz z WhatsApp, przetwarzam dane, które sam przekażesz.</p>
-<p>Cel: odpowiedź na zapytanie i rozmowy o możliwej współpracy. Podstawa prawna: prawnie uzasadniony interes administratora (art. 6 ust. 1 lit. f RODO) lub — gdy prosisz o ofertę — działania przed zawarciem umowy (art. 6 ust. 1 lit. b RODO).</p>
-<h2>3. Odbiorcy danych</h2>
-<p>Strona jest hostowana w Cloudflare (Cloudflare, Inc.), który obsługuje też przesłanie formularza. Do ochrony formularza przed nadużyciami wykorzystuję Cloudflare Turnstile (weryfikacja może przetwarzać dane techniczne przeglądarki i połączenia). Wysyłkę zapytań realizuje Resend, a wiadomości odbiera Namecheap Private Email na adres contact@scenovis.com. Część dostawców może przetwarzać dane poza Europejskim Obszarem Gospodarczym — w takim przypadku na podstawie mechanizmów przewidzianych w RODO (np. standardowe klauzule umowne lub decyzja o adekwatności). {todo:WERYFIKACJA — sprawdź umowy powierzenia (DPA) faktycznie używanych dostawców}</p>
+<p>Gdy wysyłasz zapytanie przez formularz, przetwarzam podany telefon lub e-mail, wybrany temat, a jeśli je podasz — imię, treść wiadomości i informacje o projekcie (wydarzenie, miasto, termin, powierzchnia, budżet, ponowne użycie stoiska). Do wiadomości dołączana jest data otrzymania, język i podstrona, z której wysłano formularz, oraz kraj połączenia ustalony przez Cloudflare. Gdy piszesz e-mail, dzwonisz lub korzystasz z WhatsApp, przetwarzam dane, które sam przekażesz.</p>
+<p>Cel: odpowiedź na zapytanie i rozmowy o możliwej współpracy oraz ochrona formularza przed spamem i nadużyciami. Podstawa prawna: prawnie uzasadniony interes administratora (art. 6 ust. 1 lit. f RODO) lub — gdy prosisz o ofertę — działania przed zawarciem umowy (art. 6 ust. 1 lit. b RODO). {todo:WERYFIKACJA — potwierdź podstawy prawne z osobą znającą RODO}</p>
+<h2>3. Jak działa formularz i kto jest odbiorcą danych</h2>
+<p>Strona jest hostowana w Cloudflare (Cloudflare, Inc.). Formularz trafia do mechanizmu Cloudflare Workers, który sprawdza dane i przekazuje je dalej jako wiadomość e-mail — <strong>strona nie zapisuje zapytań w bazie danych</strong>. Do ochrony formularza przed nadużyciami służy Cloudflare Turnstile (weryfikacja może przetwarzać dane techniczne przeglądarki i połączenia, w tym adres IP). Wiadomość wysyła usługa Resend, a odbiera ją skrzynka Namecheap Private Email pod adresem {email}. Dostawcy mogą przechowywać kopie wiadomości i logi techniczne zgodnie ze swoimi zasadami.</p>
+<p>Część dostawców może przetwarzać dane poza Europejskim Obszarem Gospodarczym — w takim przypadku na podstawie mechanizmów przewidzianych w RODO (np. standardowe klauzule umowne lub decyzja o adekwatności). {todo:WERYFIKACJA — sprawdź umowy powierzenia (DPA) i lokalizację danych u Cloudflare, Resend i Namecheap}</p>
 <p>Kliknięcie linku do WhatsApp otwiera usługę WhatsApp (Meta), w której obowiązują jej własne zasady prywatności.</p>
 <h2>4. Jak długo przechowuję dane</h2>
-<p>{todo:RETENCJA — np. do 12 miesięcy od ostatniego kontaktu, jeśli nie dojdzie do współpracy; dłużej, jeśli wymagają tego przepisy lub ochrona przed roszczeniami}</p>
+<p>{todo:RETENCJA — wpisz faktyczny okres, np. do X miesięcy od ostatniego kontaktu, jeśli nie dojdzie do współpracy; dłużej, jeśli wymagają tego przepisy lub ochrona przed roszczeniami}</p>
 <h2>5. Twoje prawa</h2>
-<p>Masz prawo dostępu do danych, ich sprostowania, usunięcia lub ograniczenia przetwarzania, prawo do przenoszenia danych oraz prawo sprzeciwu wobec przetwarzania opartego na uzasadnionym interesie. Możesz też złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych. Podanie kontaktu jest dobrowolne, ale bez niego nie mogę odpowiedzieć.</p>
+<p>Masz prawo dostępu do danych, ich sprostowania, usunięcia lub ograniczenia przetwarzania, prawo do przenoszenia danych oraz prawo sprzeciwu wobec przetwarzania opartego na uzasadnionym interesie. Możesz też złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych. Podanie kontaktu jest dobrowolne, ale bez niego nie mogę odpowiedzieć. Dane nie służą do profilowania ani automatycznego podejmowania decyzji.</p>
 <h2>6. Pliki cookies, analityka i zasoby zewnętrzne</h2>
-<p>Strona nie używa plików cookies analitycznych ani reklamowych. Formularz wczytuje zewnętrzny skrypt Cloudflare Turnstile w celu ochrony przed spamem. Czcionki i film są serwowane z tego samego serwera. Hosting może zapisywać techniczne logi serwera (np. adres IP, czas żądania) w celu zapewnienia bezpieczeństwa i działania strony.</p>
+<p>Strona nie używa plików cookies analitycznych ani reklamowych i nie ma zainstalowanej analityki. Formularz wczytuje zewnętrzny skrypt Cloudflare Turnstile w celu ochrony przed spamem. Czcionki i pliki strony są serwowane z tego samego serwera. Hosting może zapisywać techniczne logi serwera (np. adres IP, czas żądania) w celu zapewnienia bezpieczeństwa i działania strony.</p>
 <p>Jeżeli w przyszłości dodam analitykę (np. Google Analytics), tagi reklamowe (np. Google Ads) lub osadzone treści zewnętrzne (np. YouTube), ta polityka zostanie zaktualizowana, a narzędzia te zostaną uruchomione dopiero po uzyskaniu Twojej zgody.</p>
 <h2>7. Zmiany</h2>
 <p>Aktualna wersja polityki jest zawsze dostępna na tej stronie. {todo:DATA — wpisz datę ostatniej aktualizacji}</p>
 """,
     "en": """
 <h2>1. Data controller</h2>
-<p>{todo:CONTROLLER — full company name or full name, business address, tax ID if applicable}. Contact for data protection matters: <a href="mailto:{email}">{email}</a>.</p>
+<p>{todo:CONTROLLER — full company name or full name, business address, tax ID if applicable}. Contact for data protection matters: <a href="mailto:{email}">{email}</a>, phone {phone}.</p>
 <h2>2. What data I process and why</h2>
-<p>When you send an enquiry through the form, I process the phone number or email you provide and, if you give them, your name, message and trade fair details (event, city, dates, stand size, budget, reuse). When you email, call or use WhatsApp, I process the data you choose to share.</p>
-<p>Purpose: to answer your enquiry and discuss possible cooperation. Legal basis: the controller’s legitimate interests (Art. 6(1)(f) GDPR) or — if you ask for a quote — steps taken before entering into a contract (Art. 6(1)(b) GDPR).</p>
-<h2>3. Recipients</h2>
-<p>The website is hosted by Cloudflare (Cloudflare, Inc.), which also handles form submission. The form uses Cloudflare Turnstile to deter abuse (verification may process technical browser and connection data). Enquiries are sent through Resend and received in a Namecheap Private Email mailbox at contact@scenovis.com. Some providers may process data outside the European Economic Area — in that case on the basis of GDPR transfer mechanisms (e.g. standard contractual clauses or an adequacy decision). {todo:CHECK — verify the data processing agreements (DPA) of the providers actually used}</p>
+<p>When you send an enquiry through the form, I process the phone number or email you provide, the selected topic and, if you give them, your name, message and project details (event, city, dates, stand size, budget, reuse). The message also includes the time it was received, the language and page the form was sent from, and the connection country determined by Cloudflare. When you email, call or use WhatsApp, I process the data you choose to share.</p>
+<p>Purpose: to answer your enquiry, discuss possible cooperation and protect the form against spam and abuse. Legal basis: the controller’s legitimate interests (Art. 6(1)(f) GDPR) or — if you ask for a quote — steps taken before entering into a contract (Art. 6(1)(b) GDPR). {todo:CHECK — confirm the legal bases with someone familiar with GDPR}</p>
+<h2>3. How the form works and who receives the data</h2>
+<p>The website is hosted by Cloudflare (Cloudflare, Inc.). The form is handled by Cloudflare Workers, which checks the data and forwards it as an email — <strong>the website does not store enquiries in a database</strong>. Cloudflare Turnstile protects the form against abuse (verification may process technical browser and connection data, including the IP address). The message is sent through Resend and received in a Namecheap Private Email mailbox at {email}. Providers may keep copies of messages and technical logs under their own terms.</p>
+<p>Some providers may process data outside the European Economic Area — in that case on the basis of GDPR transfer mechanisms (e.g. standard contractual clauses or an adequacy decision). {todo:CHECK — verify the data processing agreements (DPA) and data location of Cloudflare, Resend and Namecheap}</p>
 <p>Clicking the WhatsApp link opens WhatsApp (Meta), where its own privacy terms apply.</p>
 <h2>4. Retention</h2>
-<p>{todo:RETENTION — e.g. up to 12 months after the last contact if no cooperation follows; longer where required by law or to defend legal claims}</p>
+<p>{todo:RETENTION — enter the actual period, e.g. up to X months after the last contact if no cooperation follows; longer where required by law or to defend legal claims}</p>
 <h2>5. Your rights</h2>
-<p>You have the right to access, rectify, erase or restrict the processing of your data, to data portability and to object to processing based on legitimate interests. You may also lodge a complaint with the Polish supervisory authority (Prezes UODO). Providing contact details is voluntary, but I can’t reply without them.</p>
+<p>You have the right to access, rectify, erase or restrict the processing of your data, to data portability and to object to processing based on legitimate interests. You may also lodge a complaint with the Polish supervisory authority (Prezes UODO). Providing contact details is voluntary, but I can’t reply without them. The data is not used for profiling or automated decision-making.</p>
 <h2>6. Cookies, analytics and external resources</h2>
-<p>This website does not use analytics or advertising cookies. The contact form loads a third-party Cloudflare Turnstile script to protect against spam. Fonts and video are served from the same server. The host may keep technical server logs (e.g. IP address, request time) for security and operation of the site.</p>
+<p>This website does not use analytics or advertising cookies and has no analytics installed. The contact form loads a third-party Cloudflare Turnstile script to protect against spam. Fonts and site files are served from the same server. The host may keep technical server logs (e.g. IP address, request time) for security and operation of the site.</p>
 <p>If analytics (e.g. Google Analytics), advertising tags (e.g. Google Ads) or external embeds (e.g. YouTube) are added in future, this policy will be updated and those tools will run only after you give consent.</p>
 <h2>7. Changes</h2>
 <p>The current version of this policy is always available on this page. {todo:DATE — add the date of the last update}</p>
@@ -757,8 +798,9 @@ PRIVACY = {
 def build_privacy(lang):
     t = CONTENT[lang]
     a = alts("privacy")
-    body = todo(PRIVACY[lang].replace("{email}", C.EMAIL))
-    draft = f'<p class="policy-draft">{esc(t["privacy_draft"])}</p>' if C.DRAFT else ""
+    body = todo(PRIVACY[lang].replace("{email}", C.EMAIL).replace("{phone}", C.PHONE_DISPLAY))
+    # Baner widoczny zawsze, dopóki polityka zawiera niewypełnione pola {todo:...} — nawet gdy DRAFT=False.
+    draft = f'<p class="policy-draft">{esc(t["privacy_draft"])}</p>' if (C.DRAFT or "{todo:" in PRIVACY[lang]) else ""
     return (head(lang, "privacy", t["privacy_title"], t["privacy_desc"], a, robots="noindex,follow")
             + header(lang, "privacy", a, nav=False)
             + f'<section class="section policy"><div class="wrap narrow"><h1>{esc(t["privacy_h1"])}</h1>{draft}{body}</div></section>'

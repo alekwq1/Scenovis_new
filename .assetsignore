@@ -10,3 +10,9 @@ TODO.md
 *.py
 node_modules
 .wrangler
+# pliki robocze i stare wersje — nie publikować
+*.md
+/netlify.toml
+/site.js
+/site.css
+/refinements.css
