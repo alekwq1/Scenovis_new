@@ -754,43 +754,43 @@ def build_3d(lang):
 PRIVACY = {
     "pl": """
 <h2>1. Administrator danych</h2>
-<p>{todo:ADMINISTRATOR — pełna nazwa firmy lub imię i nazwisko, adres działalności, NIP (jeśli jest)}. Kontakt w sprawach danych osobowych: <a href="mailto:{email}">{email}</a>, tel. {phone}.</p>
+<p>Administratorem danych osobowych jest Aliaksei Malyshka, prowadzący działalność pod marką Scenovis, ul. Przytulna 26, 80-176 Gdańsk. Kontakt w sprawach danych osobowych: <a href="mailto:{email}">{email}</a>, tel. {phone}.</p>
 <h2>2. Jakie dane przetwarzam i po co</h2>
 <p>Gdy wysyłasz zapytanie przez formularz, przetwarzam podany telefon lub e-mail, wybrany temat, a jeśli je podasz — imię, treść wiadomości i informacje o projekcie (wydarzenie, miasto, termin, powierzchnia, budżet, ponowne użycie stoiska). Do wiadomości dołączana jest data otrzymania, język i podstrona, z której wysłano formularz, oraz kraj połączenia ustalony przez Cloudflare. Gdy piszesz e-mail, dzwonisz lub korzystasz z WhatsApp, przetwarzam dane, które sam przekażesz.</p>
-<p>Cel: odpowiedź na zapytanie i rozmowy o możliwej współpracy oraz ochrona formularza przed spamem i nadużyciami. Podstawa prawna: prawnie uzasadniony interes administratora (art. 6 ust. 1 lit. f RODO) lub — gdy prosisz o ofertę — działania przed zawarciem umowy (art. 6 ust. 1 lit. b RODO). {todo:WERYFIKACJA — potwierdź podstawy prawne z osobą znającą RODO}</p>
+<p>Cel: odpowiedź na zapytanie i rozmowy o możliwej współpracy oraz ochrona formularza przed spamem i nadużyciami. Podstawa prawna: prawnie uzasadniony interes administratora (art. 6 ust. 1 lit. f RODO) lub — gdy prosisz o ofertę — działania przed zawarciem umowy (art. 6 ust. 1 lit. b RODO).</p>
 <h2>3. Jak działa formularz i kto jest odbiorcą danych</h2>
 <p>Strona jest hostowana w Cloudflare (Cloudflare, Inc.). Formularz trafia do mechanizmu Cloudflare Workers, który sprawdza dane i przekazuje je dalej jako wiadomość e-mail — <strong>strona nie zapisuje zapytań w bazie danych</strong>. Do ochrony formularza przed nadużyciami służy Cloudflare Turnstile (weryfikacja może przetwarzać dane techniczne przeglądarki i połączenia, w tym adres IP). Wiadomość wysyła usługa Resend, a odbiera ją skrzynka Namecheap Private Email pod adresem {email}. Dostawcy mogą przechowywać kopie wiadomości i logi techniczne zgodnie ze swoimi zasadami.</p>
-<p>Część dostawców może przetwarzać dane poza Europejskim Obszarem Gospodarczym — w takim przypadku na podstawie mechanizmów przewidzianych w RODO (np. standardowe klauzule umowne lub decyzja o adekwatności). {todo:WERYFIKACJA — sprawdź umowy powierzenia (DPA) i lokalizację danych u Cloudflare, Resend i Namecheap}</p>
+<p>Część dostawców może przetwarzać dane poza Europejskim Obszarem Gospodarczym — w takim przypadku na podstawie mechanizmów przewidzianych w RODO (np. standardowe klauzule umowne lub decyzja o adekwatności).</p>
 <p>Kliknięcie linku do WhatsApp otwiera usługę WhatsApp (Meta), w której obowiązują jej własne zasady prywatności.</p>
 <h2>4. Jak długo przechowuję dane</h2>
-<p>{todo:RETENCJA — wpisz faktyczny okres, np. do X miesięcy od ostatniego kontaktu, jeśli nie dojdzie do współpracy; dłużej, jeśli wymagają tego przepisy lub ochrona przed roszczeniami}</p>
+<p>Zapytania, które nie prowadzą do współpracy, usuwam najpóźniej po 6 miesiącach od ostatniego kontaktu. Jeśli dojdzie do współpracy, korespondencję przechowuję przez czas jej trwania, a następnie przez okres wymagany przepisami (np. podatkowymi) lub potrzebny do ustalenia, dochodzenia albo obrony roszczeń. Kopie wiadomości i logi techniczne u dostawców (Cloudflare, Resend, Namecheap) są usuwane zgodnie z ich zasadami.</p>
 <h2>5. Twoje prawa</h2>
 <p>Masz prawo dostępu do danych, ich sprostowania, usunięcia lub ograniczenia przetwarzania, prawo do przenoszenia danych oraz prawo sprzeciwu wobec przetwarzania opartego na uzasadnionym interesie. Możesz też złożyć skargę do Prezesa Urzędu Ochrony Danych Osobowych. Podanie kontaktu jest dobrowolne, ale bez niego nie mogę odpowiedzieć. Dane nie służą do profilowania ani automatycznego podejmowania decyzji.</p>
 <h2>6. Pliki cookies, analityka i zasoby zewnętrzne</h2>
 <p>Strona nie używa plików cookies analitycznych ani reklamowych i nie ma zainstalowanej analityki. Formularz wczytuje zewnętrzny skrypt Cloudflare Turnstile w celu ochrony przed spamem. Czcionki i pliki strony są serwowane z tego samego serwera. Hosting może zapisywać techniczne logi serwera (np. adres IP, czas żądania) w celu zapewnienia bezpieczeństwa i działania strony.</p>
 <p>Jeżeli w przyszłości dodam analitykę (np. Google Analytics), tagi reklamowe (np. Google Ads) lub osadzone treści zewnętrzne (np. YouTube), ta polityka zostanie zaktualizowana, a narzędzia te zostaną uruchomione dopiero po uzyskaniu Twojej zgody.</p>
 <h2>7. Zmiany</h2>
-<p>Aktualna wersja polityki jest zawsze dostępna na tej stronie. {todo:DATA — wpisz datę ostatniej aktualizacji}</p>
+<p>Aktualna wersja polityki jest zawsze dostępna na tej stronie. Ostatnia aktualizacja: 17 października 2026 r.</p>
 """,
     "en": """
 <h2>1. Data controller</h2>
-<p>{todo:CONTROLLER — full company name or full name, business address, tax ID if applicable}. Contact for data protection matters: <a href="mailto:{email}">{email}</a>, phone {phone}.</p>
+<p>The controller of personal data is Aliaksei Malyshka, operating under the Scenovis brand, ul. Przytulna 26, 80-176 Gdańsk, Poland. Contact for data protection matters: <a href="mailto:{email}">{email}</a>, phone {phone}.</p>
 <h2>2. What data I process and why</h2>
 <p>When you send an enquiry through the form, I process the phone number or email you provide, the selected topic and, if you give them, your name, message and project details (event, city, dates, stand size, budget, reuse). The message also includes the time it was received, the language and page the form was sent from, and the connection country determined by Cloudflare. When you email, call or use WhatsApp, I process the data you choose to share.</p>
-<p>Purpose: to answer your enquiry, discuss possible cooperation and protect the form against spam and abuse. Legal basis: the controller’s legitimate interests (Art. 6(1)(f) GDPR) or — if you ask for a quote — steps taken before entering into a contract (Art. 6(1)(b) GDPR). {todo:CHECK — confirm the legal bases with someone familiar with GDPR}</p>
+<p>Purpose: to answer your enquiry, discuss possible cooperation and protect the form against spam and abuse. Legal basis: the controller’s legitimate interests (Art. 6(1)(f) GDPR) or — if you ask for a quote — steps taken before entering into a contract (Art. 6(1)(b) GDPR).</p>
 <h2>3. How the form works and who receives the data</h2>
 <p>The website is hosted by Cloudflare (Cloudflare, Inc.). The form is handled by Cloudflare Workers, which checks the data and forwards it as an email — <strong>the website does not store enquiries in a database</strong>. Cloudflare Turnstile protects the form against abuse (verification may process technical browser and connection data, including the IP address). The message is sent through Resend and received in a Namecheap Private Email mailbox at {email}. Providers may keep copies of messages and technical logs under their own terms.</p>
-<p>Some providers may process data outside the European Economic Area — in that case on the basis of GDPR transfer mechanisms (e.g. standard contractual clauses or an adequacy decision). {todo:CHECK — verify the data processing agreements (DPA) and data location of Cloudflare, Resend and Namecheap}</p>
+<p>Some providers may process data outside the European Economic Area — in that case on the basis of GDPR transfer mechanisms (e.g. standard contractual clauses or an adequacy decision).</p>
 <p>Clicking the WhatsApp link opens WhatsApp (Meta), where its own privacy terms apply.</p>
 <h2>4. Retention</h2>
-<p>{todo:RETENTION — enter the actual period, e.g. up to X months after the last contact if no cooperation follows; longer where required by law or to defend legal claims}</p>
+<p>Enquiries that do not lead to cooperation are deleted no later than 6 months after the last contact. If we work together, correspondence is kept for the duration of the cooperation and then for the period required by law (e.g. tax regulations) or needed to establish, pursue or defend legal claims. Copies of messages and technical logs held by providers (Cloudflare, Resend, Namecheap) are deleted under their own terms.</p>
 <h2>5. Your rights</h2>
 <p>You have the right to access, rectify, erase or restrict the processing of your data, to data portability and to object to processing based on legitimate interests. You may also lodge a complaint with the Polish supervisory authority (Prezes UODO). Providing contact details is voluntary, but I can’t reply without them. The data is not used for profiling or automated decision-making.</p>
 <h2>6. Cookies, analytics and external resources</h2>
 <p>This website does not use analytics or advertising cookies and has no analytics installed. The contact form loads a third-party Cloudflare Turnstile script to protect against spam. Fonts and site files are served from the same server. The host may keep technical server logs (e.g. IP address, request time) for security and operation of the site.</p>
 <p>If analytics (e.g. Google Analytics), advertising tags (e.g. Google Ads) or external embeds (e.g. YouTube) are added in future, this policy will be updated and those tools will run only after you give consent.</p>
 <h2>7. Changes</h2>
-<p>The current version of this policy is always available on this page. {todo:DATE — add the date of the last update}</p>
+<p>The current version of this policy is always available on this page. Last updated: 17 October 2026.</p>
 """,
 }
 

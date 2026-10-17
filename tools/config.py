@@ -9,8 +9,8 @@ SCENOVIS — ustawienia strony. Po zmianie uruchom:  python3 tools/build.py
 SITE_URL = "https://scenovis.com"
 
 # True = tryb roboczy: na stronie widać pomarańczowe znaczniki TODO.
-# Przed publikacją produkcyjną ustaw False (i uzupełnij TODO.md).
-DRAFT = True
+# Produkcja od 17.10.2026. Znaczniki {todo:...} (np. film) są wtedy ukryte.
+DRAFT = False
 
 # Telefon / WhatsApp (zaktualizowane 17.10.2026). E-mail jest firmowy.
 PHONE_DISPLAY = "+48 734 215 791"

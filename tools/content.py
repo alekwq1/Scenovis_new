@@ -48,7 +48,7 @@ PL = {
     "hero_cta_primary": "Opowiedz o swoim projekcie",
     "hero_paths_label": "Usługi",
     "hero_paths": [("expo", "Projekt stoiska targowego"), ("3d", "Prezentacje produktów 3D")],
-    "hero_note": "Gdańsk, cała Polska {todo:potwierdź obszar działania} · rozmowa po polsku lub angielsku",
+    "hero_note": "Gdańsk · projekty w całej Polsce i za granicą · rozmowa po polsku lub angielsku",
     "hero_tags": [
         ("led", "Ściana LED", "wynajem"),
         ("light", "Oświetlenie", "wynajem"),
@@ -250,11 +250,15 @@ PL = {
                      "i — jeśli tak ustalimy — w koordynacji. Możesz też zamówić sam projekt z zestawieniem kosztów "
                      "i zrealizować go z własnym wykonawcą.</p>"),
         "area": ("Gdzie działasz?",
-                 "<p>{todo:OBSZAR DZIAŁANIA — np. cała Polska / wybrane targi za granicą}</p>"),
+                 "<p>Pracuję z Gdańska dla klientów z całej Polski i przy targach za granicą. Projekt, model 3D i zestawienie "
+                 "kosztów przygotowuję zdalnie, a spotkania odbywają się online lub na miejscu. Wsparcie na miejscu "
+                 "podczas targów ustalamy indywidualnie.</p>"),
         "time": ("Ile wcześniej trzeba zacząć?",
-                 "<p>Im wcześniej, tym więcej czasu na porównanie wariantów i ofert wykonawców. "
-                 "Konkretny harmonogram ustalamy po briefie.</p>"
-                 "<p>{todo:TERMINY — ile tygodni przed targami najlepiej zacząć projekt i realizację}</p>"),
+                 "<p>Najwygodniej zacząć 2–3 miesiące przed targami, a przy zabudowie indywidualnej lub dużym stoisku — "
+                 "jeszcze wcześniej. Organizatorzy często wymagają zatwierdzenia projektu z wyprzedzeniem, a wykonawcy "
+                 "potrzebują czasu na oferty i produkcję.</p>"
+                 "<p>Jestem elastyczny: przy mniejszym zakresie i gotowych materiałach (wymiary stoiska, logo, dane produktu) "
+                 "da się pracować szybciej. Konkretny harmonogram ustalamy po briefie.</p>"),
         "3d_forms": ("W jakiej formie może powstać prezentacja 3D?",
                      "<p>Zależnie od potrzeb: jako interaktywna prezentacja, w której użytkownik sam wybiera elementy "
                      "produktu, jako animacja lub film albo jako zestaw wizualizacji i przekrojów. Formę dobieramy do "
@@ -263,9 +267,10 @@ PL = {
                     "<p>Najlepiej pracuje się na modelach CAD (np. STEP) lub rysunkach technicznych. Jeśli ich nie ma, "
                     "zaczniemy od zdjęć, wymiarów i opisu działania — ustalimy razem, jaki poziom szczegółów ma sens.</p>"),
         "3d_hw": ("Na jakich urządzeniach działa interaktywna prezentacja?",
-                  "<p>Urządzenie ustalamy na początku projektu — np. ekran dotykowy, kiosk, laptop handlowca lub duży "
-                  "ekran na stoisku. Wymagania techniczne sprawdzamy przed rozpoczęciem pracy.</p>"
-                  "<p>{todo:SPRZĘT — na jakim sprzęcie / ekranie działa prezentacja, czy działa offline}</p>"),
+                  "<p>Standardowo prezentacja działa w przeglądarce — na laptopie lub na ekranie dotykowym. Jakość i sposób "
+                  "uruchomienia dopasowujemy do sprzętu: wersja online (np. streaming w wysokiej jakości) wymaga internetu, "
+                  "a na komputerze stacjonarnym lub w kiosku prezentacja może działać lokalnie, bez internetu. "
+                  "Wariant ustalamy na początku projektu.</p>"),
         "3d_reuse": ("Czy prezentację można wykorzystać ponownie?",
                      "<p>Tak, jeśli pozwala na to format i ustalenia umowy. Model i materiały przygotowane na targi "
                      "mogą później służyć w sprzedaży, w showroomie lub jako film i grafiki na stronę internetową.</p>"),
@@ -434,7 +439,7 @@ EN = {
     "hero_cta_primary": "Tell me about your project",
     "hero_paths_label": "Services",
     "hero_paths": [("expo", "Exhibition stand design"), ("3d", "3D product presentations")],
-    "hero_note": "Based in Gdańsk, Poland {todo:confirm service area} · Polish or English",
+    "hero_note": "Based in Gdańsk, Poland · projects across Poland and abroad · Polish or English",
     "hero_tags": [
         ("led", "LED wall", "rent"),
         ("light", "Lighting", "rent"),
@@ -627,11 +632,14 @@ EN = {
                      "you choose them and, if agreed, coordinate the work. You can also order just the design with a cost "
                      "breakdown and build it with your own contractor.</p>"),
         "area": ("Where do you work?",
-                 "<p>{todo:SERVICE AREA — e.g. all of Poland / selected fairs abroad}</p>"),
+                 "<p>I work from Gdańsk for clients across Poland and at trade fairs abroad. The design, 3D model and cost "
+                 "breakdown are prepared remotely, with meetings online or in person. On-site support during the fair "
+                 "is agreed individually.</p>"),
         "time": ("How early should we start?",
-                 "<p>The earlier, the more time there is to compare options and contractor quotes. "
-                 "We agree a specific schedule after the brief.</p>"
-                 "<p>{todo:LEAD TIME — how many weeks before the fair to start design and delivery}</p>"),
+                 "<p>Ideally start 2–3 months before the fair, and earlier for a custom-built or large stand. "
+                 "Organisers often require design approval in advance, and contractors need time for quotes and production.</p>"
+                 "<p>I’m flexible: with a smaller scope and materials ready (stand dimensions, logo, product data) "
+                 "we can work faster. We agree a specific schedule after the brief.</p>"),
         "3d_forms": ("What form can a 3D presentation take?",
                      "<p>Depending on your needs: an interactive presentation where the user picks parts of the product, "
                      "an animation or film, or a set of visuals and cutaways. We choose the format for where it will be "
@@ -640,9 +648,10 @@ EN = {
                     "<p>CAD models (e.g. STEP) or technical drawings work best. If you don’t have them, we can start from "
                     "photos, dimensions and a description of how it works — and agree the right level of detail together.</p>"),
         "3d_hw": ("Which devices does the interactive presentation run on?",
-                  "<p>We agree the device at the start of the project — e.g. a touchscreen, a kiosk, a sales rep’s laptop "
-                  "or a large screen on the stand. Technical requirements are checked before work begins.</p>"
-                  "<p>{todo:HARDWARE — which device / screen the presentation runs on, whether it works offline}</p>"),
+                  "<p>As standard, the presentation runs in a web browser — on a laptop or a touchscreen. Quality and set-up "
+                  "are matched to the hardware: an online version (e.g. high-quality streaming) needs internet access, "
+                  "while on a desktop computer or kiosk it can run locally, offline. We agree the option at the start "
+                  "of the project.</p>"),
         "3d_reuse": ("Can the presentation be reused?",
                      "<p>Yes, where the format and the contract allow it. A model and materials prepared for a fair can later "
                      "support sales, a showroom, or be used as video and images on your website.</p>"),

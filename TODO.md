@@ -61,7 +61,7 @@ Polityka prywatności jest projektem — przed publikacją warto, by sprawdziła
 
 1. Ustawić 3 sekrety runtime i wdrożyć (B2) → `INSTRUKCJA_WDROZENIA_FORMULARZA.md`.
 2. Prawdziwy test wysyłki PL i EN (e-mail i telefon) + sprawdzenie Resend → Logs.
-3. Polityka prywatności: administrator, retencja, DPA, podstawy prawne, data (B1, B3). Baner „wersja robocza” zniknie dopiero, gdy w `PRIVACY` (`tools/build.py`) nie będzie żadnego `{todo:`.
-4. FAQ: obszar działania, terminy, sprzęt prezentacji 3D (offline?) — pola TODO.
+3. ~~Polityka prywatności~~ — uzupełniona 17.10.2026 (Aliaksei Malyshka, ul. Przytulna 26, 80-176 Gdańsk; retencja 6 mies.). Nadal warto: sprawdzić umowy powierzenia (DPA) Cloudflare/Resend/Namecheap i dać tekst do przeczytania osobie znającej RODO.
+4. ~~FAQ~~ — obszar, terminy i sprzęt uzupełnione; `DRAFT = False` (produkcja).
 5. Opcjonalnie: usunąć stare pliki V5 z katalogu głównego (`site.js`, `site.css`, `refinements.css`, `netlify.toml`, `README_V5.md`) — nie są używane ani publikowane.
 6. Opcjonalnie: w Cloudflare usunąć wpisy z „Build → Variables and secrets” (kod ich nie używa).
