@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://scenovis.malyshkogrodno.workers.dev/sitemap.xml
+Sitemap: https://scenovis.com/sitemap.xml

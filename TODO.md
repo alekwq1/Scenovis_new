@@ -10,7 +10,7 @@ Wszystkie znaczniki znajdziesz poleceniem: `grep -rn "todo:" tools/`
 | B1 | **Dane administratora danych** (pełna nazwa / imię i nazwisko, adres, NIP jeśli jest) | Polityka prywatności bez administratora jest niezgodna z RODO (art. 13) | `PRIVACY` w `tools/build.py` |
 | B2 | **Sekrety runtime + test wysyłki** — `RESEND_API_KEY`, `TURNSTILE_SECRET`, `TURNSTILE_SITE_KEY` ustawić jako zmienne *runtime* Workera (dziś są w „Build → Variables”, stąd `not_configured`), potem prawdziwy test PL/EN | Bez tego żadne zapytanie nie dotrze; formularz pokazuje wtedy uczciwy błąd + e-mail/WhatsApp | `INSTRUKCJA_WDROZENIA_FORMULARZA.md` kroki 3–5 |
 | B3 | **Retencja / dane administratora / umowy powierzenia** (Namecheap, Resend, Cloudflare, Turnstile) | Polityka musi opisywać faktycznych odbiorców danych | `PRIVACY` w `tools/build.py` |
-| B4 | **Docelowa domena** | Canonical, hreflang, sitemap i reklamy muszą wskazywać finalny adres | `SITE_URL` w `tools/config.py` |
+| B4 | ~~Docelowa domena~~ — `SITE_URL = https://scenovis.com` (17.10.2026). Do zrobienia w panelu: Custom domain `scenovis.com` + `www.scenovis.com`, potem wyłączyć workers.dev | — | Cloudflare → Workers → scenovis → Domains |
 | B5 | `DRAFT = False` po uzupełnieniu powyższych | Ukrywa znaczniki TODO | `tools/config.py` |
 
 Polityka prywatności jest projektem — przed publikacją warto, by sprawdziła ją osoba z wiedzą prawną (nie jestem prawnikiem).
@@ -20,7 +20,7 @@ Polityka prywatności jest projektem — przed publikacją warto, by sprawdziła
 | # | Materiał | Format / parametry | Gdzie użyty |
 |---|----------|--------------------|-------------|
 | 1 | ~~Dane kontaktowe~~ — **zrobione 17.10.2026**: +48 734 215 791 (tel., WhatsApp, JSON-LD), contact@scenovis.com | — | `tools/config.py` |
-| 2 | **Docelowa domena** | np. `scenovis.pl` | wszystkie URL (`SITE_URL`) |
+| 2 | ~~Docelowa domena~~ — scenovis.com | — | `SITE_URL` |
 | 3 | **Film EXPO** (Ty sterujesz prezentacją Blender) | MP4 H.264 + AAC, 1920×1080, 25/30 fps, ~6–10 Mb/s, **2–4 min**, bez muzyki z prawami autorskimi; opcjonalnie WebM (VP9). Pierwsze 5 s: od razu widok stoiska | sekcja „Przykład” na stronie głównej i obu landingach |
 | 4 | **Poster filmu** | JPG lub WebP 1920×1080, < 250 KB, kadr z widocznym panelem kosztów | odtwarzacz + VideoObject `thumbnailUrl` |
 | 5 | **Napisy PL i EN** | WebVTT (`.vtt`), UTF-8 | odtwarzacz (WCAG 1.2.2) |

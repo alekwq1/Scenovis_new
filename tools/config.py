@@ -3,9 +3,10 @@
 SCENOVIS — ustawienia strony. Po zmianie uruchom:  python3 tools/build.py
 """
 
-# [TODO: DOMENA] Docelowy adres strony, bez ukośnika na końcu.
+# Docelowy adres strony, bez ukośnika na końcu (domena podłączona 17.10.2026).
 # Używany w canonical, hreflang, sitemap, OpenGraph i danych strukturalnych.
-SITE_URL = "https://scenovis.malyshkogrodno.workers.dev"
+# www.scenovis.com przekierowuje na ten adres (worker/index.js).
+SITE_URL = "https://scenovis.com"
 
 # True = tryb roboczy: na stronie widać pomarańczowe znaczniki TODO.
 # Przed publikacją produkcyjną ustaw False (i uzupełnij TODO.md).

@@ -25,10 +25,20 @@ const LABELS = { contact: 'Kontakt', name: 'Imię', message: 'Wiadomość', topi
   date: 'Termin', area: 'Powierzchnia (m²)', budget: 'Budżet', reuse: 'Ponowne użycie', lang: 'Język', page: 'Podstrona' };
 const REQUIRED_ENV = ['RESEND_API_KEY', 'TURNSTILE_SECRET', 'TURNSTILE_SITE_KEY'];
 
+// Główny adres strony. www i ewentualne inne aliasy przekierowujemy tutaj (301), żeby Google widział jeden adres.
+const CANONICAL_HOST = 'scenovis.com';
+const REDIRECT_HOSTS = ['www.scenovis.com'];
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const path = url.pathname;
+
+    if (REDIRECT_HOSTS.includes(url.hostname)) {
+      url.hostname = CANONICAL_HOST;
+      url.protocol = 'https:';
+      return Response.redirect(url.toString(), 301);
+    }
 
     if (path === '/api/contact-config') {
       if (request.method !== 'GET') return json({ ok: false, error: 'method' }, 405);

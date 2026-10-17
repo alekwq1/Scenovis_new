@@ -145,7 +145,11 @@ assert.equal((await worker.fetch(new Request(base + '/api/lead', { method: 'GET'
 assert.equal((await post({ ...valid, message: 'x'.repeat(2001) })).status, 422);
 assert.equal((await get('/')).headers.get('Location'), base + '/pl/');
 assert.equal((await get('/?lang=en')).headers.get('Location'), base + '/en/');
+const www = await worker.fetch(new Request('https://www.scenovis.com/pl/prezentacje-produktow-3d/?a=1'), env);
+assert.equal(www.status, 301);
+assert.equal(www.headers.get('Location'), 'https://scenovis.com/pl/prezentacje-produktow-3d/?a=1');
+assert.equal(await (await worker.fetch(new Request('https://scenovis.com/pl/'), env)).text(), 'asset');
 
 console.error = origErr;
 console.log(results.join('\n'));
-console.log('PASS: identyczna reguła PL/EN/Worker, 15 przypadków kontaktu, szczegóły opcjonalne, temat, LEAD_*, Turnstile, błąd Resend, brak konfiguracji, honeypot, origin, limity, przekierowania.');
+console.log('PASS: identyczna reguła PL/EN/Worker, 15 przypadków kontaktu, szczegóły opcjonalne, temat, LEAD_*, Turnstile, błąd Resend, brak konfiguracji, honeypot, origin, limity, przekierowania (w tym www → scenovis.com).');
