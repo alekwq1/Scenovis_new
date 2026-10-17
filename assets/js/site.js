@@ -153,6 +153,32 @@
     });
   });
 
+  /* ---------- model 3D (Three.js) — ładowany dopiero po kliknięciu ---------- */
+  var vHost = document.querySelector('[data-viewer]');
+  var vBtn = vHost && vHost.querySelector('[data-viewer-launch]');
+  if (vHost && vBtn) {
+    var VT = JSON.parse(document.getElementById('viewer-i18n').textContent);
+    var hasGL = (function () { try { var c = document.createElement('canvas'); return !!(window.WebGL2RenderingContext && c.getContext('webgl2')); } catch (e) { return false; } })();
+    if (!hasGL) { vBtn.hidden = true; }
+    vBtn.addEventListener('click', function () {
+      var label = vBtn.querySelector('span');
+      vBtn.disabled = true; vHost.classList.add('is-loading'); label.textContent = VT.loading;
+      track('viewer_launch');
+      var v = (document.querySelector('link[href*="site.css?v="]') || {}).href || '';
+      var ver = (v.split('v=')[1] || '');
+      import('/assets/js/viewer3d.js?v=' + ver).then(function (m) {
+        return m.start(vHost, VT, function (p) { label.textContent = VT.loading + ' ' + Math.round(p * 100) + '%'; });
+      }).then(function () {
+        vHost.classList.remove('is-loading'); vHost.classList.add('is-3d'); vBtn.hidden = true;
+        var c = vHost.querySelector('canvas'); if (c) c.focus({ preventScroll: true });
+      }).catch(function () {
+        vHost.classList.remove('is-loading'); vBtn.hidden = true;
+        var p = document.createElement('p'); p.className = 'viewer-error'; p.setAttribute('role', 'status'); p.textContent = VT.error;
+        vHost.appendChild(p); track('viewer_error');
+      });
+    });
+  }
+
   /* ---------- formularz (Resend + Turnstile, no secrets in the browser) ---------- */
   if (!form) return;
   var T = JSON.parse(document.getElementById('form-i18n').textContent);

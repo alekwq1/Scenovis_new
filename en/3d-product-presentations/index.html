@@ -13,8 +13,8 @@
 <meta name="theme-color" content="#121617">
 <meta name="color-scheme" content="dark">
 <link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/site.css?v=d9baf98c">
-<script src="/assets/js/site.js?v=d9baf98c" defer></script>
+<link rel="stylesheet" href="/assets/css/site.css?v=e1d35c54">
+<script src="/assets/js/site.js?v=e1d35c54" defer></script>
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
@@ -62,8 +62,9 @@
 </div>
 </div>
 <figure class="hero-figure hero-figure--plain">
-<div class="annotated"><picture><source type="image/avif" srcset="/assets/img/scenovis-mikroskop-640.avif 640w, /assets/img/scenovis-mikroskop-960.avif 960w, /assets/img/scenovis-mikroskop-1280.avif 1280w, /assets/img/scenovis-mikroskop-1600.avif 1600w" sizes="(min-width: 1000px) 55vw, 100vw"><source type="image/webp" srcset="/assets/img/scenovis-mikroskop-640.webp 640w, /assets/img/scenovis-mikroskop-960.webp 960w, /assets/img/scenovis-mikroskop-1280.webp 1280w, /assets/img/scenovis-mikroskop-1600.webp 1600w" sizes="(min-width: 1000px) 55vw, 100vw"><img class="" src="/assets/img/scenovis-mikroskop-1280.webp" width="1600" height="1067" alt="3D model of a microscope in studio lighting — product render" fetchpriority="high" decoding="async"></picture><span class="concept-badge">Demo project</span></div>
-<figcaption>3D render of a Scenovis demo project (Blender) — not a client project.</figcaption>
+<div class="annotated" id="viewer-host" data-viewer><picture><source type="image/avif" srcset="/assets/img/scenovis-mikroskop-640.avif 640w, /assets/img/scenovis-mikroskop-960.avif 960w, /assets/img/scenovis-mikroskop-1280.avif 1280w, /assets/img/scenovis-mikroskop-1600.avif 1600w" sizes="(min-width: 1000px) 55vw, 100vw"><source type="image/webp" srcset="/assets/img/scenovis-mikroskop-640.webp 640w, /assets/img/scenovis-mikroskop-960.webp 960w, /assets/img/scenovis-mikroskop-1280.webp 1280w, /assets/img/scenovis-mikroskop-1600.webp 1600w" sizes="(min-width: 1000px) 55vw, 100vw"><img class="" src="/assets/img/scenovis-mikroskop-1280.webp" width="1600" height="1067" alt="3D model of a microscope in studio lighting — product render" fetchpriority="high" decoding="async"></picture><span class="concept-badge">Demo project</span><button class="viewer-launch" type="button" data-viewer-launch><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg><span>Launch 3D model</span></button></div>
+<figcaption>3D render of a Scenovis demo project (Blender) — not a client project. <span class="viewer-note">The model runs in your browser (about 2–3 MB to download).</span></figcaption>
+<script type="application/json" id="viewer-i18n">{"launch": "Launch 3D model", "loading": "Loading model…", "canvas_label": "Interactive 3D model of a microscope", "explode": "Explode", "assemble": "Assemble", "reset": "Reset view", "hint": "Drag to rotate · scroll or pinch to zoom · numbers show part descriptions", "error": "The 3D model could not start in this browser. The render stays below.", "note": "The model runs in your browser (about 2–3 MB to download).", "hotspots": [{"node": "Head_Body", "title": "Head with eyepieces", "text": "The viewing path: the image from the objective travels through the head to both eyepieces."}, {"node": "Nosepiece_Turret", "title": "Objective turret", "text": "Three objectives: 4×, 10× and 40×. Turning the turret changes the magnification."}, {"node": "Stage_Plate", "title": "Specimen stage", "text": "The slide sits here. The holder lets you move it precisely."}, {"node": "FocusKnob_Coarse_L", "title": "Focus knobs", "text": "Coarse and fine focus raise the stage to bring the image into focus."}, {"node": "Illuminator_Housing", "title": "Illuminator", "text": "Light from the base passes through the condenser and the specimen into the objective."}]}</script>
 </figure>
 </div>
 </section><section class="section get" id="scope" aria-labelledby="get-title">

@@ -795,3 +795,45 @@ p { text-wrap: pretty; }
 .tag--light .tag-label { top: auto; bottom: 44px; left: -2px; right: auto; }
 .tag--led::before { bottom: auto; top: 11px; }
 .tag--led .tag-label { bottom: auto; top: 44px; left: -2px; right: auto; }
+
+/* ---------- interaktywny model 3D (podstrona prezentacji 3D) ---------- */
+.viewer-launch {
+  position: absolute; z-index: 4; left: 50%; bottom: 18px; transform: translateX(-50%);
+  display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 10px 20px 10px 14px;
+  border-radius: 999px; border: 1px solid rgba(255,178,142,.5); background: rgba(18,22,23,.82); color: var(--ink);
+  font-weight: 640; font-size: .98rem; white-space: nowrap;
+  transition: background-color .2s, border-color .2s;
+}
+@supports (backdrop-filter: blur(8px)) { .viewer-launch { background: rgba(18,22,23,.62); backdrop-filter: blur(10px); } }
+.viewer-launch .icon { width: 30px; height: 30px; padding: 8px 7px 8px 9px; border-radius: 50%; background: var(--accent); color: var(--accent-deep); fill: currentColor; stroke: none; }
+.viewer-launch:hover { border-color: var(--accent); background: rgba(18,22,23,.9); }
+.viewer-launch[disabled] { cursor: progress; }
+.viewer-note { color: var(--ink-3); }
+.annotated.is-3d { background: radial-gradient(60% 60% at 50% 45%, #2a3133, #121617 75%); }
+.annotated.is-3d picture, .annotated.is-3d::after { display: none; }
+.viewer-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
+.viewer-canvas:active { cursor: grabbing; }
+.viewer-canvas:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: -2px; }
+.viewer-hotspots { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+.viewer-spot {
+  position: absolute; left: 0; top: 0; margin: -15px 0 0 -15px; width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.7); background: rgba(18,22,23,.75); color: var(--ink); font-size: .8rem; font-weight: 650;
+  pointer-events: auto; box-shadow: 0 0 0 4px rgba(255,147,100,.25);
+}
+.viewer-spot:hover, .viewer-spot.is-on { background: var(--accent); color: var(--accent-deep); border-color: var(--accent); }
+.viewer-card {
+  position: absolute; z-index: 4; left: 14px; top: 14px; max-width: min(320px, calc(100% - 28px)); padding: 12px 14px;
+  border-radius: 12px; background: rgba(18,22,23,.9); border: 1px solid var(--line-2); font-size: .9rem; line-height: 1.5;
+}
+.viewer-card strong { display: block; margin-bottom: 4px; }
+.viewer-card p { color: var(--ink-2); }
+.annotated.is-3d .concept-badge { display: none; }
+.viewer-bar { position: absolute; z-index: 4; left: 12px; right: 12px; bottom: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; pointer-events: none; }
+.viewer-btn { pointer-events: auto; min-height: 40px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(18,22,23,.82); color: var(--ink); font-size: .9rem; font-weight: 620; }
+.viewer-btn:hover, .viewer-btn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent-ink); }
+.viewer-hint { margin-left: auto; font-size: .8rem; color: var(--ink-3); text-shadow: 0 1px 6px rgba(0,0,0,.8); }
+.viewer-error { position: absolute; z-index: 4; left: 12px; right: 12px; bottom: 12px; padding: 10px 12px; border-radius: 10px; background: rgba(18,22,23,.88); font-size: .9rem; }
+@media (max-width: 700px) {
+  .viewer-hint { display: none; }
+  .viewer-launch { bottom: 12px; font-size: .92rem; }
+}

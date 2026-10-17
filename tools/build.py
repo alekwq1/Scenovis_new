@@ -310,6 +310,15 @@ def hero_landing(lang, kind):
         pic = img(lang, 'visitor', '(min-width: 1000px) 55vw, 100vw', eager=True)
     else:
         pic = img(lang, 'product', '(min-width: 1000px) 55vw, 100vw', eager=True)
+    viewer_attr = viewer_btn = viewer_note = viewer_json = ""
+    if kind == "3d":
+        v = t["viewer"]
+        viewer_attr = ' id="viewer-host" data-viewer'
+        viewer_btn = (f'<button class="viewer-launch" type="button" data-viewer-launch>{icon("play")}'
+                      f'<span>{esc(v["launch"])}</span></button>')
+        viewer_note = f' <span class="viewer-note">{esc(v["note"])}</span>'
+        vjson = json.dumps(v, ensure_ascii=False).replace("</", "<\\/")
+        viewer_json = f'<script type="application/json" id="viewer-i18n">{vjson}</script>'
     crumbs = (f'<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="{page_path(lang, "home")}">'
               f'{esc(t["breadcrumb_home"])}</a></li><li aria-current="page">{esc(t[p + "_crumb"])}</li></ol></nav>')
     return f"""<section class="hero hero--landing" aria-labelledby="hero-title">
@@ -326,8 +335,9 @@ def hero_landing(lang, kind):
 </div>
 </div>
 <figure class="hero-figure hero-figure--plain">
-<div class="annotated">{pic}<span class="concept-badge">{esc(t['concept_badge'])}</span></div>
-<figcaption>{esc(t['concept_caption'])}</figcaption>
+<div class="annotated"{viewer_attr}>{pic}<span class="concept-badge">{esc(t['concept_badge'])}</span>{viewer_btn}</div>
+<figcaption>{esc(t['concept_caption'])}{viewer_note}</figcaption>
+{viewer_json}
 </figure>
 </div>
 </section>"""
