@@ -143,7 +143,16 @@ r = await post({ ...valid, website: 'http://spam' }); assert.equal(r.status, 200
 assert.equal((await post(valid, { Origin: 'https://evil.example' })).status, 403);
 assert.equal((await worker.fetch(new Request(base + '/api/lead', { method: 'GET' }), env)).status, 405);
 assert.equal((await post({ ...valid, message: 'x'.repeat(2001) })).status, 422);
-assert.equal((await get('/')).headers.get('Location'), base + '/pl/');
+const home = al => worker.fetch(new Request(base + '/', al ? { headers: { 'Accept-Language': al } } : {}), env);
+assert.equal((await home('pl-PL,pl;q=0.9,en-US;q=0.8')).headers.get('Location'), base + '/pl/');
+assert.equal((await home('pl')).status, 302);
+assert.equal((await home('de-DE,de;q=0.9,en;q=0.5')).headers.get('Location'), base + '/en/');
+assert.equal((await home('en-GB,en;q=0.9,pl;q=0.8')).headers.get('Location'), base + '/en/');
+assert.equal((await home('uk-UA,uk;q=0.9,pl;q=0.8')).headers.get('Location'), base + '/en/');
+assert.equal((await home('en;q=0.5,pl;q=0.9')).headers.get('Location'), base + '/pl/');
+assert.equal((await home()).headers.get('Location'), base + '/en/');
+assert.equal((await home('de')).headers.get('Vary'), 'Accept-Language');
+assert.equal((await worker.fetch(new Request(base + '/?lang=pl', { headers: { 'Accept-Language': 'de' } }), env)).headers.get('Location'), base + '/pl/');
 assert.equal((await get('/?lang=en')).headers.get('Location'), base + '/en/');
 const www = await worker.fetch(new Request('https://www.scenovis.com/pl/prezentacje-produktow-3d/?a=1'), env);
 assert.equal(www.status, 301);
@@ -152,4 +161,4 @@ assert.equal(await (await worker.fetch(new Request('https://scenovis.com/pl/'), 
 
 console.error = origErr;
 console.log(results.join('\n'));
-console.log('PASS: identyczna reguła PL/EN/Worker, 15 przypadków kontaktu, szczegóły opcjonalne, temat, LEAD_*, Turnstile, błąd Resend, brak konfiguracji, honeypot, origin, limity, przekierowania (w tym www → scenovis.com).');
+console.log('PASS: identyczna reguła PL/EN/Worker, 15 przypadków kontaktu, szczegóły opcjonalne, temat, LEAD_*, Turnstile, błąd Resend, brak konfiguracji, honeypot, origin, limity, przekierowania (www → scenovis.com, język wg przeglądarki).');

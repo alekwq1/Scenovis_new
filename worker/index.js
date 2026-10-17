@@ -50,8 +50,14 @@ export default {
     }
     if (path === '/api/lead') return handleLead(request, env, url);
     if (path === '/' || path === '/index.html') {
-      const target = url.searchParams.get('lang') === 'en' ? '/en/' : '/pl/';
-      return Response.redirect(new URL(target, url.origin).toString(), 301);
+      // Strona główna: wybór języka wg przeglądarki (polski → /pl/, każdy inny → /en/).
+      // 302 + Vary, bo odpowiedź zależy od odwiedzającego. Podstrony /pl/ i /en/ nigdy nie przekierowują.
+      const forced = url.searchParams.get('lang');
+      const lang = forced === 'en' || forced === 'pl' ? forced : preferredLang(request.headers.get('Accept-Language'));
+      return new Response(null, {
+        status: 302,
+        headers: { 'Location': new URL(`/${lang}/`, url.origin).toString(), 'Vary': 'Accept-Language', 'Cache-Control': 'private, max-age=0' }
+      });
     }
     if (path === '/privacy.html') {
       const target = url.searchParams.get('lang') === 'en' ? '/en/privacy-policy/' : '/pl/polityka-prywatnosci/';
@@ -60,6 +66,16 @@ export default {
     return env.ASSETS.fetch(request);
   }
 };
+
+// "pl-PL,pl;q=0.9,en;q=0.8" → "pl"; "de-DE,de;q=0.9,en;q=0.5" → "en"; brak nagłówka (np. Googlebot) → "en" (x-default).
+function preferredLang(header) {
+  const langs = String(header || '').split(',').map((part, i) => {
+    const [tag, ...params] = part.trim().toLowerCase().split(';');
+    const q = params.map(p => p.trim()).find(p => p.startsWith('q='));
+    return { base: tag.split('-')[0], q: q ? Number(q.slice(2)) || 0 : 1, i };
+  }).filter(l => l.base && l.q > 0).sort((a, b) => b.q - a.q || a.i - b.i);
+  return langs.length && langs[0].base === 'pl' ? 'pl' : 'en';
+}
 
 function json(body, status = 200) {
   return new Response(JSON.stringify(body), {

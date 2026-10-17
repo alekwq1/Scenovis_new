@@ -828,7 +828,7 @@ def build_404():
 
 def build_root():
     # Rezerwowa strona główna "/" (np. gdy Worker nie jest aktywny).
-    # Worker Cloudflare odpowiada na "/" przekierowaniem 301 do /pl/ (lub /en/ dla ?lang=en).
+    # Worker Cloudflare odpowiada na "/" przekierowaniem 302: polski w przeglądarce → /pl/, inny język → /en/.
     return f"""<!doctype html>
 <html lang="pl">
 <head>
