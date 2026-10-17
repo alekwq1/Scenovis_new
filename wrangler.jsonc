@@ -1,0 +1,17 @@
+// Cloudflare Workers — strona statyczna + mały Worker (przekierowania, formularz).
+// Dokumentacja: https://developers.cloudflare.com/workers/static-assets/
+{
+  "name": "scenovis",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page",
+    // Worker obsługuje tylko te ścieżki; resztę serwują pliki statyczne
+    "run_worker_first": ["/", "/index.html", "/privacy.html", "/api/*"]
+  }
+  // Opcja B (zapis zapytań w KV) — odkomentuj po utworzeniu przestrzeni KV:
+  // ,"kv_namespaces": [{ "binding": "LEADS", "id": "WSTAW_ID_KV" }]
+}

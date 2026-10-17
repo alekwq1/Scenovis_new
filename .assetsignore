@@ -1,0 +1,12 @@
+.git
+.gitignore
+.assetsignore
+wrangler.jsonc
+worker
+tools
+docs
+README.md
+TODO.md
+*.py
+node_modules
+.wrangler

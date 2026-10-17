@@ -1,6 +1,8 @@
 .DS_Store
 Thumbs.db
-.netlify/
 node_modules/
+.wrangler/
+.dev.vars
 .env
 .env.*
+__pycache__/
