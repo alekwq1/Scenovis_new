@@ -93,14 +93,26 @@ def abs_url(path):
 
 
 # ---------------------------------------------------------------- elementy wspólne
+_IMG_HASH = {}
+
+
+def img_url(rel):
+    """Adres obrazu z krótką sumą kontrolną — po podmianie pliku przeglądarki pobiorą nową wersję
+    mimo długiego cache (assets/img: 30 dni w _headers)."""
+    if rel not in _IMG_HASH:
+        with open(os.path.join(ROOT, rel.lstrip("/")), "rb") as f:
+            _IMG_HASH[rel] = hashlib.sha1(f.read()).hexdigest()[:8]
+    return f"{rel}?v={_IMG_HASH[rel]}"
+
+
 def picture(name, widths, w, h, alt, sizes, eager=False, cls=""):
-    avif = ", ".join(f"/assets/img/{name}-{x}.avif {x}w" for x in widths)
-    webp = ", ".join(f"/assets/img/{name}-{x}.webp {x}w" for x in widths)
+    avif = ", ".join(f"{img_url(f'/assets/img/{name}-{x}.avif')} {x}w" for x in widths)
+    webp = ", ".join(f"{img_url(f'/assets/img/{name}-{x}.webp')} {x}w" for x in widths)
     mid = widths[len(widths) // 2]
     load = 'fetchpriority="high" decoding="async"' if eager else 'loading="lazy" decoding="async"'
     return (f'<picture><source type="image/avif" srcset="{avif}" sizes="{sizes}">'
             f'<source type="image/webp" srcset="{webp}" sizes="{sizes}">'
-            f'<img class="{cls}" src="/assets/img/{name}-{mid}.webp" width="{w}" height="{h}" alt="{esc(alt)}" {load}>'
+            f'<img class="{cls}" src="{img_url(f'/assets/img/{name}-{mid}.webp')}" width="{w}" height="{h}" alt="{esc(alt)}" {load}>'
             f'</picture>')
 
 
