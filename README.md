@@ -79,6 +79,14 @@ Na podglądzie lokalnym (file:// i localhost) formularz pokazuje awaryjny `mailt
 
 **Prywatność:** w tekście polityki wpisano Resend, Cloudflare Turnstile oraz Namecheap Private Email. Przed publikacją uzupełnij pola TODO dotyczące administratora danych, retencji i podstaw przekazywania danych dostawcom. 
 
+## Rendery z Blendera (obrazy na stronie)
+
+Obrazy w hero, sekcji „Przykład” i na podstronach usług to rendery projektu demonstracyjnego
+`D:\Prywat\SCENOVIS\MODELE\SCENOVIS_EXPO_BOOTH\EXPO_INTERACTIVE_PRESENTATION.blend` (Cycles, OptiX).
+Źródłowe PNG: `D:\Prywat\SCENOVIS\WWW_RENDERS\final`. Rozmiary i nazwy: słownik `IMG` w `tools/build.py`,
+opisy alternatywne: klucz `alt` w `tools/content.py`. Znaczniki na obrazie w hero (`.tag--*` w `site.css`)
+mają współrzędne w pełnym kadrze 16:9 — po podmianie renderu trzeba je zaktualizować.
+
 ## Dodanie filmu EXPO
 
 1. Wgraj do `assets/video/`: MP4 (H.264 + AAC, 1920×1080), poster (JPG/WebP 1920×1080), napisy `*.pl.vtt` i `*.en.vtt`.

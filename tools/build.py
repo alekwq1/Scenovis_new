@@ -104,6 +104,23 @@ def picture(name, widths, w, h, alt, sizes, eager=False, cls=""):
             f'</picture>')
 
 
+# Rendery z projektu demonstracyjnego Scenovis (Blender / Cycles). Pliki: assets/img/<nazwa>-<szerokość>.avif|webp
+IMG = {
+    "stand":      ("scenovis-stoisko",               [640, 960, 1280, 1660, 1920], 1920, 1080),
+    "visitor":    ("scenovis-stoisko-odwiedzajacy",  [640, 960, 1280, 1660, 1920], 1920, 1080),
+    "standmic":   ("scenovis-stoisko-mikroskop",     [640, 960, 1280, 1660, 1920], 1920, 1080),
+    "kiosk":      ("scenovis-kiosk",                 [640, 960, 1280, 1660, 1920], 1920, 1080),
+    "product":    ("scenovis-mikroskop",             [640, 960, 1280, 1600], 1600, 1067),
+    "exploded":   ("scenovis-mikroskop-rozlozony",   [640, 960, 1280, 1600], 1600, 1067),
+    "objectives": ("scenovis-obiektywy",             [640, 960, 1280, 1600], 1600, 1067),
+}
+
+
+def img(lang, key, sizes, eager=False, cls=""):
+    name, widths, w, h = IMG[key]
+    return picture(name, widths, w, h, CONTENT[lang]["alt"][key], sizes, eager, cls)
+
+
 def icon(name):
     paths = {
         "phone": '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>',
@@ -273,8 +290,7 @@ def hero_home(lang):
 </div>
 <figure class="hero-figure">
 <div class="annotated">
-{picture('stoisko-koncepcja', [640, 960, 1280, 1660], 1660, 934, t['concept_caption'],
-         '(min-width: 1000px) 58vw, 100vw', eager=True, cls='annotated-img')}
+{img(lang, 'stand', '(min-width: 1000px) 58vw, 100vw', eager=True, cls='annotated-img')}
 <ul class="tags" aria-label="{esc(t['hero_figure_label'])}">{''.join(tags)}</ul>
 <div class="variant-pill" aria-hidden="true"><span>{esc(t['hero_variant_label'])}</span><b>Economy</b><b class="is-on">Smart</b><b>Premium</b></div>
 <span class="concept-badge">{esc(t['concept_badge'])}</span>
@@ -291,11 +307,9 @@ def hero_landing(lang, kind):
     p = "expo" if kind == "expo" else "p3d"
     points = "".join(f'<li>{icon("check")}{esc(x)}</li>' for x in t[f"{p}_points"])
     if kind == "expo":
-        pic = picture('stoisko-koncepcja', [640, 960, 1280, 1660], 1660, 934, t['concept_caption'],
-                      '(min-width: 1000px) 55vw, 100vw', eager=True)
+        pic = img(lang, 'visitor', '(min-width: 1000px) 55vw, 100vw', eager=True)
     else:
-        pic = picture('produkt-3d-koncepcja', [640, 960, 1280, 1536], 1536, 1024, t['concept_caption'],
-                      '(min-width: 1000px) 55vw, 100vw', eager=True)
+        pic = img(lang, 'product', '(min-width: 1000px) 55vw, 100vw', eager=True)
     crumbs = (f'<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="{page_path(lang, "home")}">'
               f'{esc(t["breadcrumb_home"])}</a></li><li aria-current="page">{esc(t[p + "_crumb"])}</li></ol></nav>')
     return f"""<section class="hero hero--landing" aria-labelledby="hero-title">
@@ -331,11 +345,13 @@ def tldr(lang):
 </section>"""
 
 
-def player(lang):
+def player(lang, kind="expo"):
     t = CONTENT[lang]
     v = C.VIDEO
     if not v:
-        return f"""<div class="player is-placeholder" role="img" aria-label="{esc(t['video_placeholder_title'])}">
+        bg = img(lang, "objectives" if kind == "3d" else "kiosk", "(min-width: 1000px) 58vw, 100vw")
+        return f"""<div class="player is-placeholder">
+<div class="player-bg">{bg}</div>
 <div class="player-ph">
 <span class="play-ring" aria-hidden="true">{icon('play')}</span>
 <p class="player-ph-title">{esc(t['video_placeholder_title'])}</p>
@@ -391,7 +407,7 @@ def case(lang, kind="expo"):
 <div class="wrap">
 {section_head(t['case_label'], esc(t[k + '_h2']), t[k + '_lead'], 'case-title', tag)}
 <div class="case-stage">
-{player(lang)}
+{player(lang, kind)}
 </div>
 <p class="case-intro">{esc(intro)}</p>
 <ul class="benefits">{benefits}</ul>
@@ -531,9 +547,13 @@ def get_grid(lang, kind):
     p = "expo" if kind == "expo" else "p3d"
     items = "".join(f'<li><h3>{esc(a)}</h3><p>{esc(b)}</p></li>' for a, b in t[f"{p}_get"])
     label = t["services_label"]
+    figs = "".join(f'<figure class="shot">{img(lang, key, "(min-width: 1000px) 40vw, 100vw")}'
+                   f'<figcaption>{esc(cap)}</figcaption></figure>' for key, cap in t[f"{p}_shots"])
+    shots = f'<div class="shots">{figs}</div>' if figs else ""
     return f"""<section class="section get" id="{ids['get']}" aria-labelledby="get-title">
 <div class="wrap">
 {section_head(label, esc(t[p + '_get_h2']), None, 'get-title')}
+{shots}
 <ul class="get-grid">{items}</ul>
 </div>
 </section>"""
