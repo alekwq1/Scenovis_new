@@ -785,8 +785,13 @@ p { text-wrap: pretty; }
   .hero-figure:not(.hero-figure--plain) .annotated { --vis: 1; --off: 0; }
   .hero-figure:not(.hero-figure--plain) .annotated img { object-position: 50% 50%; }
 }
-.tag--led   { --u: .455; --v: .30; }
-.tag--light { --u: .30;  --v: .20; }
-.tag--kiosk { --u: .395; --v: .64; }
-.tag--build { --u: .72;  --v: .72; }
+/* współrzędne policzone z kamery CAM_EXPO_MAIN (world_to_camera_view) */
+.tag--led   { --u: .405; --v: .36; }
+.tag--light { --u: .311; --v: .219; }
+.tag--kiosk { --u: .386; --v: .645; }
+.tag--build { --u: .70;  --v: .78; }
 .tag--build .tag-label { left: auto; right: -2px; }
+.tag--light::before { top: auto; bottom: 11px; }
+.tag--light .tag-label { top: auto; bottom: 44px; left: -2px; right: auto; }
+.tag--led::before { bottom: auto; top: 11px; }
+.tag--led .tag-label { bottom: auto; top: 44px; left: -2px; right: auto; }
