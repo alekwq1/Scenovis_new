@@ -60,6 +60,9 @@ def esc(s):
 
 def todo(text):
     """Zamienia {todo:...} na znacznik widoczny tylko w trybie roboczym."""
+    # W produkcji (DRAFT=False) znacznik w ogóle nie trafia do HTML — Google nie zobaczy go w kodzie strony.
+    if not C.DRAFT:
+        return TODO_RE.sub("", text)
     return TODO_RE.sub(lambda m: f'<span class="todo">[TODO: {esc(m.group(1))}]</span>', text)
 
 
@@ -337,7 +340,7 @@ def player(lang):
 <span class="play-ring" aria-hidden="true">{icon('play')}</span>
 <p class="player-ph-title">{esc(t['video_placeholder_title'])}</p>
 <p>{esc(t['video_placeholder_text'])}</p>
-<p>{todo(t['video_todo'])}</p>
+{('<p>' + todo(t['video_todo']) + '</p>') if C.DRAFT else ''}
 </div>
 </div>"""
     tracks = ""
