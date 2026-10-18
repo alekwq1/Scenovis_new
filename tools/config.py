@@ -32,6 +32,21 @@ ADDRESS = None
 # True  — po wgraniu obrazów (python tools/warianty.py FOLDER_Z_PNG): przełącznik zmienia też obraz i punkty.
 VARIANT_RENDERS = False
 
+# FILM na podstronie „Prezentacje produktów 3D” (sekcja „Interaktywna prezentacja produktu”).
+# Okładka przed odtworzeniem: assets/img/scenovis-obiektywy-okladka-*.webp/.avif (klucz "cover3d" w build.py).
+VIDEO_3D = {
+    "src": "/assets/video/scenovis-mikroskop-prezentacja.mp4",   # 1728×1000, H.264, bez dźwięku, 71 s
+    "poster": "/assets/video/scenovis-mikroskop-okladka.jpg",
+    "width": 1728, "height": 1000,
+    "duration_iso": "PT1M11S",
+    "duration_label": {"pl": "1:11", "en": "1:11"},
+    "upload_date": "2026-10-18T13:00:00+02:00",
+    "name": {"pl": "Interaktywna prezentacja mikroskopu — Scenovis",
+             "en": "Interactive microscope presentation — Scenovis"},
+    "cover": "cover3d",
+    "muted": True,
+}
+
 # WIDEO w oknie hero na podstronie „Projekt stoiska targowego” (zamiast renderu).
 # Krótka pętla bez dźwięku, odtwarzana automatycznie. Przykład:
 # EXPO_HERO_VIDEO = {"src": "/assets/video/stoisko-hero.mp4", "poster": "/assets/video/stoisko-hero.jpg",

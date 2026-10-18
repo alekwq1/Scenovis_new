@@ -970,3 +970,9 @@ p { text-wrap: pretty; }
 @media (max-width: 700px) {
   .viewer-card-nav { margin-top: 6px; padding-top: 4px; }
 }
+/* okładka nad filmem — znika po starcie odtwarzania */
+.player.has-video video { object-fit: contain; background: #0d1011; }
+.player-cover { z-index: 1; pointer-events: none; }
+.player-cover::after { background: linear-gradient(180deg, rgba(13,16,17,0) 40%, rgba(13,16,17,.45)); }
+.player.has-video .player-play { z-index: 2; }
+.player.is-playing .player-cover { display: none; }

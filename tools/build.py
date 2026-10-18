@@ -125,6 +125,7 @@ IMG = {
     "front":      ("scenovis-stoisko-front",         [640, 960, 1280, 1660, 1920], 1920, 1080),
     "widok":      ("scenovis-stoisko-widok",         [640, 960, 1280, 1660, 1920], 1920, 1080),
     "kioskscreen": ("scenovis-kiosk-ekran",          [640, 960, 1280, 1660, 1920], 1920, 1080),
+    "cover3d":    ("scenovis-obiektywy-okladka",     [640, 960, 1280, 1660, 1920], 1920, 1080),
     "product":    ("scenovis-mikroskop",             [640, 960, 1280, 1600], 1600, 1067),
     "exploded":   ("scenovis-mikroskop-rozlozony",   [640, 960, 1280, 1600], 1600, 1067),
     "objectives": ("scenovis-obiektywy",             [640, 960, 1280, 1600], 1600, 1067),
@@ -405,7 +406,7 @@ def player(lang, kind="expo"):
     """Okno filmu. Bez nagrania (config.VIDEO = None) — sama okładka, bez przycisku odtwarzania.
     Po dodaniu pliku i uzupełnieniu config.VIDEO pojawia się odtwarzacz z tą samą wielkością okna."""
     t = CONTENT[lang]
-    v = C.VIDEO
+    v = C.VIDEO_3D if kind == "3d" else C.VIDEO
     if not v:
         bg = img(lang, "objectives" if kind == "3d" else "kioskscreen", "(min-width: 1000px) 58vw, 100vw")
         return f'<div class="player is-placeholder is-cover"><div class="player-bg">{bg}</div></div>'
@@ -417,10 +418,13 @@ def player(lang, kind="expo"):
                        f'src="{v["captions"][l]}"{default}>')
     dur = v.get("duration_label", {}).get(lang, "")
     webm = f'<source src="{v["src_webm"]}" type="video/webm">' if v.get("src_webm") else ""
+    cover = (f'<div class="player-bg player-cover">{img(lang, v["cover"], "(min-width: 1000px) 58vw, 100vw")}</div>'
+             if v.get("cover") else "")
+    muted = " muted" if v.get("muted") else ""
     return f"""<div class="player is-placeholder has-video">
-<video id="case-video" controls preload="none" playsinline poster="{v['poster']}" width="{v['width']}" height="{v['height']}" data-video-name="expo_case">
+<video id="case-video" controls preload="none" playsinline{muted} poster="{v['poster']}" width="{v['width']}" height="{v['height']}" data-video-name="{kind}_case">
 {webm}<source src="{v['src']}" type="video/mp4">{tracks}
-</video>
+</video>{cover}
 <button class="player-play" type="button" aria-label="{esc(t['video_play'])}">{icon('play')}<span>{esc(t['video_play'])}{(' · ' + esc(dur)) if dur else ''}</span></button>
 </div>"""
 
@@ -733,12 +737,12 @@ def website_node():
 
 
 def video_node(lang, page="home"):
-    v = C.VIDEO
+    v = C.VIDEO_3D if page == "3d" else C.VIDEO
     if not v:
         return None
     t = CONTENT[lang]
     return {"@type": "VideoObject", "@id": abs_url(page_path(lang, page) + "#video"),
-            "name": v["name"][lang], "description": t["case_lead"],
+            "name": v["name"][lang], "description": t["case3d_lead" if page == "3d" else "case_lead"],
             "thumbnailUrl": [abs_url(v["poster"])], "uploadDate": v["upload_date"],
             "duration": v["duration_iso"], "contentUrl": abs_url(v["src"]), "inLanguage": lang,
             "creator": {"@id": abs_url("/#organization")}}
