@@ -233,7 +233,7 @@ def head(lang, page, title, desc, alternates, robots="index,follow", jsonld=None
 </head>"""
 
 
-def header(lang, page, alternates, nav=True):
+def header(lang, page, alternates, nav=True, nav_items=None):
     t = CONTENT[lang]
     ids = IDS[lang]
     home = page_path(lang, "home")
@@ -243,7 +243,10 @@ def header(lang, page, alternates, nav=True):
         def nav_href(href):
             # "@expo" / "@3d" = podstrona usługi, "#..." = sekcja strony głównej
             return page_path(lang, href[1:]) if href.startswith("@") else prefix + href
-        items = "".join(f'<li><a href="{nav_href(href)}">{esc(label)}</a></li>' for href, label in t["nav"])
+        if nav_items is not None:
+            prefix = ""  # podstrona usługi: kotwice do sekcji tej samej strony
+        items = "".join(f'<li><a href="{nav_href(href)}">{esc(label)}</a></li>'
+                        for href, label in (nav_items if nav_items is not None else t["nav"]))
         nav_html = (f'<nav class="nav" id="site-nav" aria-label="{esc(t["nav_label"])}">'
                     f'<ul>{items}</ul></nav>')
     contact_href = f"#{ids['contact']}" if page != "privacy" else f"{home}#{ids['contact']}"
@@ -832,7 +835,7 @@ def build_expo(lang):
     ld = graph(lang, "expo", t["expo_title"], t["expo_desc"],
                [service_node(lang, "expo"), breadcrumb_node(lang, "expo"), video_node(lang, "expo")])
     return (head(lang, "expo", t["expo_title"], t["expo_desc"], a, jsonld=ld)
-            + header(lang, "expo", a, nav=False)
+            + header(lang, "expo", a, nav_items=t["nav_expo"])
             + hero_landing(lang, "expo") + get_grid(lang, "expo") + case(lang, "expo") + process(lang)
             + cross(lang, "expo")
             + faq(lang, ["expo_process", "price", "factors", "buyrent", "reuse", "materials", "delivery", "time"])
@@ -845,7 +848,7 @@ def build_3d(lang):
     ld = graph(lang, "3d", t["p3d_title"], t["p3d_desc"],
                [service_node(lang, "3d"), breadcrumb_node(lang, "3d"), video_node(lang, "3d")])
     return (head(lang, "3d", t["p3d_title"], t["p3d_desc"], a, jsonld=ld)
-            + header(lang, "3d", a, nav=False)
+            + header(lang, "3d", a, nav_items=t["nav_3d"])
             + hero_landing(lang, "3d") + case(lang, "3d") + after_fair(lang)
             + cross(lang, "3d")
             + faq(lang, ["3d_forms", "3d_data", "3d_hw", "3d_reuse", "3d_nofair", "price"])
