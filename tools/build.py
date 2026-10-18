@@ -263,6 +263,12 @@ def header(lang, page, alternates, nav=True, nav_items=None):
         toggle = (f'<button class="menu-toggle" type="button" aria-controls="site-nav" aria-expanded="false" '
                   f'aria-label="{esc(t["menu_open"])}" data-label-open="{esc(t["menu_open"])}" '
                   f'data-label-close="{esc(t["menu_close"])}"><span></span><span></span></button>')
+    mobile_contact = ""
+    if page == "home":
+        mobile_contact = (f'<div class="wrap mobile-contact-bar">'
+                          f'<a class="button button-primary" href="{contact_href}">{esc(t["nav_cta"])}</a>'
+                          f'<a class="button button-ghost" href="https://wa.me/{C.WHATSAPP}" '
+                          f'target="_blank" rel="noopener" data-track="whatsapp_click">WhatsApp</a></div>')
     return f"""<body class="{'is-draft' if C.DRAFT else ''}" data-page="{page}" data-lang="{lang}">
 <a class="skip-link" href="#main">{esc(t['skip'])}</a>
 <header class="site-header">
@@ -275,6 +281,7 @@ def header(lang, page, alternates, nav=True, nav_items=None):
 {toggle}
 </div>
 </div>
+{mobile_contact}
 <div class="scroll-progress" aria-hidden="true"><span></span></div>
 </header>
 <main id="main" tabindex="-1">"""
