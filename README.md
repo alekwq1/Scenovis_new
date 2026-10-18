@@ -112,5 +112,7 @@ Strony działają na każdym hostingu statycznym (rezerwowe przekierowania w `in
    Każdą kolejną poprawkę obrazów wystarczy wgrać tym samym skryptem — nazwy plików są stałe, bez przebudowy HTML.
 4. Punkty z opisami: treść w `tools/content.py` → `variants`, położenie w `assets/css/site.css` (`.tag--screen` itd.).
 
-**Film:** pliki do `assets/video/`, uzupełnij `VIDEO` w `tools/config.py`, potem `python tools/build.py`.
+**Film (sekcja „Zobacz stoisko”):** pliki do `assets/video/`, uzupełnij `VIDEO` w `tools/config.py`, potem `python tools/build.py`.
+
+**Wideo w oknie hero podstrony „Projekt stoiska”:** MP4 + okładka do `assets/video/`, uzupełnij `EXPO_HERO_VIDEO` w `tools/config.py`, potem `python tools/build.py`.
 Okno filmu ma ten sam rozmiar co obecna okładka.

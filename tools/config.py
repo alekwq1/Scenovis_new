@@ -32,6 +32,12 @@ ADDRESS = None
 # True  — po wgraniu obrazów (python tools/warianty.py FOLDER_Z_PNG): przełącznik zmienia też obraz i punkty.
 VARIANT_RENDERS = False
 
+# WIDEO w oknie hero na podstronie „Projekt stoiska targowego” (zamiast renderu).
+# Krótka pętla bez dźwięku, odtwarzana automatycznie. Przykład:
+# EXPO_HERO_VIDEO = {"src": "/assets/video/stoisko-hero.mp4", "poster": "/assets/video/stoisko-hero.jpg",
+#                    "width": 1920, "height": 1080}
+EXPO_HERO_VIDEO = None
+
 # FILM w sekcji „Zobacz stoisko. Porównaj możliwości.”
 # Dopóki VIDEO = None, okno filmu pokazuje okładkę (kadr z kiosku) bez przycisku odtwarzania
 # i strona NIE generuje VideoObject JSON-LD. Po nagraniu: wgraj pliki do assets/video/,

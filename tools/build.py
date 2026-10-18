@@ -122,6 +122,9 @@ IMG = {
     "visitor":    ("scenovis-stoisko-odwiedzajacy",  [640, 960, 1280, 1660, 1920], 1920, 1080),
     "standmic":   ("scenovis-stoisko-mikroskop",     [640, 960, 1280, 1660, 1920], 1920, 1080),
     "kiosk":      ("scenovis-kiosk",                 [640, 960, 1280, 1660, 1920], 1920, 1080),
+    "front":      ("scenovis-stoisko-front",         [640, 960, 1280, 1660, 1920], 1920, 1080),
+    "widok":      ("scenovis-stoisko-widok",         [640, 960, 1280, 1660, 1920], 1920, 1080),
+    "kioskscreen": ("scenovis-kiosk-ekran",          [640, 960, 1280, 1660, 1920], 1920, 1080),
     "product":    ("scenovis-mikroskop",             [640, 960, 1280, 1600], 1600, 1067),
     "exploded":   ("scenovis-mikroskop-rozlozony",   [640, 960, 1280, 1600], 1600, 1067),
     "objectives": ("scenovis-obiektywy",             [640, 960, 1280, 1600], 1600, 1067),
@@ -344,7 +347,12 @@ def hero_landing(lang, kind):
     ids = IDS[lang]
     p = "expo" if kind == "expo" else "p3d"
     points = "".join(f'<li>{icon("check")}{esc(x)}</li>' for x in t[f"{p}_points"])
-    if kind == "expo":
+    if kind == "expo" and C.EXPO_HERO_VIDEO:
+        hv = C.EXPO_HERO_VIDEO
+        pic = (f'<video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="{hv["poster"]}" '
+               f'width="{hv.get("width", 1920)}" height="{hv.get("height", 1080)}" aria-label="{esc(t["alt"]["visitor"])}">'
+               f'<source src="{hv["src"]}" type="video/mp4"></video>')
+    elif kind == "expo":
         pic = img(lang, 'visitor', '(min-width: 1000px) 55vw, 100vw', eager=True)
     else:
         pic = img(lang, 'product', '(min-width: 1000px) 55vw, 100vw', eager=True)
@@ -399,7 +407,7 @@ def player(lang, kind="expo"):
     t = CONTENT[lang]
     v = C.VIDEO
     if not v:
-        bg = img(lang, "objectives" if kind == "3d" else "kiosk", "(min-width: 1000px) 58vw, 100vw")
+        bg = img(lang, "objectives" if kind == "3d" else "kioskscreen", "(min-width: 1000px) 58vw, 100vw")
         return f'<div class="player is-placeholder is-cover"><div class="player-bg">{bg}</div></div>'
     tracks = ""
     for l in LANGS:
@@ -777,7 +785,7 @@ def build_home(lang):
     ld = graph(lang, "home", t["home_title"], t["home_desc"], [video_node(lang, "home")])
     return (head(lang, "home", t["home_title"], t["home_desc"], a, jsonld=ld)
             + header(lang, "home", a)
-            + hero_home(lang) + tldr(lang) + services(lang) + case(lang, "expo") + costs(lang)
+            + hero_home(lang) + tldr(lang) + services(lang) + case(lang, "expo")
             + about(lang) + process(lang)
             + faq(lang, ["price", "expo_process", "delivery", "3d_forms", "3d_data", "3d_nofair", "area", "time"])
             + contact(lang, "home") + footer(lang))
@@ -790,7 +798,7 @@ def build_expo(lang):
                [service_node(lang, "expo"), breadcrumb_node(lang, "expo"), video_node(lang, "expo")])
     return (head(lang, "expo", t["expo_title"], t["expo_desc"], a, jsonld=ld)
             + header(lang, "expo", a, nav=False)
-            + hero_landing(lang, "expo") + get_grid(lang, "expo") + case(lang, "expo") + costs(lang) + process(lang)
+            + hero_landing(lang, "expo") + get_grid(lang, "expo") + case(lang, "expo") + process(lang)
             + cross(lang, "expo")
             + faq(lang, ["expo_process", "price", "factors", "buyrent", "reuse", "materials", "delivery", "time"])
             + contact(lang, "expo", topic="expo") + footer(lang))
