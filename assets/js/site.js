@@ -463,20 +463,17 @@
         observer.unobserve(el);
         // Do not delay keyboard navigation or anchored content.
         if (el.contains(document.activeElement)) return;
-        var index = Array.prototype.indexOf.call(el.parentElement.children, el);
         var animation = el.animate([
-          { opacity: 0, transform: 'translateY(' + (small.matches ? 12 : 22) + 'px)' },
-          { opacity: 1, transform: 'translateY(0)' }
+          { transform: 'translateY(' + (small.matches ? 8 : 14) + 'px)' },
+          { transform: 'translateY(0)' }
         ], {
-          duration: small.matches ? 460 : 680,
-          delay: small.matches ? 0 : Math.min(index % 3, 2) * 65,
-          easing: 'cubic-bezier(.22,1,.36,1)',
-          fill: 'backwards'
+          duration: small.matches ? 380 : 520,
+          easing: 'cubic-bezier(.22,1,.36,1)'
         });
         active.add(animation);
         animation.onfinish = animation.oncancel = function () { active.delete(animation); };
       });
-    }, { threshold: 0.06, rootMargin: '0px 0px -24px 0px' });
+    }, { threshold: 0, rootMargin: '0px 0px 80px 0px' });
     targets.forEach(function (el) {
       if (seen.has(el)) return;
       var rect = el.getBoundingClientRect();
