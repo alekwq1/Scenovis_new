@@ -26,6 +26,12 @@ ADDRESS = None
 # Przykład:
 # ADDRESS = {"streetAddress": "ul. ...", "postalCode": "80-000", "addressLocality": "Gdańsk", "addressCountry": "PL"}
 
+# WARIANTY STOISKA w hero (Economy / Smart / Premium).
+# False — dopóki nie ma trzech renderów: hero pokazuje obecny render stoiska, a przełącznik zmienia
+#         opis zakresu i zestawienie kosztów (bez punktów, żeby nie opisywać elementów, których nie widać).
+# True  — po wgraniu obrazów (python tools/warianty.py FOLDER_Z_PNG): przełącznik zmienia też obraz i punkty.
+VARIANT_RENDERS = False
+
 # FILM w sekcji „Zobacz stoisko. Porównaj możliwości.”
 # Dopóki VIDEO = None, okno filmu pokazuje okładkę (kadr z kiosku) bez przycisku odtwarzania
 # i strona NIE generuje VideoObject JSON-LD. Po nagraniu: wgraj pliki do assets/video/,

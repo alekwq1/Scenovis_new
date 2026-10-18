@@ -102,3 +102,15 @@ Na starym adresie `workers.dev` ustaw przekierowanie 301 na nową domenę (szcze
 ## Hosting poza Cloudflare
 
 Strony działają na każdym hostingu statycznym (rezerwowe przekierowania w `index.html` i `privacy.html`), ale formularz wymaga odpowiednika `/api/lead`, a nagłówki z `_headers` trzeba przenieść do konfiguracji tego hostingu.
+
+## Podmiana grafik wariantów i filmu (18.10.2026)
+
+**Trzy obrazy wariantów (hero):**
+1. Przygotuj `stoisko-economy.png`, `stoisko-smart.png`, `stoisko-premium.png` — ta sama kamera (CAM_EXPO_MAIN), 16:9.
+2. `python tools/warianty.py FOLDER_Z_PNG` → pliki trafią do `assets/img/warianty/` (AVIF + WebP, 4 rozmiary).
+3. Za pierwszym razem ustaw `VARIANT_RENDERS = True` w `tools/config.py` i uruchom `python tools/build.py`.
+   Każdą kolejną poprawkę obrazów wystarczy wgrać tym samym skryptem — nazwy plików są stałe, bez przebudowy HTML.
+4. Punkty z opisami: treść w `tools/content.py` → `variants`, położenie w `assets/css/site.css` (`.tag--screen` itd.).
+
+**Film:** pliki do `assets/video/`, uzupełnij `VIDEO` w `tools/config.py`, potem `python tools/build.py`.
+Okno filmu ma ten sam rozmiar co obecna okładka.

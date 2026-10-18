@@ -304,8 +304,9 @@ def hero_home(lang):
     pics, tags, scopes, buttons = [], [], [], []
     for v in VARIANTS:
         d = t["variants"][v]
-        pics.append(variant_picture(lang, v, "(min-width: 1000px) 58vw, 100vw"))
-        for key, name, typ in d["tags"]:
+        if C.VARIANT_RENDERS:
+            pics.append(variant_picture(lang, v, "(min-width: 1000px) 58vw, 100vw"))
+        for key, name, typ in (d["tags"] if C.VARIANT_RENDERS else []):
             tags.append(f'<li class="tag tag--{key} in-{v}"><span class="tag-label"><span class="tag-name">{esc(name)}</span>'
                         f'<span class="chip chip--{types[typ]}">{esc(typ)}</span></span></li>')
         scopes.append(f'<p class="variant-scope in-{v}"><strong>{esc(d["name"])}:</strong> {esc(d["scope"])}</p>')
@@ -328,8 +329,8 @@ def hero_home(lang):
 </div>
 <figure class="hero-figure" data-variant-scope data-variant="smart">
 <div class="annotated">
-<div class="vimgs">{''.join(pics)}</div>
-<ul class="tags" aria-label="{esc(t['hero_figure_label'])}">{''.join(tags)}</ul>
+{('<div class="vimgs">' + ''.join(pics) + '</div>') if pics else img(lang, 'stand', '(min-width: 1000px) 58vw, 100vw', eager=True, cls='annotated-img')}
+{('<ul class="tags" aria-label="' + esc(t['hero_figure_label']) + '">' + ''.join(tags) + '</ul>') if tags else ''}
 <div class="variant-pill" role="group" aria-label="{esc(t['costs_variant_label'])}"><span aria-hidden="true">{esc(t['hero_variant_label'])}</span>{''.join(buttons)}</div>
 </div>
 <figcaption class="variant-scopes" aria-live="polite">{''.join(scopes)}</figcaption>
