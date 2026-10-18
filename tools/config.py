@@ -50,7 +50,12 @@ VIDEO_3D = {
 }
 
 # WIDEO w oknie hero STRONY GŁÓWNEJ (zamiast zdjęcia kiosku). Format jak EXPO_HERO_VIDEO poniżej.
-HOME_HERO_VIDEO = None
+HOME_HERO_VIDEO = {
+    "src": "/assets/video/scenovis-home.mp4",       # 1920×1080, 31 s, bez dźwięku (nagranie bez głosu), napisy PL/EN
+    "poster": "/assets/video/scenovis-home.jpg",
+    "width": 1920, "height": 1080,
+    "captions": {"pl": "/assets/video/scenovis-home.pl.vtt", "en": "/assets/video/scenovis-home.en.vtt"},
+}
 
 # WIDEO w oknie hero na podstronie „Projekt stoiska targowego” (zamiast renderu).
 # Krótka pętla bez dźwięku, odtwarzana automatycznie. Przykład:
