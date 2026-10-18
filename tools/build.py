@@ -340,19 +340,27 @@ def variant_figure(lang, sizes="(min-width: 1000px) 52vw, 100vw"):
 </figure>"""
 
 
-def hero_video(lang, hv, label):
+def hero_video(lang, hv, label, loop=True, end_cta=None):
     """Zapętlone wideo bez dźwięku z przyciskiem pauzy (hero strony głównej i podstrony stoiska)."""
     htracks = "".join(
         f'<track kind="captions" srclang="{l}" label="{esc(CONTENT[l]["lang_name"])}" '
         f'src="{img_url(hv["captions"][l])}"{" default" if l == lang else ""}>'
         for l in LANGS if hv.get("captions", {}).get(l))
     t = CONTENT[lang]
-    return (f'<video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="{img_url(hv["poster"])}" '
+    end = ""
+    if not loop and end_cta:
+        href, text, topic = end_cta
+        end = (f'<div class="hero-video-end" hidden><div class="player-end-actions">'
+               f'<button type="button" class="button button-ghost player-replay" data-hero-replay>{esc(t["video_replay"])}</button>'
+               f'<a class="button button-primary" href="{href}" data-topic="{topic}" data-track="hero_video_end_cta">{esc(text)}</a>'
+               f'</div></div>')
+    loop_attr = " loop" if loop else ""
+    return (f'<video class="hero-video" autoplay muted{loop_attr} playsinline preload="metadata" poster="{img_url(hv["poster"])}" '
             f'width="{hv.get("width", 1920)}" height="{hv.get("height", 1080)}" aria-label="{esc(label)}">'
             f'<source src="{img_url(hv["src"])}" type="video/mp4">{htracks}</video>'
             f'<button class="hero-video-toggle" type="button" data-hero-video-toggle aria-pressed="false" '
             f'aria-label="{esc(t["video_pause"])}" data-label-pause="{esc(t["video_pause"])}" '
-            f'data-label-play="{esc(t["video_play"])}"><span aria-hidden="true"></span></button>')
+            f'data-label-play="{esc(t["video_play"])}"><span aria-hidden="true"></span></button>' + end)
 
 
 def hero_home(lang):
@@ -360,7 +368,8 @@ def hero_home(lang):
     ids = IDS[lang]
     hv = getattr(C, "HOME_HERO_VIDEO", None)
     if hv:
-        media = hero_video(lang, hv, t["alt"]["kioskscreen"])
+        media = hero_video(lang, hv, t["alt"]["kioskscreen"], loop=False,
+                           end_cta=(f"#{ids['contact']}", t["hero_cta_primary"], "general"))
     else:
         media = img(lang, "kioskscreen", "(min-width: 1000px) 58vw, 100vw", eager=True, cls="annotated-img")
     paths = "".join(f'<li><a class="hero-path" href="{page_path(lang, key)}" data-track="hero_service_{key}">'

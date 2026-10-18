@@ -183,6 +183,19 @@
       }, { threshold: 0.15 }).observe(v);
     }
     v.addEventListener('play', sync); v.addEventListener('pause', sync); sync();
+    // film bez pętli (strona główna): po zakończeniu ekran z „Obejrzyj ponownie” i kontaktem
+    var endBox = btn.parentNode.querySelector('.hero-video-end');
+    if (endBox) {
+      v.addEventListener('ended', function () {
+        userPaused = true; endBox.hidden = false; btn.hidden = true;
+        track('video_complete', { video_name: 'home_hero' });
+      });
+      var rep = endBox.querySelector('[data-hero-replay]');
+      if (rep) rep.addEventListener('click', function () {
+        endBox.hidden = true; btn.hidden = false; userPaused = false; v.currentTime = 0; v.play();
+        track('video_replay', { video_name: 'home_hero' });
+      });
+    }
   });
 
   /* ---------- film: start, 25%, 50%, koniec + CTA po filmie ---------- */

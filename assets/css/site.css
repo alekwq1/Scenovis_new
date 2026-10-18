@@ -1079,3 +1079,5 @@ p { text-wrap: pretty; }
 .player-replay { background: rgba(18,22,23,.6); }
 @media (max-width: 700px) { .player-end-actions { flex-direction: column; } .player-end-actions .button { width: 100%; } }
 .player.is-ended .player-play, .player.is-ended .player-cover { display: none; }
+.hero-video-end { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; padding: 20px; background: rgba(12,15,16,.82); }
+.hero-video-end[hidden], .hero-video-toggle[hidden] { display: none; }
