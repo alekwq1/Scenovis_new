@@ -54,7 +54,7 @@ VIDEO_3D = {
 # EXPO_HERO_VIDEO = {"src": "/assets/video/stoisko-hero.mp4", "poster": "/assets/video/stoisko-hero.jpg",
 #                    "width": 1920, "height": 1080}
 EXPO_HERO_VIDEO = {
-    "src": "/assets/video/stoisko-hero.mp4",       # 1728×972, 21,5 s, bez dźwięku, kwoty rozmyte
+    "src": "/assets/video/stoisko-hero.mp4",       # 1728×972, 18,4 s, bez dźwięku, kwoty rozmyte
     "poster": "/assets/video/stoisko-hero.jpg",
     "width": 1728, "height": 972,
     "captions": {"pl": "/assets/video/stoisko-hero.pl.vtt", "en": "/assets/video/stoisko-hero.en.vtt"},
