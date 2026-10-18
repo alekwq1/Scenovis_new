@@ -1081,3 +1081,37 @@ p { text-wrap: pretty; }
 .player.is-ended .player-play, .player.is-ended .player-cover { display: none; }
 .hero-video-end { position: absolute; inset: 0; z-index: 4; display: grid; place-items: center; padding: 20px; background: rgba(12,15,16,.82); }
 .hero-video-end[hidden], .hero-video-toggle[hidden] { display: none; }
+
+/* Compact homepage on phones; desktop and service pages retain their layout. */
+.mobile-contact-bar { display: none; }
+@media (max-width: 700px) {
+  html:has(body[data-page="home"]) { --header-h: 124px; }
+  body[data-page="home"] .header-inner { height: 64px; }
+  body[data-page="home"] .mobile-contact-bar {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-bottom: 12px;
+  }
+  .mobile-contact-bar .button { min-height: 44px; padding: 10px 14px; }
+  body[data-page="home"] .tldr,
+  body[data-page="home"] .case,
+  body[data-page="home"] .process,
+  body[data-page="home"] .faq,
+  body[data-page="home"] .nav li:has(a[href="#faq"]),
+  body[data-page="home"] .service-list,
+  body[data-page="home"] .full-list,
+  body[data-page="home"] .services-note { display: none; }
+  body[data-page="home"] .section { padding-block: 32px; }
+  body[data-page="home"] .hero-grid { gap: 20px; }
+  body[data-page="home"] .hero-copy { display: contents; }
+  body[data-page="home"] .hero .eyebrow { order: 0; margin: 0; }
+  body[data-page="home"] .hero h1 { order: 1; margin: 0; font-size: clamp(28px, 9vw, 52px); }
+  body[data-page="home"] .hero .lead { order: 2; margin: 0; }
+  body[data-page="home"] .hero-figure { order: 3; margin: 0; }
+  body[data-page="home"] .hero .cta-row { order: 4; margin: 0; }
+  body[data-page="home"] .hero-paths { order: 5; }
+  body[data-page="home"] .hero-note { order: 6; margin: 0; }
+  body[data-page="home"] .service { padding: 20px; }
+  body[data-page="home"] .service-actions { margin-top: 18px; }
+  body[data-page="home"] .about-grid { grid-template-columns: 1fr; gap: 18px; }
+  body[data-page="home"] .about-photo { max-width: 120px; }
+  body[data-page="home"] .about-body p { margin-bottom: 12px; }
+}
