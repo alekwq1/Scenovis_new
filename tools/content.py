@@ -403,7 +403,7 @@ PL = {
     "p3d_points": ["Budowa i komponenty produktu", "Animacje działania mechanizmów",
                    "Interakcja na ekranie dotykowym", "Wsparcie dla handlowców"],
     "p3d_cta": "Porozmawiajmy o prezentacji produktu",
-    "p3d_cta2": "Zobacz prezentację",
+    "p3d_cta2": "Zobacz film",
     "viewer": {
         "launch": "Uruchom model 3D", "loading": "Wczytywanie modelu…", "canvas_label": "Interaktywny model 3D mikroskopu",
         "explode": "Rozłóż", "assemble": "Złóż", "reset": "Widok startowy",
@@ -820,7 +820,7 @@ EN = {
     "p3d_points": ["Product build and components", "Animations of mechanisms at work",
                    "Touchscreen interaction", "Support for sales teams"],
     "p3d_cta": "Let’s talk about your product presentation",
-    "p3d_cta2": "See the presentation",
+    "p3d_cta2": "Watch the video",
     "viewer": {
         "launch": "Launch 3D model", "loading": "Loading model…", "canvas_label": "Interactive 3D model of a microscope",
         "explode": "Explode", "assemble": "Assemble", "reset": "Reset view",

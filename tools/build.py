@@ -253,7 +253,10 @@ def header(lang, page, alternates, nav=True, nav_items=None):
     lang_links = []
     for l in LANGS:
         cur = ' aria-current="true"' if l == lang else ""
-        lang_links.append(f'<a href="{alternates[l]}" hreflang="{l}" lang="{l}"{cur} '
+        # mapa kotwic: sekcja w bieżącym języku -> ta sama sekcja w drugim języku (przełącznik zachowuje miejsce)
+        idmap = "" if l == lang else esc(json.dumps({IDS[lang][k]: IDS[l][k] for k in IDS[lang]}))
+        idattr = f' data-idmap="{idmap}"' if idmap else ""
+        lang_links.append(f'<a href="{alternates[l]}" hreflang="{l}" lang="{l}"{cur}{idattr} '
                           f'title="{esc(CONTENT[l]["lang_name"])}">{l.upper()}</a>')
     toggle = ""
     if nav:

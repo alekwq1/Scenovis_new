@@ -43,6 +43,21 @@
     requestAnimationFrame(function () { document.getElementById(aliases[h]).scrollIntoView(); });
   }
 
+  /* ---------- przełącznik języka: zostań w tej samej sekcji ---------- */
+  document.querySelectorAll('.lang-switch a[data-idmap]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var map; try { map = JSON.parse(a.getAttribute('data-idmap')); } catch (e) { return; }
+      var mid = innerHeight * 0.4, cur = null;
+      Object.keys(map).forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= mid) {
+          if (!cur || el.getBoundingClientRect().top > document.getElementById(cur).getBoundingClientRect().top) cur = id;
+        }
+      });
+      if (cur && map[cur]) a.href = a.href.split('#')[0] + '#' + map[cur];
+    });
+  });
+
   /* ---------- menu mobilne ---------- */
   var toggle = document.querySelector('.menu-toggle');
   var nav = document.getElementById('site-nav');
