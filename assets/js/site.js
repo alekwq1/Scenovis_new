@@ -439,3 +439,59 @@
   placeOptionalFields();
   mobile.addEventListener('change', placeOptionalFields);
 })();
+
+/* One-time scroll entrances. Content stays visible if animation APIs fail. */
+(function () {
+  'use strict';
+  if (!('IntersectionObserver' in window) || !Element.prototype.animate) return;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var small = window.matchMedia('(max-width: 700px)');
+  var observer;
+  var active = new Set();
+  var seen = new WeakSet();
+  var selector = '.section-head, .service, .full, .case-copy, .case-stage, .about-photo, .about-copy, .steps > li, .get-grid > li, .benefits > *, .shot, .cross > .wrap';
+  var targets = Array.from(document.querySelectorAll(selector)).filter(function (el) {
+    return !el.parentElement.closest(selector);
+  });
+  function start() {
+    if (reduced.matches) return;
+    observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var el = entry.target;
+        if (!entry.isIntersecting || seen.has(el)) return;
+        seen.add(el);
+        observer.unobserve(el);
+        // Do not delay keyboard navigation or anchored content.
+        if (el.contains(document.activeElement)) return;
+        var index = Array.prototype.indexOf.call(el.parentElement.children, el);
+        var animation = el.animate([
+          { opacity: 0, transform: 'translateY(' + (small.matches ? 12 : 22) + 'px)' },
+          { opacity: 1, transform: 'translateY(0)' }
+        ], {
+          duration: small.matches ? 460 : 680,
+          delay: small.matches ? 0 : Math.min(index % 3, 2) * 65,
+          easing: 'cubic-bezier(.22,1,.36,1)',
+          fill: 'backwards'
+        });
+        active.add(animation);
+        animation.onfinish = animation.oncancel = function () { active.delete(animation); };
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -24px 0px' });
+    targets.forEach(function (el) {
+      if (seen.has(el)) return;
+      var rect = el.getBoundingClientRect();
+      // Leave the initial viewport and restored scroll position fully visible.
+      if (rect.height && rect.top < window.innerHeight) seen.add(el);
+      else observer.observe(el);
+    });
+  }
+  function finishActive() { active.forEach(function (animation) { animation.cancel(); }); }
+  reduced.addEventListener('change', function () {
+    if (observer) observer.disconnect();
+    finishActive();
+    if (!reduced.matches) start();
+  });
+  document.addEventListener('focusin', finishActive);
+  window.addEventListener('pagehide', finishActive);
+  start();
+})();
