@@ -60,14 +60,34 @@ export async function start(host, T, onProgress) {
   const ROUGH = { M_Paint_Lacquer_White: 0.32, M_Paint_Lacquer_Grey: 0.38, M_Plastic_Tech_Black: 0.5,
     M_Rubber_Grip: 0.85, M_Metal_Brushed_Steel: 0.32 };
   const fixed = new Set();
+  const isGlass = m => m.transmission > 0 || /Glass/i.test(m.name || '');
+  const isDecal = m => /Label|Specimen/i.test(m.name || '');
   model.traverse(o => {
     if (!o.isMesh) return;
-    o.castShadow = true; o.receiveShadow = true;
-    for (const m of [].concat(o.material)) {
+    const mats = [].concat(o.material);
+    o.castShadow = !mats.some(isGlass); o.receiveShadow = true;
+    if (mats.some(isGlass)) o.renderOrder = 2;      // szkło rysowane po elementach nieprzezroczystych
+    if (mats.some(isDecal)) o.renderOrder = 1;
+    for (const m of mats) {
       if (fixed.has(m)) continue; fixed.add(m);
       m.emissive && m.emissive.setRGB(0, 0, 0);
-      const glass = m.transmission > 0;
-      if (!glass) { m.transparent = false; m.opacity = 1; m.depthWrite = true; }
+      if (isGlass(m)) {
+        // Szkło bez przebiegu transmission (migotało na cienkich, nakładających się ściankach szkiełka):
+        // zwykła przezroczystość, tylko przednie ścianki, bez zapisu głębi.
+        m.transmission = 0; m.thickness = 0;
+        m.transparent = true; m.depthWrite = false; m.side = THREE.FrontSide;
+        m.metalness = 0; m.roughness = 0.04;
+        if (/Slide/i.test(m.name)) { m.color.setRGB(0.86, 0.93, 0.95); m.opacity = 0.22; }
+        else { m.color.setRGB(0.12, 0.16, 0.2); m.opacity = 0.85; }
+        m.envMapIntensity = 1.4;
+      } else {
+        m.transparent = false; m.opacity = 1; m.depthWrite = true;
+      }
+      if (isDecal(m)) {
+        // napisy i preparat leżą tuż na powierzchni — przesunięcie głębi zapobiega migotaniu
+        m.polygonOffset = true; m.polygonOffsetFactor = -2; m.polygonOffsetUnits = -2;
+        if (m.map) m.alphaTest = 0.4;
+      }
       if (ROUGH[m.name] !== undefined) m.roughness = ROUGH[m.name];
       m.needsUpdate = true;
     }
@@ -297,7 +317,7 @@ export async function start(host, T, onProgress) {
       else if (camera.view) camera.clearViewOffset();
       // pulsujące podświetlenie wybranej części
       for (let k = 0; k < spots.length; k++) {
-        const s = spots[k], want = k === active ? 0.035 + 0.02 * Math.sin(now / 320) : 0;
+        const s = spots[k], want = k === active ? 0.014 + 0.008 * Math.sin(now / 320) : 0;
         if (Math.abs(s.glow - want) < 0.002 && want === 0) continue;
         s.glow += (want - s.glow) * Math.min(1, dt * 8);
         for (const m of s.meshes) for (const mat of [].concat(m.material)) if (mat.emissive) { mat.emissive.copy(ACCENT); mat.emissiveIntensity = s.glow; }
