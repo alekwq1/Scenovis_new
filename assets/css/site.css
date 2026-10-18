@@ -1151,3 +1151,49 @@ p { text-wrap: pretty; }
   .direct strong { font-size: 15px; }
   .direct a { padding: 10px 0; }
 }
+
+/* Shared phone type scale across PL/EN home, EXPO and 3D pages. */
+@media (max-width: 700px) {
+  body { font-size: 15px; line-height: 1.5; }
+  body[data-page] h1,
+  body[data-page] .hero h1,
+  body[data-page] .hero h1:lang(en) {
+    font-size: clamp(26px, 7vw, 30px); line-height: 1.16; letter-spacing: -.025em;
+  }
+  body[data-page] h2,
+  body[data-page] .section h2 { font-size: 22px; line-height: 1.25; letter-spacing: -.02em; }
+  body[data-page] h3 { font-size: 18px; line-height: 1.3; }
+  .hero .lead, .section-lead, .service-desc, .about-body,
+  .after-inner p, .case-cta p, .player-end p, .player-ph-title,
+  .tldr-list p, .benefits p, .get-grid p, .steps p,
+  .case--3d .case-copy .section-lead, .case--3d .case-get p,
+  .check-list li, .service-list li, .case-points li,
+  .case--3d .case-points li, .full-list li, .chapters li,
+  .costs .legend li, .legend li, .faq-a, .faq-item summary,
+  .form-status, .form-error { font-size: 15px; line-height: 1.5; }
+  .hero-note, .service-code, .section-label, .eyebrow,
+  .full-note, .services-note, .contact-small, .direct-title,
+  .footer-brand p, .footer-meta, .crumbs ol, .player-meta,
+  .shot figcaption, .variant-scopes { font-size: 13px; line-height: 1.45; }
+  .nav a, .button, .button-small, .hero-path, .text-link,
+  .footer-links a, .direct small, .pills li, .flow li,
+  .sheet table, .sheet-note strong, .more-list { font-size: 14px; }
+  .field input, .field select, .field textarea { font-size: 16px; }
+  .section { padding-block: 24px; }
+  .section-head { margin-bottom: 16px; }
+  .section-lead { margin-top: 12px; }
+  .hero { padding-block: 20px 28px; }
+  .hero-grid { gap: 24px; }
+  .hero h1 { margin-block: 14px; }
+  .hero .cta-row { margin-top: 18px; gap: 10px; }
+  .hero-note { margin-top: 16px; }
+  .crumbs ol { margin-bottom: 20px; }
+  .faq-item summary { min-height: 48px; padding-block: 10px; }
+  .faq-a { padding-bottom: 14px; }
+  .get-grid li, .get-grid li:nth-child(2n), .get-grid li:not(:nth-child(3n+1)) { padding-block: 16px; }
+  /* The illustrated stand comparison is desktop-only on the EXPO page. */
+  body[data-page="expo"] .case,
+  body[data-page="expo"] .nav li:has(a[href="#przyklad"]),
+  body[data-page="expo"] .nav li:has(a[href="#example"]),
+  body[data-page="expo"] a[data-track="hero_cta_case"] { display: none; }
+}
