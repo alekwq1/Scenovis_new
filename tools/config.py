@@ -60,7 +60,20 @@ EXPO_HERO_VIDEO = None
 # i strona NIE generuje VideoObject JSON-LD. Po nagraniu: wgraj pliki do assets/video/,
 # odkomentuj poniższy słownik, popraw nazwy/czas i uruchom: python tools/build.py
 # Okno filmu zachowuje ten sam rozmiar co okładka.
-VIDEO = None
+VIDEO = {
+    "src": "/assets/video/scenovis-stoisko-prezentacja.mp4",      # 1728×972, H.264, bez dźwięku, 17 s
+    "poster": "/assets/img/scenovis-kiosk-ekran-1920.webp",
+    "width": 1728, "height": 972,
+    "duration_iso": "PT17S",
+    "duration_label": {"pl": "0:17", "en": "0:17"},
+    "upload_date": "2026-10-18T14:00:00+02:00",
+    "captions": {"pl": "/assets/video/scenovis-stoisko-prezentacja.pl.vtt",
+                 "en": "/assets/video/scenovis-stoisko-prezentacja.en.vtt"},
+    "name": {"pl": "Zobacz stoisko. Porównaj możliwości. — Scenovis",
+             "en": "See the stand. Compare the options. — Scenovis"},
+    "cover": "kioskscreen",
+    "muted": True,
+}
 # Przykład:
 # VIDEO = {
 #     "src": "/assets/video/scenovis-expo-demo.mp4",      # H.264 (AAC), 1920x1080 — wymagany
