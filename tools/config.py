@@ -43,6 +43,8 @@ VIDEO_3D = {
     "upload_date": "2026-10-18T13:00:00+02:00",
     "name": {"pl": "Interaktywna prezentacja mikroskopu — Scenovis",
              "en": "Interactive microscope presentation — Scenovis"},
+    "captions": {"pl": "/assets/video/scenovis-mikroskop-prezentacja.pl.vtt",
+                 "en": "/assets/video/scenovis-mikroskop-prezentacja.en.vtt"},
     "cover": "cover3d",
     "muted": True,
 }

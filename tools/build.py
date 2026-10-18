@@ -415,7 +415,7 @@ def player(lang, kind="expo"):
         if v.get("captions", {}).get(l):
             default = " default" if l == lang else ""
             tracks += (f'<track kind="captions" srclang="{l}" label="{esc(CONTENT[l]["lang_name"])}" '
-                       f'src="{v["captions"][l]}"{default}>')
+                       f'src="{img_url(v["captions"][l])}"{default}>')
     dur = v.get("duration_label", {}).get(lang, "")
     webm = f'<source src="{v["src_webm"]}" type="video/webm">' if v.get("src_webm") else ""
     cover = (f'<div class="player-bg player-cover">{img(lang, v["cover"], "(min-width: 1000px) 58vw, 100vw")}</div>'
@@ -445,6 +445,7 @@ def case(lang, kind="expo"):
 <p class="section-label">{esc(t['services_label'])}</p>
 <h2 id="case-title">{esc(t['p3d_get_h2'])}</h2>
 <p class="section-lead">{esc(t['case3d_lead'])}</p>
+<ul class="case-points">{benefits}</ul>
 <a class="button button-primary case-cta-btn" href="#{ids['contact']}" data-topic="3d" data-track="case_cta_click">{esc(t['case3d_cta'])}</a>
 </div>
 <div class="case-stage">
