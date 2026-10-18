@@ -1197,3 +1197,30 @@ p { text-wrap: pretty; }
   body[data-page="expo"] .nav li:has(a[href="#example"]),
   body[data-page="expo"] a[data-track="hero_cta_case"] { display: none; }
 }
+
+/* Fine-pointer interactions complement the one-time scroll entrances. */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .about-photo, .shot { overflow: hidden; }
+  .about-photo img, .shot img {
+    transition: transform .8s cubic-bezier(.22,1,.36,1), filter .6s ease;
+  }
+  .about-photo:hover img, .shot:hover img { transform: scale(1.035); filter: brightness(1.04); }
+  .service, .steps > li, .full, .hero-path, .hero-figure .annotated, .variant-figure .annotated {
+    transition: border-color .35s ease, box-shadow .45s ease, background-color .35s ease;
+  }
+  .service:hover, .steps > li:hover, .full:hover, .hero-path:hover {
+    border-color: rgba(255,147,100,.5);
+    box-shadow: 0 12px 32px rgba(0,0,0,.16), 0 0 0 1px rgba(255,147,100,.08);
+  }
+  .hero-figure .annotated:hover, .variant-figure .annotated:hover {
+    border-color: rgba(255,147,100,.4);
+    box-shadow: 0 16px 42px rgba(0,0,0,.22);
+  }
+  .button-primary:hover { transform: translateY(-2px); box-shadow: 0 7px 22px rgba(255,147,100,.16); }
+  .button-primary:active { transform: translateY(0); }
+  .text-link .icon { transition: transform .3s cubic-bezier(.22,1,.36,1); }
+  .text-link:hover .icon:last-child { transform: translateX(3px); }
+}
+@media (prefers-reduced-motion: no-preference) and (pointer: coarse) {
+  .button:active, .hero-path:active { transform: scale(.985); }
+}
