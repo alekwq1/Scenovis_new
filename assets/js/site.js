@@ -421,3 +421,21 @@
     });
   });
 })();
+
+// Keep optional name/topic fields available without lengthening the mobile form.
+(function () {
+  var form = document.getElementById('lead-form');
+  if (!form) return;
+  var row = form.querySelector('.field-row');
+  var details = form.querySelector('.more-grid');
+  if (!row || !details) return;
+  var marker = document.createComment('optional fields desktop position');
+  row.before(marker);
+  var mobile = window.matchMedia('(max-width: 700px)');
+  function placeOptionalFields() {
+    if (mobile.matches) details.prepend(row);
+    else marker.after(row);
+  }
+  placeOptionalFields();
+  mobile.addEventListener('change', placeOptionalFields);
+})();

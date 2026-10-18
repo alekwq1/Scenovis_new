@@ -636,7 +636,8 @@ def about(lang):
 <div class="about-copy">
 <p class="section-label">{esc(t['about_label'])}</p>
 <h2 id="about-title">{esc(t['about_h2'])}</h2>
-<div class="about-body">{body}</div>
+<div class="about-body about-body--full">{body}</div>
+<p class="about-body about-body--short">{esc(t["about_short"])}</p>
 <a class="text-link" href="{C.LINKEDIN_ALEKS}" rel="noopener" target="_blank">{icon('linkedin')}{esc(t['about_linkedin'])}</a>
 </div>
 </div>
