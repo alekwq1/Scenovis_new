@@ -152,8 +152,14 @@ def variant_picture(lang, v, sizes):
             f'</picture>')
 
 
+# Obrazy z tekstem interfejsu w konkretnym języku: assets/img/<nazwa>-<lang>-<szerokość>.*
+LANG_IMG = {"kioskscreen"}
+
+
 def img(lang, key, sizes, eager=False, cls=""):
     name, widths, w, h = IMG[key]
+    if key in LANG_IMG:
+        name = f"{name}-{lang}"
     return picture(name, widths, w, h, CONTENT[lang]["alt"][key], sizes, eager, cls)
 
 
