@@ -152,8 +152,21 @@
       btn.setAttribute('aria-pressed', String(paused));
       btn.setAttribute('aria-label', btn.getAttribute(paused ? 'data-label-play' : 'data-label-pause'));
     }
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); }
-    btn.addEventListener('click', function () { if (v.paused) v.play(); else v.pause(); });
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var userPaused = reduce; // ręczna pauza (lub ograniczony ruch) — nie wznawiamy automatycznie
+    if (reduce) { v.removeAttribute('autoplay'); v.pause(); }
+    btn.addEventListener('click', function () {
+      if (v.paused) { userPaused = false; v.play(); } else { userPaused = true; v.pause(); }
+    });
+    // poza ekranem film się zatrzymuje (bateria, transfer), po powrocie rusza dalej
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (!e.isIntersecting) { if (!v.paused) v.pause(); }
+          else if (!userPaused && v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        });
+      }, { threshold: 0.15 }).observe(v);
+    }
     v.addEventListener('play', sync); v.addEventListener('pause', sync); sync();
   });
 
