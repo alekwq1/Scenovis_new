@@ -340,6 +340,18 @@ def variant_figure(lang, sizes="(min-width: 1000px) 52vw, 100vw"):
 </figure>"""
 
 
+def mobile_src(src):
+    """Lżejsza wersja filmu na telefony (plik <nazwa>-960.mp4 obok oryginału), jeśli istnieje."""
+    m = src[:-4] + "-960.mp4"
+    return m if os.path.exists(os.path.join(ROOT, m.lstrip("/"))) else None
+
+
+def video_sources(src):
+    m = mobile_src(src)
+    small = f'<source src="{img_url(m)}" type="video/mp4" media="(max-width: 700px)">' if m else ""
+    return small + f'<source src="{img_url(src)}" type="video/mp4">'
+
+
 def hero_video(lang, hv, label, loop=True, end_cta=None):
     """Zapętlone wideo bez dźwięku z przyciskiem pauzy (hero strony głównej i podstrony stoiska)."""
     htracks = "".join(
@@ -357,7 +369,7 @@ def hero_video(lang, hv, label, loop=True, end_cta=None):
     loop_attr = " loop" if loop else ""
     return (f'<video class="hero-video" autoplay muted{loop_attr} playsinline preload="metadata" poster="{img_url(hv["poster"])}" '
             f'width="{hv.get("width", 1920)}" height="{hv.get("height", 1080)}" aria-label="{esc(label)}">'
-            f'<source src="{img_url(hv["src"])}" type="video/mp4">{htracks}</video>'
+            f'{video_sources(hv["src"])}{htracks}</video>'
             f'<button class="hero-video-toggle" type="button" data-hero-video-toggle aria-pressed="false" '
             f'aria-label="{esc(t["video_pause"])}" data-label-pause="{esc(t["video_pause"])}" '
             f'data-label-play="{esc(t["video_play"])}"><span aria-hidden="true"></span></button>' + end)
@@ -471,7 +483,7 @@ def player(lang, kind="expo"):
     muted = " muted" if v.get("muted") else ""
     return f"""<div class="player is-placeholder has-video" data-replay="{esc(t['video_replay'])}">
 <video id="case-video" controls preload="none" playsinline{muted} poster="{img_url(v['poster'])}" width="{v['width']}" height="{v['height']}" data-video-name="{kind}_case">
-{webm}<source src="{img_url(v['src'])}" type="video/mp4">{tracks}
+{webm}{video_sources(v['src'])}{tracks}
 </video>{cover}
 <button class="player-play" type="button" aria-label="{esc(t['video_play'])}">{icon('play')}<span>{esc(t['video_play'])}{(' · ' + esc(dur)) if dur else ''}</span></button>
 </div>"""
@@ -803,15 +815,24 @@ def website_node():
 
 
 def video_node(lang, page="home"):
-    v = C.VIDEO_3D if page == "3d" else C.VIDEO
-    if not v:
-        return None
+    """VideoObject dla filmów widocznych na stronie (hero i sekcja filmu)."""
     t = CONTENT[lang]
-    return {"@type": "VideoObject", "@id": abs_url(page_path(lang, page) + "#video"),
-            "name": v["name"][lang], "description": t["case3d_lead" if page == "3d" else "case_lead"],
-            "thumbnailUrl": [abs_url(v["poster"])], "uploadDate": v["upload_date"],
-            "duration": v["duration_iso"], "contentUrl": abs_url(v["src"]), "inLanguage": lang,
-            "creator": {"@id": abs_url("/#organization")}}
+    items = []
+    if page == "home" and getattr(C, "HOME_HERO_VIDEO", None):
+        items.append((C.HOME_HERO_VIDEO, t["home_title"], t["hero_lead"], "PT31S"))
+    if page == "expo" and getattr(C, "EXPO_HERO_VIDEO", None):
+        items.append((C.EXPO_HERO_VIDEO, t["expo_title"], t["expo_lead"], "PT18S"))
+    v = C.VIDEO_3D if page == "3d" else C.VIDEO
+    if v:
+        items.append((v, v["name"][lang], t["case3d_lead" if page == "3d" else "case_lead"], v["duration_iso"]))
+    nodes = []
+    for n, (v, name, desc, dur) in enumerate(items):
+        nodes.append({"@type": "VideoObject", "@id": abs_url(page_path(lang, page) + f"#video{n or ''}"),
+                      "name": name.replace("\xa0", " "), "description": desc.replace("\xa0", " "), "thumbnailUrl": [abs_url(v["poster"])],
+                      "uploadDate": v.get("upload_date", "2026-10-18T12:00:00+02:00"), "duration": v.get("duration_iso", dur),
+                      "contentUrl": abs_url(v["src"]), "inLanguage": lang,
+                      "creator": {"@id": abs_url("/#organization")}})
+    return nodes or None
 
 
 def graph(lang, page, title, desc, extra=None):
@@ -823,7 +844,9 @@ def graph(lang, page, title, desc, extra=None):
     if page == "home":
         nodes.append(person_node())
     for n in (extra or []):
-        if n:
+        if isinstance(n, list):
+            nodes.extend(n)
+        elif n:
             nodes.append(n)
     return {"@context": "https://schema.org", "@graph": nodes}
 
