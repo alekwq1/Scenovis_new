@@ -436,6 +436,23 @@ def case(lang, kind="expo"):
     k = "case3d" if kind == "3d" else "case"
     benefits = "".join(f'<li>{icon("check")}<span><strong>{esc(a)}</strong> — {esc(b)}</span></li>'
                        for a, b in t[k + "_benefits"])
+    if kind == "3d":
+        # podstrona 3D: jedna sekcja „Co możemy przygotować” — film obok opisu, zakres pod spodem
+        grid = "".join(f'<li><h3>{esc(a)}</h3><p>{esc(b)}</p></li>' for a, b in t["p3d_get"])
+        return f"""<section class="section case case--3d" id="{ids['case']}" aria-labelledby="case-title">
+<div class="wrap">
+<div class="case-copy">
+<p class="section-label">{esc(t['services_label'])}</p>
+<h2 id="case-title">{esc(t['p3d_get_h2'])}</h2>
+<p class="section-lead">{esc(t['case3d_lead'])}</p>
+<a class="button button-primary case-cta-btn" href="#{ids['contact']}" data-topic="3d" data-track="case_cta_click">{esc(t['case3d_cta'])}</a>
+</div>
+<div class="case-stage">
+{player(lang, kind)}
+</div>
+<ul class="get-grid case-get">{grid}</ul>
+</div>
+</section>"""
     return f"""<section class="section case" id="{ids['case']}" aria-labelledby="case-title">
 <div class="wrap">
 <div class="case-copy">
@@ -815,7 +832,7 @@ def build_3d(lang):
                [service_node(lang, "3d"), breadcrumb_node(lang, "3d"), video_node(lang, "3d")])
     return (head(lang, "3d", t["p3d_title"], t["p3d_desc"], a, jsonld=ld)
             + header(lang, "3d", a, nav=False)
-            + hero_landing(lang, "3d") + get_grid(lang, "3d") + case(lang, "3d") + after_fair(lang)
+            + hero_landing(lang, "3d") + case(lang, "3d") + after_fair(lang)
             + cross(lang, "3d")
             + faq(lang, ["3d_forms", "3d_data", "3d_hw", "3d_reuse", "3d_nofair", "price"])
             + contact(lang, "3d", topic="3d") + footer(lang))

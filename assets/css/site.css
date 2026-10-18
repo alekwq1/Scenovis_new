@@ -976,3 +976,9 @@ p { text-wrap: pretty; }
 .player-cover::after { background: linear-gradient(180deg, rgba(13,16,17,0) 40%, rgba(13,16,17,.45)); }
 .player.has-video .player-play { z-index: 2; }
 .player.is-playing .player-cover { display: none; }
+/* podstrona 3D: film + zakres w jednej sekcji */
+.case--3d { background: var(--bg-2); border-top: 1px solid var(--line); }
+.case--3d .section-label { margin-bottom: 14px; }
+.case--3d .case-cta-btn { margin-top: 26px; }
+.case-get { margin-top: 44px; }
+@media (min-width: 1000px) { .case--3d > .wrap > .case-get { grid-column: 1 / -1; grid-row: 2; } }
