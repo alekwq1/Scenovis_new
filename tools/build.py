@@ -116,7 +116,7 @@ def picture(name, widths, w, h, alt, sizes, eager=False, cls=""):
             f'</picture>')
 
 
-# Rendery z projektu demonstracyjnego Scenovis (Blender / Cycles). Pliki: assets/img/<nazwa>-<szerokość>.avif|webp
+# Rendery Scenovis (Blender / Cycles). Pliki: assets/img/<nazwa>-<szerokość>.avif|webp
 IMG = {
     "stand":      ("scenovis-stoisko",               [640, 960, 1280, 1660, 1920], 1920, 1080),
     "visitor":    ("scenovis-stoisko-odwiedzajacy",  [640, 960, 1280, 1660, 1920], 1920, 1080),
@@ -126,6 +126,26 @@ IMG = {
     "exploded":   ("scenovis-mikroskop-rozlozony",   [640, 960, 1280, 1600], 1600, 1067),
     "objectives": ("scenovis-obiektywy",             [640, 960, 1280, 1600], 1600, 1067),
 }
+
+
+# Warianty stoiska w hero. Pliki: assets/img/warianty/stoisko-<wariant>-<szerokość>.avif|webp
+# Stałe nazwy i krótki cache (_headers) — wystarczy podmienić pliki (tools/warianty.py robi to z PNG).
+VARIANTS = ["economy", "smart", "premium"]
+VARIANT_WIDTHS = [640, 960, 1280, 1920]
+
+
+def variant_picture(lang, v, sizes):
+    t = CONTENT[lang]["variants"][v]
+    base = f"/assets/img/warianty/stoisko-{v}"
+    avif = ", ".join(f"{base}-{x}.avif {x}w" for x in VARIANT_WIDTHS)
+    webp = ", ".join(f"{base}-{x}.webp {x}w" for x in VARIANT_WIDTHS)
+    on = v == "smart"
+    load = 'fetchpriority="high" decoding="async"' if on else 'fetchpriority="low" decoding="async"'
+    hidden = '' if on else ' aria-hidden="true"'
+    return (f'<picture class="vimg vimg--{v}"{hidden}><source type="image/avif" srcset="{avif}" sizes="{sizes}">'
+            f'<source type="image/webp" srcset="{webp}" sizes="{sizes}">'
+            f'<img class="annotated-img" src="{base}-1280.webp" width="1920" height="1080" alt="{esc(t["alt"])}" {load}>'
+            f'</picture>')
 
 
 def img(lang, key, sizes, eager=False, cls=""):
@@ -280,12 +300,18 @@ def section_head(label, h2, lead=None, h2_id=None, extra=""):
 def hero_home(lang):
     t = CONTENT[lang]
     ids = IDS[lang]
-    tags = []
-    for key, name, typ in t["hero_tags"]:
-        tkey = {"wynajem": "rent", "rent": "rent", "zakup": "buy", "buy": "buy",
-                "usługa": "service", "service": "service"}[typ]
-        tags.append(f'<li class="tag tag--{key}"><span class="tag-label"><span class="tag-name">{esc(name)}</span>'
-                    f'<span class="chip chip--{tkey}">{esc(typ)}</span></span></li>')
+    types = {"wynajem": "rent", "rent": "rent", "zakup": "buy", "buy": "buy", "usługa": "service", "service": "service"}
+    pics, tags, scopes, buttons = [], [], [], []
+    for v in VARIANTS:
+        d = t["variants"][v]
+        pics.append(variant_picture(lang, v, "(min-width: 1000px) 58vw, 100vw"))
+        for key, name, typ in d["tags"]:
+            tags.append(f'<li class="tag tag--{key} in-{v}"><span class="tag-label"><span class="tag-name">{esc(name)}</span>'
+                        f'<span class="chip chip--{types[typ]}">{esc(typ)}</span></span></li>')
+        scopes.append(f'<p class="variant-scope in-{v}"><strong>{esc(d["name"])}:</strong> {esc(d["scope"])}</p>')
+        on = v == "smart"
+        buttons.append(f'<button type="button" class="vbtn" data-set-variant="{v}" aria-pressed="{str(on).lower()}">'
+                       f'{esc(d["name"])}</button>')
     paths = "".join(f'<li><a class="hero-path" href="{page_path(lang, key)}" data-track="hero_service_{key}">'
                     f'<span>{esc(label)}</span>{icon("arrow")}</a></li>' for key, label in t["hero_paths"])
     return f"""<section class="hero" aria-labelledby="hero-title">
@@ -298,16 +324,15 @@ def hero_home(lang):
 <a class="button button-primary" href="#{ids['contact']}" data-topic="general" data-track="hero_cta_contact">{esc(t['hero_cta_primary'])}</a>
 </div>
 <nav class="hero-paths" aria-label="{esc(t['hero_paths_label'])}"><ul>{paths}</ul></nav>
-<p class="hero-note">{todo(esc(t['hero_note']).replace('{todo:', '{todo:'))}</p>
+<p class="hero-note">{todo(esc(t['hero_note']))}</p>
 </div>
-<figure class="hero-figure">
+<figure class="hero-figure" data-variant-scope data-variant="smart">
 <div class="annotated">
-{img(lang, 'stand', '(min-width: 1000px) 58vw, 100vw', eager=True, cls='annotated-img')}
+<div class="vimgs">{''.join(pics)}</div>
 <ul class="tags" aria-label="{esc(t['hero_figure_label'])}">{''.join(tags)}</ul>
-<div class="variant-pill" aria-hidden="true"><span>{esc(t['hero_variant_label'])}</span><b>Economy</b><b class="is-on">Smart</b><b>Premium</b></div>
-<span class="concept-badge">{esc(t['concept_badge'])}</span>
+<div class="variant-pill" role="group" aria-label="{esc(t['costs_variant_label'])}"><span aria-hidden="true">{esc(t['hero_variant_label'])}</span>{''.join(buttons)}</div>
 </div>
-<figcaption>{esc(t['concept_caption'])}</figcaption>
+<figcaption class="variant-scopes" aria-live="polite">{''.join(scopes)}</figcaption>
 </figure>
 </div>
 </section>"""
@@ -328,7 +353,7 @@ def hero_landing(lang, kind):
         viewer_attr = ' id="viewer-host" data-viewer'
         viewer_btn = (f'<button class="viewer-launch" type="button" data-viewer-launch>{icon("play")}'
                       f'<span>{esc(v["launch"])}</span></button>')
-        viewer_note = f' <span class="viewer-note">{esc(v["note"])}</span>'
+        viewer_note = f'<span class="viewer-note">{esc(v["note"])}</span>'
         vjson = json.dumps(v, ensure_ascii=False).replace("</", "<\\/")
         viewer_json = f'<script type="application/json" id="viewer-i18n">{vjson}</script>'
     crumbs = (f'<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="{page_path(lang, "home")}">'
@@ -347,8 +372,8 @@ def hero_landing(lang, kind):
 </div>
 </div>
 <figure class="hero-figure hero-figure--plain">
-<div class="annotated"{viewer_attr}>{pic}<span class="concept-badge">{esc(t['concept_badge'])}</span>{viewer_btn}</div>
-<figcaption>{esc(t['concept_caption'])}{viewer_note}</figcaption>
+<div class="annotated"{viewer_attr}>{pic}{viewer_btn}</div>
+{('<figcaption>' + viewer_note + '</figcaption>') if viewer_note else ''}
 {viewer_json}
 </figure>
 </div>
@@ -368,19 +393,13 @@ def tldr(lang):
 
 
 def player(lang, kind="expo"):
+    """Okno filmu. Bez nagrania (config.VIDEO = None) — sama okładka, bez przycisku odtwarzania.
+    Po dodaniu pliku i uzupełnieniu config.VIDEO pojawia się odtwarzacz z tą samą wielkością okna."""
     t = CONTENT[lang]
     v = C.VIDEO
     if not v:
         bg = img(lang, "objectives" if kind == "3d" else "kiosk", "(min-width: 1000px) 58vw, 100vw")
-        return f"""<div class="player is-placeholder">
-<div class="player-bg">{bg}</div>
-<div class="player-ph">
-<span class="play-ring" aria-hidden="true">{icon('play')}</span>
-<p class="player-ph-title">{esc(t['video_placeholder_title'])}</p>
-<p>{esc(t['video_placeholder_text'])}</p>
-{('<p>' + todo(t['video_todo']) + '</p>') if C.DRAFT else ''}
-</div>
-</div>"""
+        return f'<div class="player is-placeholder is-cover"><div class="player-bg">{bg}</div></div>'
     tracks = ""
     for l in LANGS:
         if v.get("captions", {}).get(l):
@@ -389,51 +408,32 @@ def player(lang, kind="expo"):
                        f'src="{v["captions"][l]}"{default}>')
     dur = v.get("duration_label", {}).get(lang, "")
     webm = f'<source src="{v["src_webm"]}" type="video/webm">' if v.get("src_webm") else ""
-    return f"""<div class="player">
+    return f"""<div class="player is-placeholder has-video">
 <video id="case-video" controls preload="none" playsinline poster="{v['poster']}" width="{v['width']}" height="{v['height']}" data-video-name="expo_case">
 {webm}<source src="{v['src']}" type="video/mp4">{tracks}
 </video>
 <button class="player-play" type="button" aria-label="{esc(t['video_play'])}">{icon('play')}<span>{esc(t['video_play'])}{(' · ' + esc(dur)) if dur else ''}</span></button>
-</div>
-<p class="player-meta">{esc(t['video_duration'])}: {esc(dur)} · {esc(t['video_captions_note'])}</p>"""
+</div>"""
 
 
 def case(lang, kind="expo"):
-    """Sekcja „Przykład”. kind="expo" — demonstrator stoiska (strona główna, projekt stoiska);
-    kind="3d" — ten sam projekt demonstracyjny opisany z perspektywy prezentacji produktu."""
+    """Sekcja filmu: nagłówek, trzy krótkie korzyści i jedno CTA obok okna filmu."""
     t = CONTENT[lang]
     ids = IDS[lang]
     k = "case3d" if kind == "3d" else "case"
-    intro = t[k + "_intro"] if C.VIDEO else t[k + "_intro_pending"]
-    benefits = "".join(f'<li><h3>{esc(a)}</h3><p>{esc(b)}</p></li>' for a, b in t[k + "_benefits"])
-    tag = f'<p class="demo-tag">{esc(t[k + "_tag"])}</p>'
-    cta = f"""<div class="case-cta">
-<p>{esc(t[k + '_cta_q'])}</p>
-<a class="button button-primary" href="#{ids['contact']}" data-topic="{kind}" data-track="case_cta_click">{esc(t[k + '_cta'])}</a>
-</div>"""
-    if kind == "3d":
-        bottom = f'<div class="case-bottom case-bottom--single">{cta}</div>'
-    else:
-        chapters = "".join(f'<li>{esc(c)}</li>' for c in t["case_chapters"])
-        transcript = (f'<details class="transcript"><summary>{esc(t["case_transcript"])}</summary>'
-                      f'{todo(t["case_transcript_body"])}</details>') if C.VIDEO else ""
-        bottom = f"""<div class="case-bottom">
-<div class="chapters">
-<h3>{esc(t['case_chapters_title'])}</h3>
-<ol>{chapters}</ol>
-{transcript}
-</div>
-{cta}
-</div>"""
+    benefits = "".join(f'<li>{icon("check")}<span><strong>{esc(a)}</strong> — {esc(b)}</span></li>'
+                       for a, b in t[k + "_benefits"])
     return f"""<section class="section case" id="{ids['case']}" aria-labelledby="case-title">
 <div class="wrap">
-{section_head(t['case_label'], esc(t[k + '_h2']), t[k + '_lead'], 'case-title', tag)}
+<div class="case-copy">
+<h2 id="case-title">{esc(t[k + '_h2'])}</h2>
+<p class="section-lead">{esc(t[k + '_lead'])}</p>
+<ul class="case-points">{benefits}</ul>
+<a class="button button-primary case-cta-btn" href="#{ids['contact']}" data-topic="{kind}" data-track="case_cta_click">{esc(t[k + '_cta'])}</a>
+</div>
 <div class="case-stage">
 {player(lang, kind)}
 </div>
-<p class="case-intro">{esc(intro)}</p>
-<ul class="benefits">{benefits}</ul>
-{bottom}
 </div>
 </section>"""
 
@@ -448,12 +448,11 @@ def services(lang):
         if s["more"]:
             label, target = s["more"]
             more = f'<a class="text-link" href="{page_path(lang, target)}">{esc(label)}{icon("arrow")}</a>'
-        cards.append(f"""<article class="service service--{s['who_type']}">
+        cards.append(f"""<article class="service">
 <p class="service-code">{esc(s['code'])}</p>
 <h3>{esc(s['title'])}</h3>
 <p class="service-desc">{esc(s['desc'])}</p>
 <ul class="service-list">{items}</ul>
-<p class="who who--{s['who_type']}">{esc(s['who'])}</p>
 <div class="service-actions">
 <a class="button button-ghost button-small" href="#{ids['contact']}" data-topic="{s['key']}">{esc(s['ask'])}</a>
 {more}
@@ -463,47 +462,65 @@ def services(lang):
 <div class="wrap">
 {section_head(t['services_label'], esc(t['services_h2']), t['services_lead'], 'services-title')}
 <div class="services-grid">{''.join(cards)}</div>
+{full_service(lang)}
 <p class="services-note">{esc(t['services_note'])}</p>
 </div>
 </section>"""
 
 
+def full_service(lang):
+    t = CONTENT[lang]
+    f = t["full"]
+    items = "".join(f'<li>{icon("check")}{esc(x)}</li>' for x in f["items"])
+    return f"""<div class="full">
+<div class="full-copy">
+<p class="service-code">{esc(f['label'])}</p>
+<h3>{esc(f['title'])}</h3>
+<p class="service-desc">{esc(f['desc'])}</p>
+<p class="full-note">{esc(f['note'])}</p>
+<a class="button button-primary" href="#{IDS[lang]['contact']}" data-topic="delivery" data-track="full_service_cta">{esc(f['cta'])}</a>
+</div>
+<ul class="full-list">{items}</ul>
+</div>"""
+
+
 def costs(lang):
     t = CONTENT[lang]
     ids = IDS[lang]
-    variants = ["economy", "smart", "premium"]
     tabs = "".join(
         f'<button type="button" role="tab" id="tab-{v}" aria-controls="cost-sheet" '
         f'aria-selected="{"true" if v == "smart" else "false"}" tabindex="{"0" if v == "smart" else "-1"}" '
-        f'data-variant="{v}">{v.capitalize()}</button>' for v in variants)
+        f'data-set-variant="{v}">{esc(t["variants"][v]["name"])}</button>' for v in VARIANTS)
     rows = []
-    for code, name, typ, descs in t["costs_rows"]:
-        d = "".join(f'<span class="v v-{v}">{esc(x)}</span>' for v, x in zip(variants, descs))
-        rows.append(f'<tr><td class="c-code">{code}</td><th scope="row">{esc(name)}</th>'
-                    f'<td><span class="chip chip--{typ}">{esc(t["cost_types"][typ])}</span></td><td class="c-desc">{d}</td></tr>')
+    for name, per in t["costs_rows"]:
+        desc = "".join(f'<span class="v in-{v}">{esc(x)}</span>' for v, (_, x) in zip(VARIANTS, per))
+        chips = "".join(f'<span class="v in-{v}"><span class="chip chip--{"buy" if typ == "mix" else typ}'
+                        f'{" chip--mix" if typ == "mix" else ""}">{esc(t["cost_types"][typ])}</span></span>'
+                        for v, (typ, _) in zip(VARIANTS, per))
+        rows.append(f'<tr><th scope="row">{esc(name)}</th><td class="c-desc">{desc}</td><td class="c-type">{chips}</td></tr>')
+    more = "".join(f'<ul class="v in-{v} more-list">' + "".join(f"<li>{esc(x)}</li>" for x in items) + "</ul>"
+                   for v, items in zip(VARIANTS, t["costs_more_items"]))
     c1, c2, c3 = t["costs_cols"]
     legend = "".join(f'<li><span class="chip chip--{k}">{esc(a)}</span> {esc(b)}</li>' for k, a, b in t["costs_legend"])
-    get = "".join(f'<li>{icon("check")}{esc(x)}</li>' for x in t["costs_get"])
     return f"""<section class="section costs" id="{ids['costs']}" aria-labelledby="costs-title">
 <div class="wrap costs-grid">
 <div class="costs-copy">
 {section_head(t['costs_label'], t['costs_h2'], t['costs_lead'], 'costs-title')}
 <ul class="legend">{legend}</ul>
-<h3 class="small-h">{esc(t['costs_get_title'])}</h3>
-<ul class="check-list">{get}</ul>
 </div>
-<div class="sheet" data-variant="smart">
+<div class="sheet" data-variant-scope data-variant="smart">
 <div class="sheet-top">
 <p class="sheet-title">{esc(t['costs_sheet_title'])}</p>
 <div class="seg" role="tablist" aria-label="{esc(t['costs_variant_label'])}">{tabs}</div>
 </div>
 <div class="sheet-body" id="cost-sheet" role="tabpanel" aria-labelledby="tab-smart" tabindex="0">
 <table>
-<thead><tr><th scope="col" class="c-code"><span class="visually-hidden">ID</span></th><th scope="col">{esc(c1)}</th><th scope="col">{esc(c2)}</th><th scope="col">{esc(c3)}</th></tr></thead>
+<thead><tr><th scope="col">{esc(c1)}</th><th scope="col">{esc(c2)}</th><th scope="col">{esc(c3)}</th></tr></thead>
 <tbody>{''.join(rows)}</tbody>
 </table>
 </div>
-<p class="sheet-note">{esc(t['costs_sheet_note'])}</p>
+<details class="sheet-more"><summary>{esc(t['costs_more'])}</summary>{more}</details>
+<div class="sheet-note"><strong>{esc(t['costs_price'])}</strong> <span>{esc(t['costs_price_note'])}</span></div>
 </div>
 </div>
 </section>"""
@@ -513,8 +530,6 @@ def about(lang):
     t = CONTENT[lang]
     ids = IDS[lang]
     body = "".join(f"<p>{esc(p)}</p>" for p in t["about_body"])
-    own = "".join(f"<li>{esc(x)}</li>" for x in t["about_own"])
-    partners = "".join(f"<li>{esc(x)}</li>" for x in t["about_partners"])
     pic = picture('aleks', [400, 600, 800], 800, 1067, t['about_photo_alt'], '(min-width: 900px) 320px, 60vw')
     return f"""<section class="section about" id="{ids['about']}" aria-labelledby="about-title">
 <div class="wrap">
@@ -526,11 +541,6 @@ def about(lang):
 <div class="about-body">{body}</div>
 <a class="text-link" href="{C.LINKEDIN_ALEKS}" rel="noopener" target="_blank">{icon('linkedin')}{esc(t['about_linkedin'])}</a>
 </div>
-</div>
-<div class="roles">
-<div class="role role--own"><h3>{esc(t['about_own_title'])}</h3><ol class="flow">{own}</ol></div>
-<div class="role role--partners"><h3>{esc(t['about_partners_title'])}</h3><ul class="pills">{partners}</ul>
-<p>{esc(t['about_partners_note'])}</p></div>
 </div>
 </div>
 </section>"""

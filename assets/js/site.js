@@ -93,31 +93,54 @@
     if (t && form) form.elements.topic.value = t.getAttribute('data-topic');
   });
 
-  /* ---------- zestawienie kosztów: warianty ---------- */
-  document.querySelectorAll('.sheet').forEach(function (sheet) {
-    var tabs = Array.prototype.slice.call(sheet.querySelectorAll('[role="tab"]'));
-    var panel = sheet.querySelector('[role="tabpanel"]');
-    function select(tab, focus) {
-      tabs.forEach(function (t) {
-        var on = t === tab;
+  /* ---------- warianty Economy / Smart / Premium: jeden stan dla hero i zestawienia kosztów ---------- */
+  var VARIANTS = ['economy', 'smart', 'premium'];
+  function setVariant(v, src) {
+    if (VARIANTS.indexOf(v) < 0) return;
+    document.querySelectorAll('[data-variant-scope]').forEach(function (el) { el.setAttribute('data-variant', v); });
+    document.querySelectorAll('.vbtn[data-set-variant]').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-set-variant') === v));
+    });
+    document.querySelectorAll('.vimg').forEach(function (p) {
+      if (p.classList.contains('vimg--' + v)) p.removeAttribute('aria-hidden'); else p.setAttribute('aria-hidden', 'true');
+    });
+    document.querySelectorAll('.sheet').forEach(function (sheet) {
+      var panel = sheet.querySelector('[role="tabpanel"]');
+      sheet.querySelectorAll('[role="tab"]').forEach(function (t) {
+        var on = t.getAttribute('data-set-variant') === v;
         t.setAttribute('aria-selected', String(on));
         t.tabIndex = on ? 0 : -1;
+        if (on && panel) panel.setAttribute('aria-labelledby', t.id);
       });
-      sheet.setAttribute('data-variant', tab.getAttribute('data-variant'));
-      if (panel) panel.setAttribute('aria-labelledby', tab.id);
-      if (focus) tab.focus();
-    }
+    });
+    if (src) track('variant_select', { variant: v, source: src });
+  }
+  document.querySelectorAll('.vbtn[data-set-variant]').forEach(function (b, i, all) {
+    b.addEventListener('click', function () { setVariant(b.getAttribute('data-set-variant'), 'hero'); });
+    b.addEventListener('keydown', function (e) {
+      var n = null;
+      if (e.key === 'ArrowRight') n = all[(i + 1) % all.length];
+      if (e.key === 'ArrowLeft') n = all[(i - 1 + all.length) % all.length];
+      if (n) { e.preventDefault(); n.focus(); setVariant(n.getAttribute('data-set-variant'), 'hero'); }
+    });
+  });
+  document.querySelectorAll('.sheet').forEach(function (sheet) {
+    var tabs = Array.prototype.slice.call(sheet.querySelectorAll('[role="tab"]'));
     tabs.forEach(function (tab, i) {
-      tab.addEventListener('click', function () { select(tab); track('cost_variant_select', { variant: tab.getAttribute('data-variant') }); });
+      tab.addEventListener('click', function () { setVariant(tab.getAttribute('data-set-variant'), 'costs'); });
       tab.addEventListener('keydown', function (e) {
         var n = null;
         if (e.key === 'ArrowRight') n = tabs[(i + 1) % tabs.length];
         if (e.key === 'ArrowLeft') n = tabs[(i - 1 + tabs.length) % tabs.length];
         if (e.key === 'Home') n = tabs[0];
         if (e.key === 'End') n = tabs[tabs.length - 1];
-        if (n) { e.preventDefault(); select(n, true); }
+        if (n) { e.preventDefault(); setVariant(n.getAttribute('data-set-variant'), 'costs'); n.focus(); }
       });
     });
+  });
+  // obrazy pozostałych wariantów pobierane po załadowaniu strony — przełączenie bez czekania
+  window.addEventListener('load', function () {
+    document.querySelectorAll('.vimg img').forEach(function (im) { if (im.decode) im.decode().catch(function () {}); });
   });
 
   /* ---------- film: start, 25%, 50%, koniec + CTA po filmie ---------- */
@@ -141,11 +164,11 @@
       if (document.fullscreenElement) document.exitFullscreen().catch(function () {});
       var end = wrap.querySelector('.player-end');
       if (!end) {
-        var cta = document.querySelector('.case-cta');
+        var cta = document.querySelector('.case-cta-btn');
         if (!cta) return;
         end = document.createElement('div');
         end.className = 'player-end';
-        end.innerHTML = '<div>' + cta.innerHTML + '</div>';
+        end.innerHTML = '<div>' + cta.outerHTML + '</div>';
         wrap.appendChild(end);
       }
       var btn = end.querySelector('a, button');

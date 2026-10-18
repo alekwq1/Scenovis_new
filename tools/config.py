@@ -26,8 +26,11 @@ ADDRESS = None
 # Przykład:
 # ADDRESS = {"streetAddress": "ul. ...", "postalCode": "80-000", "addressLocality": "Gdańsk", "addressCountry": "PL"}
 
-# [TODO: EXPO VIDEO] Uzupełnij po nagraniu filmu. Dopóki VIDEO = None,
-# strona pokazuje estetyczny placeholder i NIE generuje VideoObject JSON-LD.
+# FILM w sekcji „Zobacz stoisko. Porównaj możliwości.”
+# Dopóki VIDEO = None, okno filmu pokazuje okładkę (kadr z kiosku) bez przycisku odtwarzania
+# i strona NIE generuje VideoObject JSON-LD. Po nagraniu: wgraj pliki do assets/video/,
+# odkomentuj poniższy słownik, popraw nazwy/czas i uruchom: python tools/build.py
+# Okno filmu zachowuje ten sam rozmiar co okładka.
 VIDEO = None
 # Przykład:
 # VIDEO = {
@@ -40,6 +43,6 @@ VIDEO = None
 #     "upload_date": "2026-11-05T12:00:00+01:00",          # data publikacji
 #     "captions": {"pl": "/assets/video/scenovis-expo-demo.pl.vtt",
 #                  "en": "/assets/video/scenovis-expo-demo.en.vtt"},
-#     "name": {"pl": "Od koncepcji stoiska do decyzji budżetowej — Scenovis",
-#              "en": "From stand concept to budget decision — Scenovis"},
+#     "name": {"pl": "Zobacz stoisko. Porównaj możliwości. — Scenovis",
+#              "en": "See the stand. Compare the options. — Scenovis"},
 # }

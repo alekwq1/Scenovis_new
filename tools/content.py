@@ -26,10 +26,8 @@ PL = {
     "nav_cta": "Kontakt",
     "lang_switch_label": "Wersja językowa",
     "home_label": "Scenovis — strona główna",
-    "concept_caption": "Render 3D projektu demonstracyjnego Scenovis (Blender) — nie jest realizacją dla klienta.",
-    "concept_badge": "Projekt demonstracyjny",
     "alt": {
-        "stand": "Render 3D stoiska targowego z mikroskopami, ekranem i kioskiem dotykowym — projekt demonstracyjny Scenovis",
+        "stand": "Render 3D stoiska targowego z mikroskopami, ekranem i kioskiem dotykowym",
         "visitor": "Stoisko targowe z perspektywy odwiedzającego: lada, ekran, dwa stanowiska z mikroskopami",
         "standmic": "Mikroskop na stanowisku pokazowym na stoisku targowym — render 3D",
         "kiosk": "Kiosk dotykowy z interaktywną prezentacją 3D mikroskopu na stoisku targowym",
@@ -52,20 +50,41 @@ PL = {
     # ---------- hero ----------
     "hero_eyebrow": "STOISKA EXPO • PREZENTACJE 3D",
     "hero_h1": "Pokaż produkt.<br>Zrozum stoisko.<br><em>Kontroluj budżet.</em>",
-    "hero_lead": "Projektuję stoiska targowe z modelem 3D i zestawieniem kosztów oraz interaktywne "
-                 "prezentacje 3D produktów technicznych. Każdą usługę możesz zamówić osobno lub razem.",
+    "hero_lead": "Projektujemy stoiska targowe i interaktywne prezentacje 3D produktów. Łączymy koncepcję, "
+                 "budżet i organizację udziału w targach — od projektu po obsługę na miejscu.",
     "hero_cta_primary": "Opowiedz o swoim projekcie",
     "hero_paths_label": "Usługi",
     "hero_paths": [("expo", "Projekt stoiska targowego"), ("3d", "Prezentacje produktów 3D")],
     "hero_note": "Gdańsk · projekty w całej Polsce i za granicą · rozmowa po polsku lub angielsku",
-    "hero_tags": [
-        ("led", "Ekran", "wynajem"),
-        ("light", "Oświetlenie", "wynajem"),
-        ("kiosk", "Kiosk dotykowy", "zakup"),
-        ("build", "Montaż i demontaż", "usługa"),
-    ],
+    # Warianty stoiska w hero — zakres zgodny z modelem Blender (EXPO_COST_DATA.json: presets ECONOMY/SMART/PREMIUM).
+    # Punkty: (klucz pozycji, nazwa, typ kosztu). Pozycje punktów — assets/css/site.css (.tag--<klucz>).
+    "variants": {
+        "economy": {
+            "name": "Economy",
+            "scope": "Ściany systemowe i wykładzina z wynajmu, 4 reflektory, ekran 75″, kiosk dotykowy z wynajmu.",
+            "alt": "Stoisko w wariancie Economy: ściany systemowe, wykładzina, cztery reflektory, ekran 75 cali i kiosk dotykowy",
+            "tags": [("screen", "Ekran 75″", "zakup"), ("spots", "4 reflektory", "wynajem"),
+                     ("kiosk", "Kiosk dotykowy", "wynajem"), ("floor", "Wykładzina", "wynajem")],
+        },
+        "smart": {
+            "name": "Smart",
+            "scope": "Własna rama z grafiką tekstylną, podświetlany panel marki, 6 reflektorów i linia LED, "
+                     "ekran 98″, podłoga modułowa, własny kiosk.",
+            "alt": "Stoisko w wariancie Smart: podświetlany panel marki, sześć reflektorów, linia LED, ekran 98 cali, podłoga modułowa i kiosk dotykowy",
+            "tags": [("screen", "Ekran 98″", "zakup"), ("spots", "6 reflektorów", "wynajem"),
+                     ("brand", "Podświetlany panel marki", "zakup"), ("kiosk", "Kiosk dotykowy", "zakup")],
+        },
+        "premium": {
+            "name": "Premium",
+            "scope": "Zakres Smart oraz trzy podświetlane pola, podświetlenie postumentów, własne reflektory "
+                     "ze sterownikiem scen i monitor profesjonalny 98″.",
+            "alt": "Stoisko w wariancie Premium: trzy podświetlane pola, podświetlone postumenty, własne reflektory, monitor profesjonalny 98 cali",
+            "tags": [("screen", "Monitor profesjonalny 98″", "zakup"), ("spots", "6 własnych reflektorów", "zakup"),
+                     ("slats", "Podświetlane pola", "zakup"), ("ped", "Podświetlane postumenty", "zakup")],
+        },
+    },
     "hero_variant_label": "Wariant",
-    "hero_figure_label": "Przykład: elementy stoiska opisane typem kosztu",
+    "hero_figure_label": "Elementy stoiska opisane typem kosztu",
 
     # ---------- w skrócie ----------
     "tldr_title": "Scenovis w skrócie",
@@ -75,62 +94,37 @@ PL = {
         ("Projekt stoiska", "Koncepcja, układ i model 3D — oglądasz stoisko, zanim powstanie."),
         ("Koszty pod kontrolą", "Każdy element jako zakup, wynajem lub usługa. Warianty do porównania."),
         ("Prezentacje produktów 3D", "Budowa, mechanizmy i działanie urządzenia — interaktywnie lub jako animacja."),
-        ("Wykonawcy dobrani do zakresu", "Produkcję i montaż realizują współpracujące firmy. Wiesz, kto za co odpowiada."),
+        ("Od pomysłu do realizacji", "Projekt, prezentacja produktu i organizacja udziału w targach — całość lub wybrany zakres."),
     ],
 
     # ---------- case study / film (strona główna i projekt stoiska) ----------
-    "case_label": "Przykład",
-    "case_tag": "Projekt demonstracyjny / Scenovis Concept",
-    "case_h2": "Od koncepcji stoiska do decyzji budżetowej",
-    "case_lead": "Projekt demonstracyjny: jak obejrzeć stoisko, sprawdzić koszt każdego elementu "
-                 "i porównać warianty przed produkcją.",
-    "case_intro": "Na filmie sam steruję interaktywną prezentacją zbudowaną w Blenderze. "
-                  "To zapis działającego narzędzia, a nie animacja.",
-    "case_intro_pending": "Nagranie jest w przygotowaniu. Pokaże interaktywną prezentację zbudowaną w Blenderze, "
-                          "którą steruję samodzielnie — to koncepcja demonstracyjna, nie realizacja dla klienta.",
-    "video_placeholder_title": "Film w przygotowaniu",
-    "video_placeholder_text": "Tutaj pojawi się nagranie projektu demonstracyjnego.",
-    "video_todo": "{todo:EXPO VIDEO — MP4 + poster + napisy PL/EN, zob. TODO.md}",
+    "case_h2": "Zobacz stoisko. Porównaj możliwości.",
+    "case_lead": "Obejrzyj układ, sprawdź wyposażenie i porównaj warianty przed realizacją.",
     "video_play": "Odtwórz film",
     "video_duration": "Czas trwania",
     "video_captions_note": "Film ma napisy po polsku i angielsku. Dźwięk włącza się dopiero po kliknięciu.",
     "case_benefits": [
-        ("Cały układ, nie tylko render", "Zmieniasz kamery i oglądasz każdą strefę stoiska."),
-        ("Koszt przy każdym elemencie", "Konstrukcja, oświetlenie, multimedia — z podziałem na zakup, wynajem i usługę."),
-        ("Warianty przed produkcją", "Porównujesz Economy, Smart i Premium i widzisz, z czego wynikają różnice w kosztach."),
+        ("Układ 3D", "zobacz przestrzeń i ekspozycję"),
+        ("Przejrzysty budżet", "sprawdź zakup, wynajem i usługi"),
+        ("Porównanie wariantów", "wybierz Economy, Smart lub Premium"),
     ],
-    "case_chapters_title": "Co pokaże film",
-    "case_chapters": [
-        "Ogólny widok stoiska", "Zmiana kamery", "Wybór elementu", "Obrót wokół obiektu",
-        "Koszt elementu", "Zakup, wynajem czy usługa", "Warianty Economy / Smart / Premium",
-        "Koszt oświetlenia", "Kiosk dotykowy", "Prezentacja mikroskopu", "Powrót do stoiska",
-        "Porównanie kosztów wariantów",
-    ],
-    "case_transcript": "Transkrypcja filmu",
-    "case_transcript_body": "<p>{todo:TRANSKRYPCJA — wklej tekst lektora / opis kroków po nagraniu filmu}</p>",
-    "case_cta_q": "Chcesz zobaczyć w ten sposób swoje stoisko?",
     "case_cta": "Omów projekt stoiska",
 
-    # ---------- przykład na podstronie prezentacji 3D ----------
-    "case3d_tag": "Projekt demonstracyjny / Scenovis Concept",
+    # ---------- prezentacja produktu (podstrona prezentacji 3D) ----------
     "case3d_h2": "Interaktywna prezentacja produktu",
-    "case3d_lead": "Projekt demonstracyjny Scenovis: prezentacja urządzenia technicznego (mikroskopu) przygotowana "
-                   "w Blenderze. To koncepcja, nie realizacja dla klienta.",
-    "case3d_intro": "Na nagraniu sam steruję prezentacją — wybieram elementy urządzenia i pokazuję je z bliska.",
-    "case3d_intro_pending": "Nagranie jest w przygotowaniu. Poniżej zakres, który może obejmować prezentacja produktu tego typu.",
+    "case3d_lead": "Budowa, części i działanie urządzenia technicznego pokazane w 3D — na ekranie, kiosku lub w przeglądarce.",
     "case3d_benefits": [
-        ("Budowa urządzenia", "Podzespoły i mechanizmy pokazane w przestrzeni — także te ukryte w obudowie."),
-        ("Element po elemencie", "Odwiedzający lub handlowiec wybiera część i ogląda ją z każdej strony."),
-        ("Działanie produktu", "Animacja pokazuje, jak pracuje mechanizm — bez demontażu i transportu urządzenia."),
+        ("Budowa urządzenia", "podzespoły widoczne także wewnątrz obudowy"),
+        ("Element po elemencie", "wybierz część i obejrzyj ją z każdej strony"),
+        ("Działanie produktu", "mechanizm w ruchu, bez transportu urządzenia"),
     ],
-    "case3d_cta_q": "Chcesz w ten sposób pokazać swój produkt?",
     "case3d_cta": "Porozmawiajmy o prezentacji produktu",
 
     # ---------- oferta ----------
     "services_label": "Oferta",
     "services_h2": "Dwie usługi — osobno lub razem",
     "services_lead": "Projekt stoiska i prezentację produktu 3D możesz zamówić niezależnie od siebie. "
-                     "Każdy projekt wyceniam indywidualnie, według uzgodnionego zakresu.",
+                     "Każdy projekt wyceniamy indywidualnie, według uzgodnionego zakresu.",
     "services": [
         {
             "key": "expo", "code": "Usługa · EXPO", "title": "Projekt stoiska targowego",
@@ -139,7 +133,6 @@ PL = {
             "items": ["Koncepcja stoiska", "Układ funkcjonalny i ergonomia", "Model i wizualizacje 3D",
                       "Dobór wyposażenia i technologii", "Analiza: zakup, wynajem czy własne elementy",
                       "Zestawienie elementów i szacunek kosztów", "Wsparcie w wyborze wykonawców"],
-            "who": "Przygotowuję osobiście", "who_type": "own",
             "more": ("Więcej o projekcie stoiska", "expo"), "ask": "Omów projekt stoiska",
         },
         {
@@ -151,48 +144,70 @@ PL = {
                       "Wizualizacje techniczne i demonstracje funkcji",
                       "Materiały na targi, do showroomu i sprzedaży",
                       "Ponowne użycie — jeśli pozwala format i umowa"],
-            "who": "Przygotowuję osobiście", "who_type": "own",
             "more": ("Więcej o prezentacjach 3D", "3d"), "ask": "Porozmawiajmy o prezentacji",
         },
-        {
-            "key": "delivery", "code": "Opcjonalnie", "title": "Koordynacja realizacji",
-            "desc": "Produkcję, montaż i obsługę wykonują współpracujące firmy. Pomagam je dobrać, a jeśli tak "
-                    "ustalimy — koordynuję realizację.",
-            "items": ["Zabudowa i druk", "Multimedia, ekrany, oświetlenie", "Transport, montaż, demontaż",
-                      "Personel stoiska", "Koordynacja na miejscu"],
-            "who": "Przez współpracujących wykonawców", "who_type": "partners",
-            "more": None, "ask": "Zapytaj o realizację",
-        },
     ],
+    "full": {
+        "label": "Kompleksowa obsługa targów",
+        "title": "Od pomysłu do realizacji",
+        "desc": "Projekt stoiska, prezentacja produktu i organizacja udziału w targach. "
+                "Możemy zająć się całością lub wybranym zakresem.",
+        "items": ["Projekt i wizualizacja 3D", "Interaktywne prezentacje produktów",
+                  "Zabudowa, multimedia i wyposażenie", "Transport, montaż i demontaż",
+                  "Hostessy, hości i obsługa gości", "Koordynacja przebiegu wydarzenia na miejscu"],
+        "note": "Dobieramy zespół i wykonawców do zakresu projektu.",
+        "cta": "Porozmawiajmy o Twoich targach",
+    },
     "services_note": "Zakres każdego projektu ustalamy razem — bez sztywnych pakietów.",
 
     # ---------- koszty ----------
     "costs_label": "Koszty stoiska",
-    "costs_h2": "Nie tylko render.<br><em>Wiesz, za co płacisz.</em>",
-    "costs_lead": "W projekcie stoiska każdy element ma swój koszt i typ. Rozmawiamy o konkretach, "
-                  "a nie o jednej kwocie „za całość”.",
-    "costs_sheet_title": "Zestawienie elementów stoiska",
-    "costs_sheet_note": "Przykład poglądowy. Elementy i kwoty ustalam dla konkretnego projektu, na podstawie ofert wykonawców.",
+    "costs_h2": "Wiesz, za co płacisz.",
+    "costs_lead": "Porównaj wyposażenie i sposób rozliczenia. Zakres oraz wycenę dopasujemy do Twojego projektu.",
+    "costs_sheet_title": "Stoisko 5,4 × 3,8 m",
     "costs_variant_label": "Porównaj warianty",
-    "costs_cols": ("Element", "Typ kosztu", "Co obejmuje"),
-    "cost_types": {"buy": "Zakup", "rent": "Wynajem", "service": "Usługa", "buyrent": "Zakup lub wynajem"},
+    "costs_cols": ("Element", "Zakres", "Rozliczenie"),
+    "cost_types": {"buy": "Zakup", "rent": "Wynajem", "service": "Usługa", "mix": "Wynajem i zakup"},
+    # (element, [(typ, opis) dla economy, smart, premium]) — zgodnie z modelem Blender (EXPO_COST_DATA.json)
     "costs_rows": [
-        ("K-01", "Konstrukcja", "buyrent", ["System modułowy z wynajmu", "System modułowy + własne elementy wielokrotnego użytku", "Zabudowa indywidualna"]),
-        ("G-02", "Grafika", "buy", ["Wydruki na ramach systemowych", "Wymienna grafika tekstylna", "Grafika tekstylna, podświetlenia, elementy 3D"]),
-        ("O-03", "Oświetlenie", "rent", ["Oświetlenie standardowe + kilka reflektorów", "Reflektory na szynach, akcent na produkt", "Projekt oświetlenia scenicznego"]),
-        ("M-04", "Multimedia", "rent", ["Jeden ekran z pętlą wideo", "Ekran + kiosk dotykowy z prezentacją 3D", "Ściana LED + interaktywne stanowiska"]),
-        ("F-05", "Meble", "rent", ["Lada i dwa hokery", "Strefa rozmów + lada z magazynkiem", "Meble na wymiar i zaplecze"]),
-        ("L-06", "Logistyka", "service", ["Transport z wypożyczalni", "Transport + magazynowanie elementów", "Transport, magazyn i ubezpieczenie"]),
-        ("S-07", "Montaż", "service", ["Montaż i demontaż systemu", "Montaż, demontaż i serwis AV", "Ekipa montażowa + technik na targach"]),
+        ("Ściany i grafika", [("rent", "Ściany systemowe, grafika foliowa"), ("buy", "Własna rama, grafika tekstylna"),
+                              ("buy", "Własna rama, grafika tekstylna")]),
+        ("Podświetlenia marki", [("buy", "Bez podświetlenia"), ("buy", "Podświetlany panel marki"),
+                                 ("buy", "Trzy podświetlane pola")]),
+        ("Oświetlenie", [("rent", "4 reflektory LED"), ("mix", "6 reflektorów i linia LED"),
+                         ("buy", "Własne reflektory, linia LED, postumenty")]),
+        ("Ekran", [("buy", "Telewizor 75″"), ("buy", "Telewizor 98″"), ("buy", "Monitor profesjonalny 98″")]),
+        ("Kiosk dotykowy", [("rent", "Kiosk z prezentacją 3D"), ("buy", "Własny kiosk z prezentacją 3D"),
+                            ("buy", "Własny kiosk z prezentacją 3D")]),
+        ("Podłoga", [("rent", "Wykładzina targowa"), ("buy", "Podłoga modułowa z listwą"),
+                     ("buy", "Podłoga modułowa z listwą")]),
+        ("Meble i ekspozycja", [("rent", "Lada, hokery, postumenty"), ("buy", "Lada z szafkami, hokery, postumenty"),
+                                ("buy", "Lada z szafkami, hokery, postumenty")]),
+        ("Transport i montaż", [("service", "Montaż i demontaż — 2 osoby"), ("service", "Montaż i demontaż — 3 osoby"),
+                                ("service", "Montaż i demontaż — 4 osoby")]),
+        ("Personel", [("service", "Hostessa"), ("service", "Hostessa i demonstrator produktu"),
+                      ("service", "2 hostessy, demonstrator, technik")]),
+        ("Koordynacja", [("service", "Na miejscu — do ustalenia"), ("service", "Na miejscu — do ustalenia"),
+                         ("service", "Na miejscu — do ustalenia")]),
     ],
+    "costs_more": "Pokaż zakres",
+    "costs_more_items": [
+        ["Przyłącze prądu 3 kW", "Treści na ekran — pakiet podstawowy", "Elektryk przy montażu",
+         "Opłaty organizatora: powierzchnia, rejestracja, internet, sprzątanie"],
+        ["Przyłącze prądu 3 kW", "Treści na ekran — pakiet standard", "Elektryk przy montażu",
+         "Skrzynie transportowe i magazyn między targami",
+         "Opłaty organizatora: powierzchnia, rejestracja, internet, sprzątanie"],
+        ["Przyłącze prądu 9 kW", "Sterownik scen świetlnych", "Treści na ekran — pakiet rozszerzony",
+         "Elektryk przy montażu", "Skrzynie transportowe i magazyn między targami",
+         "Opłaty organizatora: powierzchnia, rejestracja, internet, sprzątanie"],
+    ],
+    "costs_price": "Indywidualna wycena",
+    "costs_price_note": "Bez sztywnych pakietów — zakres i wycenę ustalamy dla konkretnych targów.",
     "costs_legend": [
-        ("buy", "Zakup", "zostaje u Ciebie — możesz użyć go ponownie"),
-        ("rent", "Wynajem", "płacisz za czas targów"),
-        ("service", "Usługa", "praca ludzi: transport, montaż, obsługa"),
+        ("buy", "Zakup", "zostaje na kolejne wydarzenia"),
+        ("rent", "Wynajem", "na czas targów"),
+        ("service", "Usługa", "transport, montaż i obsługa"),
     ],
-    "costs_get_title": "Co dostajesz",
-    "costs_get": ["Model 3D z podziałem na elementy", "Zestawienie: zakup / wynajem / usługa",
-                  "Porównanie wariantów", "Miejsca, w których można ograniczyć koszty"],
 
     # ---------- o mnie ----------
     "about_label": "O mnie",
@@ -208,13 +223,6 @@ PL = {
     ],
     "about_photo_alt": "Aleks — Scenovis",
     "about_linkedin": "Profil na LinkedIn",
-    "about_own_title": "Co robię samodzielnie",
-    "about_own": ["Brief", "Koncepcja", "Analiza funkcjonalna", "Modele 3D", "Prezentacje techniczne", "Zestawienia kosztów"],
-    "about_partners_title": "Co realizują współpracujący wykonawcy",
-    "about_partners": ["Zabudowa", "Druk", "AV i ekrany", "Oświetlenie", "Logistyka",
-                       "Montaż i demontaż", "Personel", "Koordynacja na miejscu"],
-    "about_partners_note": "To niezależne firmy i specjaliści dobierani do konkretnego projektu, a nie pracownicy Scenovis. "
-                           "Przed startem wiesz, kto odpowiada za który element.",
 
     # ---------- proces ----------
     "process_label": "Współpraca",
@@ -224,55 +232,55 @@ PL = {
         ("Koncepcja", "Układ stoiska albo scenariusz prezentacji produktu."),
         ("Model 3D i zestawienie", "Wizualizacje, prezentacja lub zestawienie kosztów — zależnie od usługi."),
         ("Omówienie i decyzja", "Przechodzimy przez wynik razem i ustalamy kolejne kroki."),
-        ("Realizacja — opcjonalnie", "Wykonawcy dobrani do zakresu albo przekazanie materiałów Twojemu zespołowi."),
+        ("Realizacja i targi", "Zespół i wykonawcy dobrani do zakresu albo przekazanie materiałów Twojemu zespołowi."),
     ],
 
     # ---------- FAQ ----------
     "faq_label": "FAQ",
     "faq_h2": "Częste pytania",
     "faq": {
-        "price": ("Jak wyceniasz projekt?",
-                  "<p>Każdy projekt wyceniam indywidualnie — nie mam sztywnych pakietów. Wycena zależy od zakresu: "
+        "price": ("Jak wygląda wycena projektu?",
+                  "<p>Każdy projekt wyceniamy indywidualnie — bez sztywnych pakietów. Wycena zależy od zakresu: "
                   "przy stoisku m.in. od powierzchni i liczby wariantów, przy prezentacji 3D od złożoności produktu "
-                  "i formy prezentacji. Wycenę podaję po krótkiej rozmowie, przed rozpoczęciem pracy.</p>"),
+                  "i formy prezentacji. Wycenę podajemy po krótkiej rozmowie, przed rozpoczęciem pracy.</p>"),
         "expo_process": ("Jak wygląda projektowanie stoiska?",
-                         "<p>Zaczynamy od briefu: targi, termin, powierzchnia, cel i budżet. Potem przygotowuję koncepcję "
+                         "<p>Zaczynamy od briefu: targi, termin, powierzchnia, cel i budżet. Potem przygotowujemy koncepcję "
                          "i układ funkcjonalny, model 3D oraz zestawienie elementów z typem kosztu. Omawiamy warianty "
                          "i dopiero wtedy decydujesz, co zamówić u wykonawców.</p>"),
         "factors": ("Od czego zależy koszt stoiska?",
                     "<p>Najczęściej od: powierzchni i typu zabudowy (systemowa lub indywidualna), materiałów "
                     "i wykończenia, grafiki, oświetlenia, multimediów, mebli, transportu, montażu i demontażu "
-                    "oraz opłat organizatora (np. przyłącza mediów). Dla Twojego projektu rozpisuję to element po elemencie.</p>"),
+                    "oraz opłat organizatora (np. przyłącza mediów). Dla Twojego projektu rozpisujemy to element po elemencie.</p>"),
         "buyrent": ("Co lepiej wynająć, a co kupić?",
                     "<p>To zależy przede wszystkim od tego, ile razy w roku się wystawiasz. Elementy używane wielokrotnie "
                     "— np. konstrukcja systemowa, kiosk czy uniwersalna grafika — często opłaca się kupić. Sprzęt AV "
-                    "szybko się starzeje, więc zwykle lepiej go wynająć. W projekcie porównuję oba warianty dla Twojej sytuacji.</p>"),
+                    "szybko się starzeje, więc zwykle lepiej go wynająć. W projekcie porównujemy oba warianty dla Twojej sytuacji.</p>"),
         "reuse": ("Czy stoisko można wykorzystać na kolejnych targach?",
                   "<p>Tak, jeśli zaplanujemy to od początku: moduły, wymienne grafiki, transport i magazynowanie. "
-                  "Pytam o to już na etapie briefu, bo wpływa to na wybór zakup / wynajem.</p>"),
-        "materials": ("Jakich materiałów potrzebujesz na start?",
+                  "Pytamy o to już na etapie briefu, bo wpływa to na wybór zakup / wynajem.</p>"),
+        "materials": ("Jakie materiały są potrzebne na start?",
                       "<p>Wystarczy: nazwa targów i termin, powierzchnia i rodzaj stoiska (wyspowe, narożne, rzędowe), "
                       "co chcesz pokazać i orientacyjny budżet. Pomocne będą też: logo lub brandbook, zdjęcia albo modele "
                       "produktu (np. STEP) i regulamin techniczny organizatora.</p>"),
-        "delivery": ("Kto wykonuje i montuje stoisko?",
-                     "<p>Produkcję, montaż, multimedia i logistykę realizują niezależni wykonawcy. Mogę pomóc w ich wyborze "
-                     "i — jeśli tak ustalimy — w koordynacji. Możesz też zamówić sam projekt z zestawieniem kosztów "
-                     "i zrealizować go z własnym wykonawcą.</p>"),
-        "area": ("Gdzie działasz?",
-                 "<p>Pracuję z Gdańska dla klientów z całej Polski i przy targach za granicą. Projekt, model 3D i zestawienie "
-                 "kosztów przygotowuję zdalnie, a spotkania odbywają się online lub na miejscu. Wsparcie na miejscu "
-                 "podczas targów ustalamy indywidualnie.</p>"),
+        "delivery": ("Czy możecie zająć się całą realizacją?",
+                     "<p>Tak. Zabudowę, multimedia, transport, montaż, personel stoiska i koordynację na miejscu "
+                     "organizujemy w zakresie, który ustalimy — dobieramy zespół i wykonawców do projektu. "
+                     "Możesz też zamówić sam projekt z zestawieniem kosztów i zrealizować go z własnym wykonawcą.</p>"),
+        "area": ("Gdzie działacie?",
+                 "<p>Działamy z Gdańska dla klientów z całej Polski i przy targach za granicą. Projekt, model 3D i zestawienie "
+                 "kosztów przygotowujemy zdalnie, a spotkania odbywają się online lub na miejscu. Obsługę i koordynację "
+                 "na miejscu podczas targów ustalamy indywidualnie.</p>"),
         "time": ("Ile wcześniej trzeba zacząć?",
                  "<p>Najwygodniej zacząć 2–3 miesiące przed targami, a przy zabudowie indywidualnej lub dużym stoisku — "
                  "jeszcze wcześniej. Organizatorzy często wymagają zatwierdzenia projektu z wyprzedzeniem, a wykonawcy "
                  "potrzebują czasu na oferty i produkcję.</p>"
-                 "<p>Jestem elastyczny: przy mniejszym zakresie i gotowych materiałach (wymiary stoiska, logo, dane produktu) "
+                 "<p>Przy mniejszym zakresie i gotowych materiałach (wymiary stoiska, logo, dane produktu) "
                  "da się pracować szybciej. Konkretny harmonogram ustalamy po briefie.</p>"),
         "3d_forms": ("W jakiej formie może powstać prezentacja 3D?",
                      "<p>Zależnie od potrzeb: jako interaktywna prezentacja, w której użytkownik sam wybiera elementy "
                      "produktu, jako animacja lub film albo jako zestaw wizualizacji i przekrojów. Formę dobieramy do "
                      "miejsca użycia — stoiska, showroomu, spotkania handlowego lub strony internetowej.</p>"),
-        "3d_data": ("Jakich danych potrzebujesz do prezentacji 3D produktu?",
+        "3d_data": ("Jakie dane są potrzebne do prezentacji 3D produktu?",
                     "<p>Najlepiej pracuje się na modelach CAD (np. STEP) lub rysunkach technicznych. Jeśli ich nie ma, "
                     "zaczniemy od zdjęć, wymiarów i opisu działania — ustalimy razem, jaki poziom szczegółów ma sens.</p>"),
         "3d_hw": ("Na jakich urządzeniach działa interaktywna prezentacja?",
@@ -293,13 +301,13 @@ PL = {
     "contact_h2": "Opowiedz o swoim projekcie.",
     "contact_h2_expo": "Omów projekt stoiska.",
     "contact_h2_3d": "Porozmawiajmy o prezentacji produktu.",
-    "contact_lead": "Wystarczy telefon lub e-mail. Odezwę się, żeby ustalić szczegóły.",
+    "contact_lead": "Wystarczy telefon lub e-mail. Odezwiemy się, żeby ustalić szczegóły.",
     "contact_direct": "Albo napisz lub zadzwoń bezpośrednio",
     "contact_phone_sub": "Zadzwoń",
     "contact_email_sub": "Wyślij brief lub pliki",
     "contact_wa": "Napisz na WhatsApp",
     "contact_brief": "Masz już brief? Wyślij go na {email}.",
-    "contact_lang": "Rozmawiam po polsku i angielsku.",
+    "contact_lang": "Rozmawiamy po polsku i angielsku.",
     "form_title": "Szybkie zapytanie",
     "f_contact": "Telefon lub e-mail",
     "f_contact_hint": "Np. +48 500 000 000 lub imie@firma.pl",
@@ -321,11 +329,11 @@ PL = {
     "f_reuse_opts": [("", "Nie wiem jeszcze"), ("tak", "Tak, chcę użyć ponownie"), ("nie", "Nie, jednorazowo")],
     "f_submit": "Wyślij zapytanie",
     "f_sending": "Wysyłanie…",
-    "f_disclaimer": "Dane wykorzystam do obsługi zapytania i zabezpieczenia formularza. Szczegóły: <a href=\"{privacy}\">polityka prywatności</a>.",
+    "f_disclaimer": "Dane wykorzystamy do obsługi zapytania i zabezpieczenia formularza. Szczegóły: <a href=\"{privacy}\">polityka prywatności</a>.",
     "f_err_empty": "Podaj numer telefonu lub adres e-mail.",
     "f_err_email": "Sprawdź adres e-mail — powinien wyglądać np. tak: imie@firma.pl.",
     "f_err_contact": "Wpisz numer telefonu albo adres e-mail.",
-    "f_success": "Dziękuję — zapytanie zostało wysłane. Odezwę się najszybciej, jak to możliwe.",
+    "f_success": "Dziękujemy — zapytanie zostało wysłane. Odezwiemy się najszybciej, jak to możliwe.",
     "f_fail": "Formularz nie został wysłany — wiadomość nie dotarła. Twoja treść jest gotowa, wyślij ją e-mailem lub przez WhatsApp:",
     "f_fail_email": "Wyślij e-mailem",
     "f_fail_wa": "Wyślij przez WhatsApp",
@@ -337,7 +345,7 @@ PL = {
     "mail_subject": "Zapytanie ze strony Scenovis",
     "wa_hello": "Dzień dobry, piszę ze strony Scenovis.",
     "topics": {"general": "Zapytanie ogólne", "expo": "Projekt stoiska targowego", "3d": "Prezentacja produktu 3D",
-               "delivery": "Koordynacja realizacji"},
+               "delivery": "Kompleksowa obsługa targów"},
     "field_names": {"contact": "Kontakt", "name": "Imię", "message": "Wiadomość", "topic": "Temat",
                     "event": "Targi", "city": "Miasto", "date": "Termin", "area": "Powierzchnia",
                     "budget": "Budżet", "reuse": "Ponowne użycie"},
@@ -350,12 +358,12 @@ PL = {
     "expo_crumb": "Projekt stoiska targowego",
     "expo_eyebrow": "PROJEKT STOISKA TARGOWEGO",
     "expo_h1": "Projekt stoiska targowego, <em>w którym widać koszty.</em>",
-    "expo_lead": "Przygotowuję koncepcję i układ stoiska, model 3D oraz zestawienie elementów z kosztami. "
+    "expo_lead": "Przygotowujemy koncepcję i układ stoiska, model 3D oraz zestawienie elementów z kosztami. "
                  "Porównujesz rozwiązania i podejmujesz decyzje, zanim zamówisz produkcję.",
     "expo_points": ["Koncepcja i układ funkcjonalny", "Model i wizualizacje 3D",
                     "Zakup / wynajem / usługa przy każdym elemencie", "Warianty do porównania przed realizacją"],
     "expo_cta": "Omów projekt stoiska",
-    "expo_cta2": "Zobacz przykład",
+    "expo_cta2": "Zobacz stoisko",
     "expo_get_h2": "Co obejmuje projekt stoiska",
     "expo_shots": [("standmic", "Stanowisko pokazowe — ekspozycja produktu na wysokości wzroku"),
                    ("stand", "Cały układ stoiska: lada, ekran, kiosk i dwa stanowiska pokazowe")],
@@ -385,7 +393,7 @@ PL = {
     "p3d_points": ["Budowa i komponenty produktu", "Animacje działania mechanizmów",
                    "Interakcja na ekranie dotykowym", "Wsparcie dla handlowców"],
     "p3d_cta": "Porozmawiajmy o prezentacji produktu",
-    "p3d_cta2": "Zobacz przykład",
+    "p3d_cta2": "Zobacz prezentację",
     "viewer": {
         "launch": "Uruchom model 3D", "loading": "Wczytywanie modelu…", "canvas_label": "Interaktywny model 3D mikroskopu",
         "explode": "Rozłóż", "assemble": "Złóż", "reset": "Widok startowy",
@@ -400,7 +408,7 @@ PL = {
             {"node": "Illuminator_Housing", "title": "Oświetlacz", "text": "Światło z podstawy przechodzi przez kondensor i preparat do obiektywu."},
         ],
     },
-    "p3d_get_h2": "Co mogę przygotować",
+    "p3d_get_h2": "Co możemy przygotować",
     "p3d_shots": [("exploded", "Widok rozłożony — budowa urządzenia element po elemencie"),
                   ("kiosk", "Ta sama prezentacja na kiosku dotykowym na stoisku")],
     "p3d_get": [
@@ -431,7 +439,7 @@ PL = {
     # ---------- 404 ----------
     "nf_title": "Nie znaleziono strony | Scenovis",
     "nf_h1": "Nie ma tu takiej strony.",
-    "nf_text": "Adres mógł się zmienić. Przejdź na stronę główną albo napisz do mnie.",
+    "nf_text": "Adres mógł się zmienić. Przejdź na stronę główną albo napisz do nas.",
     "nf_home": "Strona główna",
 }
 
@@ -446,10 +454,8 @@ EN = {
     "nav_cta": "Contact",
     "lang_switch_label": "Language",
     "home_label": "Scenovis — home",
-    "concept_caption": "3D render of a Scenovis demo project (Blender) — not a client project.",
-    "concept_badge": "Demo project",
     "alt": {
-        "stand": "3D render of an exhibition stand with microscopes, a screen and a touch kiosk — Scenovis demo project",
+        "stand": "3D render of an exhibition stand with microscopes, a screen and a touch kiosk",
         "visitor": "Exhibition stand from a visitor’s perspective: counter, screen and two microscope stations",
         "standmic": "Microscope on a demo station at an exhibition stand — 3D render",
         "kiosk": "Touch kiosk with an interactive 3D microscope presentation at an exhibition stand",
@@ -470,20 +476,39 @@ EN = {
 
     "hero_eyebrow": "EXHIBITION STANDS • 3D PRESENTATIONS",
     "hero_h1": "Show the product.<br>Understand the stand.<br><em>Control the budget.</em>",
-    "hero_lead": "I design exhibition stands with a 3D model and a cost breakdown, and build interactive 3D "
-                 "presentations of technical products. Order either service on its own or both together.",
+    "hero_lead": "We design exhibition stands and interactive 3D product presentations. We bring together the concept, "
+                 "the budget and the organisation of your trade fair — from design to on-site support.",
     "hero_cta_primary": "Tell me about your project",
     "hero_paths_label": "Services",
     "hero_paths": [("expo", "Exhibition stand design"), ("3d", "3D product presentations")],
     "hero_note": "Based in Gdańsk, Poland · projects across Poland and abroad · Polish or English",
-    "hero_tags": [
-        ("led", "Screen", "rent"),
-        ("light", "Lighting", "rent"),
-        ("kiosk", "Touch kiosk", "buy"),
-        ("build", "Build & dismantle", "service"),
-    ],
+    "variants": {
+        "economy": {
+            "name": "Economy",
+            "scope": "Hired system walls and carpet, 4 spotlights, a 75″ screen, a hired touch kiosk.",
+            "alt": "Stand in the Economy option: system walls, carpet, four spotlights, a 75-inch screen and a touch kiosk",
+            "tags": [("screen", "75″ screen", "buy"), ("spots", "4 spotlights", "rent"),
+                     ("kiosk", "Touch kiosk", "rent"), ("floor", "Carpet", "rent")],
+        },
+        "smart": {
+            "name": "Smart",
+            "scope": "Own frame with fabric graphics, a backlit brand panel, 6 spotlights and an LED line, "
+                     "a 98″ screen, modular flooring, own kiosk.",
+            "alt": "Stand in the Smart option: backlit brand panel, six spotlights, LED line, 98-inch screen, modular flooring and a touch kiosk",
+            "tags": [("screen", "98″ screen", "buy"), ("spots", "6 spotlights", "rent"),
+                     ("brand", "Backlit brand panel", "buy"), ("kiosk", "Touch kiosk", "buy")],
+        },
+        "premium": {
+            "name": "Premium",
+            "scope": "The Smart scope plus three backlit panels, lit pedestals, own spotlights with a scene "
+                     "controller and a professional 98″ display.",
+            "alt": "Stand in the Premium option: three backlit panels, lit pedestals, own spotlights and a professional 98-inch display",
+            "tags": [("screen", "Professional 98″ display", "buy"), ("spots", "6 own spotlights", "buy"),
+                     ("slats", "Backlit panels", "buy"), ("ped", "Lit pedestals", "buy")],
+        },
+    },
     "hero_variant_label": "Option",
-    "hero_figure_label": "Example: stand elements labelled by cost type",
+    "hero_figure_label": "Stand elements labelled by cost type",
 
     "tldr_title": "Scenovis at a glance",
     "tldr_for": "<strong>Who it’s for:</strong> companies with a technical product — preparing a trade fair stand "
@@ -492,59 +517,34 @@ EN = {
         ("Stand design", "Concept, layout and 3D model — see the stand before it is built."),
         ("Costs in view", "Every element marked as buy, rent or service. Options to compare."),
         ("3D product presentations", "The build, mechanisms and operation of a device — interactive or animated."),
-        ("Contractors matched to scope", "Production and installation by partner companies. You know who does what."),
+        ("From idea to delivery", "Stand design, product presentation and trade fair organisation — all of it or a chosen part."),
     ],
 
-    "case_label": "Example",
-    "case_tag": "Demo project / Scenovis Concept",
-    "case_h2": "From stand concept to budget decision",
-    "case_lead": "A demo project: how to explore the stand, check the cost of every element and compare options "
-                 "before production.",
-    "case_intro": "In the film I operate an interactive presentation built in Blender myself. "
-                  "It is a recording of a working tool, not an animation.",
-    "case_intro_pending": "The recording is in preparation. It will show an interactive presentation built in Blender, "
-                          "operated by me — a demo concept, not a client project.",
-    "video_placeholder_title": "Video coming soon",
-    "video_placeholder_text": "A recording of the demo project will appear here.",
-    "video_todo": "{todo:EXPO VIDEO — MP4 + poster + PL/EN captions, see TODO.md}",
+    "case_h2": "See the stand. Compare the options.",
+    "case_lead": "Explore the layout, check the equipment and compare options before delivery.",
     "video_play": "Play video",
     "video_duration": "Duration",
     "video_captions_note": "Captions are available in Polish and English. Sound plays only after you press play.",
     "case_benefits": [
-        ("The whole layout, not just a render", "Switch cameras and look at every zone of the stand."),
-        ("A cost on every element", "Structure, lighting, multimedia — split into buy, rent and service."),
-        ("Options before production", "Compare Economy, Smart and Premium and see what drives the cost differences."),
+        ("3D layout", "see the space and the display"),
+        ("A clear budget", "check what is bought, rented or a service"),
+        ("Option comparison", "choose Economy, Smart or Premium"),
     ],
-    "case_chapters_title": "What the film will show",
-    "case_chapters": [
-        "Overall stand view", "Camera change", "Selecting an element", "Orbit around an object",
-        "Element cost", "Buy, rent or service", "Economy / Smart / Premium options",
-        "Lighting cost", "Touch kiosk", "Microscope presentation", "Back to the stand",
-        "Comparing option costs",
-    ],
-    "case_transcript": "Video transcript",
-    "case_transcript_body": "<p>{todo:TRANSCRIPT — paste the narration / step list after recording}</p>",
-    "case_cta_q": "Want to see your own stand like this?",
     "case_cta": "Discuss your stand design",
 
-    "case3d_tag": "Demo project / Scenovis Concept",
     "case3d_h2": "An interactive product presentation",
-    "case3d_lead": "A Scenovis demo project: a presentation of a technical device (a microscope) built in Blender. "
-                   "It is a concept, not a client project.",
-    "case3d_intro": "In the recording I operate the presentation myself — selecting parts of the device and showing them up close.",
-    "case3d_intro_pending": "The recording is in preparation. Below is what a product presentation of this kind can cover.",
+    "case3d_lead": "The build, parts and operation of a technical device shown in 3D — on a screen, a kiosk or in a browser.",
     "case3d_benefits": [
-        ("How the device is built", "Components and mechanisms shown in space — including those hidden inside the housing."),
-        ("Part by part", "A visitor or sales rep picks a part and looks at it from every side."),
-        ("How the product works", "An animation shows the mechanism in action — without dismantling or shipping the device."),
+        ("How the device is built", "components visible even inside the housing"),
+        ("Part by part", "pick a part and look at it from every side"),
+        ("How the product works", "the mechanism in motion, without shipping the device"),
     ],
-    "case3d_cta_q": "Want to present your product like this?",
     "case3d_cta": "Let’s talk about your product presentation",
 
     "services_label": "Services",
     "services_h2": "Two services — separately or together",
     "services_lead": "You can order stand design and a 3D product presentation independently of each other. "
-                     "Every project is quoted individually, based on the agreed scope.",
+                     "We quote every project individually, based on the agreed scope.",
     "services": [
         {
             "key": "expo", "code": "Service · EXPO", "title": "Exhibition stand design",
@@ -552,7 +552,6 @@ EN = {
             "items": ["Stand concept", "Functional layout and ergonomics", "3D model and visuals",
                       "Choice of furniture and technology", "Analysis: buy, rent or use your own elements",
                       "List of elements and cost estimate", "Help choosing contractors"],
-            "who": "I prepare this myself", "who_type": "own",
             "more": ("More about stand design", "expo"), "ask": "Discuss your stand design",
         },
         {
@@ -564,47 +563,65 @@ EN = {
                       "Technical visuals and feature demos",
                       "Material for trade fairs, showrooms and sales",
                       "Reuse — where the format and contract allow"],
-            "who": "I prepare this myself", "who_type": "own",
             "more": ("More about 3D presentations", "3d"), "ask": "Talk about a presentation",
         },
-        {
-            "key": "delivery", "code": "Optional", "title": "Delivery coordination",
-            "desc": "Production, installation and staffing are carried out by partner companies. I help you choose them "
-                    "and, if agreed, coordinate the delivery.",
-            "items": ["Stand build and print", "Multimedia, screens, lighting", "Transport, build-up, dismantling",
-                      "Stand staff", "On-site coordination"],
-            "who": "Through partner contractors", "who_type": "partners",
-            "more": None, "ask": "Ask about delivery",
-        },
     ],
+    "full": {
+        "label": "Full trade fair service",
+        "title": "From idea to delivery",
+        "desc": "Stand design, product presentation and the organisation of your trade fair. "
+                "We can handle all of it or a chosen part.",
+        "items": ["Design and 3D visualisation", "Interactive product presentations",
+                  "Stand build, multimedia and furniture", "Transport, build-up and dismantling",
+                  "Hosts and visitor service", "On-site event coordination"],
+        "note": "We assemble the team and contractors to match the project scope.",
+        "cta": "Let’s talk about your trade fair",
+    },
     "services_note": "We agree the scope of each project together — no fixed packages.",
 
     "costs_label": "Stand costs",
-    "costs_h2": "Not just a render.<br><em>You know what you pay for.</em>",
-    "costs_lead": "In a stand design every element has its own cost and type. We talk about specifics, "
-                  "not a single lump sum.",
-    "costs_sheet_title": "Stand elements breakdown",
-    "costs_sheet_note": "Illustrative example. Elements and amounts are set for each project, based on contractor quotes.",
+    "costs_h2": "You know what you pay for.",
+    "costs_lead": "Compare the equipment and how each part is paid for. We match the scope and the quote to your project.",
+    "costs_sheet_title": "Stand 5.4 × 3.8 m",
     "costs_variant_label": "Compare options",
-    "costs_cols": ("Element", "Cost type", "What it includes"),
-    "cost_types": {"buy": "Buy", "rent": "Rent", "service": "Service", "buyrent": "Buy or rent"},
+    "costs_cols": ("Element", "Scope", "Payment"),
+    "cost_types": {"buy": "Buy", "rent": "Rent", "service": "Service", "mix": "Rent and buy"},
     "costs_rows": [
-        ("K-01", "Structure", "buyrent", ["Hired modular system", "Modular system + own reusable parts", "Custom-built stand"]),
-        ("G-02", "Graphics", "buy", ["Prints on system frames", "Replaceable fabric graphics", "Fabric graphics, backlighting, 3D elements"]),
-        ("O-03", "Lighting", "rent", ["Standard lighting + a few spotlights", "Track spotlights, product accent", "Stage-style lighting design"]),
-        ("M-04", "Multimedia", "rent", ["One screen with a video loop", "Screen + touch kiosk with 3D presentation", "LED wall + interactive stations"]),
-        ("F-05", "Furniture", "rent", ["Counter and two stools", "Meeting area + counter with storage", "Custom furniture and back room"]),
-        ("L-06", "Logistics", "service", ["Transport from the hire company", "Transport + storage of elements", "Transport, storage and insurance"]),
-        ("S-07", "Installation", "service", ["System build-up and dismantling", "Build-up, dismantling and AV service", "Build crew + on-site technician"]),
+        ("Walls and graphics", [("rent", "System walls, vinyl graphics"), ("buy", "Own frame, fabric graphics"),
+                                ("buy", "Own frame, fabric graphics")]),
+        ("Brand lighting", [("buy", "No backlighting"), ("buy", "Backlit brand panel"), ("buy", "Three backlit panels")]),
+        ("Lighting", [("rent", "4 LED spotlights"), ("mix", "6 spotlights and an LED line"),
+                      ("buy", "Own spotlights, LED line, pedestals")]),
+        ("Screen", [("buy", "75″ TV"), ("buy", "98″ TV"), ("buy", "Professional 98″ display")]),
+        ("Touch kiosk", [("rent", "Kiosk with 3D presentation"), ("buy", "Own kiosk with 3D presentation"),
+                         ("buy", "Own kiosk with 3D presentation")]),
+        ("Flooring", [("rent", "Exhibition carpet"), ("buy", "Modular floor with edging"), ("buy", "Modular floor with edging")]),
+        ("Furniture and display", [("rent", "Counter, stools, pedestals"), ("buy", "Counter with cabinets, stools, pedestals"),
+                                   ("buy", "Counter with cabinets, stools, pedestals")]),
+        ("Transport and build", [("service", "Build-up and dismantling — 2 people"), ("service", "Build-up and dismantling — 3 people"),
+                                 ("service", "Build-up and dismantling — 4 people")]),
+        ("Staff", [("service", "Host"), ("service", "Host and product demonstrator"),
+                   ("service", "2 hosts, demonstrator, technician")]),
+        ("Coordination", [("service", "On site — to be agreed"), ("service", "On site — to be agreed"),
+                          ("service", "On site — to be agreed")]),
     ],
+    "costs_more": "Show scope",
+    "costs_more_items": [
+        ["3 kW power connection", "Screen content — basic package", "Electrician during build-up",
+         "Organiser fees: space, registration, internet, cleaning"],
+        ["3 kW power connection", "Screen content — standard package", "Electrician during build-up",
+         "Transport cases and storage between fairs", "Organiser fees: space, registration, internet, cleaning"],
+        ["9 kW power connection", "Lighting scene controller", "Screen content — extended package",
+         "Electrician during build-up", "Transport cases and storage between fairs",
+         "Organiser fees: space, registration, internet, cleaning"],
+    ],
+    "costs_price": "Individual quote",
+    "costs_price_note": "No fixed packages — we agree the scope and the quote for your specific fair.",
     "costs_legend": [
-        ("buy", "Buy", "you keep it and can reuse it"),
-        ("rent", "Rent", "you pay for the time of the fair"),
-        ("service", "Service", "people’s work: transport, installation, staffing"),
+        ("buy", "Buy", "stays with you for future events"),
+        ("rent", "Rent", "for the time of the fair"),
+        ("service", "Service", "transport, installation and staffing"),
     ],
-    "costs_get_title": "What you get",
-    "costs_get": ["3D model split into elements", "Breakdown: buy / rent / service",
-                  "Option comparison", "Where costs can be reduced"],
 
     "about_label": "About",
     "about_h2": "Hi, I’m Aleks.",
@@ -619,13 +636,6 @@ EN = {
     ],
     "about_photo_alt": "Aleks — Scenovis",
     "about_linkedin": "LinkedIn profile",
-    "about_own_title": "What I do myself",
-    "about_own": ["Brief", "Concept", "Functional analysis", "3D models", "Technical presentations", "Cost breakdowns"],
-    "about_partners_title": "What partner contractors deliver",
-    "about_partners": ["Stand build", "Print", "AV and screens", "Lighting", "Logistics",
-                       "Build-up and dismantling", "Staff", "On-site coordination"],
-    "about_partners_note": "These are independent companies and specialists selected for each project, not Scenovis employees. "
-                           "Before we start, you know who is responsible for each element.",
 
     "process_label": "Process",
     "process_h2": "How we work together",
@@ -634,7 +644,7 @@ EN = {
         ("Concept", "A stand layout or a storyline for the product presentation."),
         ("3D model and breakdown", "Visuals, a presentation or a cost breakdown — depending on the service."),
         ("Review and decision", "We go through the result together and agree the next steps."),
-        ("Delivery — optional", "Contractors matched to the scope, or a hand-over of materials to your own team."),
+        ("Delivery and the fair", "A team and contractors matched to the scope, or a hand-over of materials to your own team."),
     ],
 
     "faq_label": "FAQ",
@@ -643,38 +653,38 @@ EN = {
         "price": ("How do you price a project?",
                   "<p>Every project is quoted individually — there are no fixed packages. The quote depends on the scope: "
                   "for a stand, for example, on floor space and the number of options; for a 3D presentation, on the "
-                  "complexity of the product and the format. I give you a quote after a short call, before any work starts.</p>"),
+                  "complexity of the product and the format. We give you a quote after a short call, before any work starts.</p>"),
         "expo_process": ("What does the stand design process look like?",
-                         "<p>We start with a brief: the fair, dates, floor space, goal and budget. I then prepare the concept "
+                         "<p>We start with a brief: the fair, dates, floor space, goal and budget. We then prepare the concept "
                          "and functional layout, a 3D model and a list of elements with their cost type. We go through the "
                          "options, and only then do you decide what to order from contractors.</p>"),
         "factors": ("What drives the cost of a stand?",
                     "<p>Usually: floor space and build type (modular or custom), materials and finish, graphics, lighting, "
                     "multimedia, furniture, transport, build-up and dismantling, plus organiser fees (e.g. utility connections). "
-                    "For your project I break this down element by element.</p>"),
+                    "For your project we break this down element by element.</p>"),
         "buyrent": ("What is better to rent and what to buy?",
                     "<p>Mostly it depends on how often you exhibit. Elements used repeatedly — such as a modular structure, "
                     "a kiosk or universal graphics — are often worth buying. AV equipment dates quickly, so renting it is "
-                    "usually better. In the project I compare both options for your situation.</p>"),
+                    "usually better. In the project we compare both options for your situation.</p>"),
         "reuse": ("Can the stand be reused at future fairs?",
                   "<p>Yes, if we plan for it from the start: modules, replaceable graphics, transport and storage. "
-                  "I ask about it in the brief, because it affects the buy / rent decision.</p>"),
-        "materials": ("What do you need from me to start?",
+                  "We ask about it in the brief, because it affects the buy / rent decision.</p>"),
+        "materials": ("What is needed to start?",
                       "<p>Enough to start: the fair and its dates, floor space and stand type (island, corner, inline), "
                       "what you want to show and a rough budget. Also helpful: logo or brand guide, product photos or models "
                       "(e.g. STEP) and the organiser’s technical rules.</p>"),
-        "delivery": ("Who builds and installs the stand?",
-                     "<p>Production, installation, multimedia and logistics are delivered by independent contractors. I can help "
-                     "you choose them and, if agreed, coordinate the work. You can also order just the design with a cost "
-                     "breakdown and build it with your own contractor.</p>"),
+        "delivery": ("Can you handle the whole delivery?",
+                     "<p>Yes. Stand build, multimedia, transport, installation, stand staff and on-site coordination are "
+                     "organised within the scope we agree — we assemble the team and contractors for the project. "
+                     "You can also order just the design with a cost breakdown and build it with your own contractor.</p>"),
         "area": ("Where do you work?",
-                 "<p>I work from Gdańsk for clients across Poland and at trade fairs abroad. The design, 3D model and cost "
-                 "breakdown are prepared remotely, with meetings online or in person. On-site support during the fair "
-                 "is agreed individually.</p>"),
+                 "<p>We work from Gdańsk for clients across Poland and at trade fairs abroad. The design, 3D model and cost "
+                 "breakdown are prepared remotely, with meetings online or in person. On-site service and coordination "
+                 "during the fair are agreed individually.</p>"),
         "time": ("How early should we start?",
                  "<p>Ideally start 2–3 months before the fair, and earlier for a custom-built or large stand. "
                  "Organisers often require design approval in advance, and contractors need time for quotes and production.</p>"
-                 "<p>I’m flexible: with a smaller scope and materials ready (stand dimensions, logo, product data) "
+                 "<p>With a smaller scope and materials ready (stand dimensions, logo, product data) "
                  "we can work faster. We agree a specific schedule after the brief.</p>"),
         "3d_forms": ("What form can a 3D presentation take?",
                      "<p>Depending on your needs: an interactive presentation where the user picks parts of the product, "
@@ -700,13 +710,13 @@ EN = {
     "contact_h2": "Tell me about your project.",
     "contact_h2_expo": "Discuss your stand design.",
     "contact_h2_3d": "Let’s talk about your product presentation.",
-    "contact_lead": "A phone number or email is enough. I’ll get back to you to discuss the details.",
-    "contact_direct": "Or contact me directly",
+    "contact_lead": "A phone number or email is enough. We’ll get back to you to discuss the details.",
+    "contact_direct": "Or contact us directly",
     "contact_phone_sub": "Call",
     "contact_email_sub": "Send a brief or files",
     "contact_wa": "Message on WhatsApp",
     "contact_brief": "Already have a brief? Send it to {email}.",
-    "contact_lang": "I work in Polish and English.",
+    "contact_lang": "We work in Polish and English.",
     "form_title": "Quick enquiry",
     "f_contact": "Phone or email",
     "f_contact_hint": "E.g. +48 500 000 000 or name@company.com",
@@ -728,11 +738,11 @@ EN = {
     "f_reuse_opts": [("", "Not sure yet"), ("yes", "Yes, I want to reuse it"), ("no", "No, one-off")],
     "f_submit": "Send enquiry",
     "f_sending": "Sending…",
-    "f_disclaimer": "I use your details to respond to your enquiry and protect the form. Details: <a href=\"{privacy}\">privacy policy</a>.",
+    "f_disclaimer": "We use your details to respond to your enquiry and protect the form. Details: <a href=\"{privacy}\">privacy policy</a>.",
     "f_err_empty": "Please enter a phone number or an email address.",
     "f_err_email": "Please check the email address — it should look like name@company.com.",
     "f_err_contact": "Enter a phone number or an email address.",
-    "f_success": "Thank you — your enquiry has been sent. I’ll get back to you as soon as I can.",
+    "f_success": "Thank you — your enquiry has been sent. We’ll get back to you as soon as we can.",
     "f_fail": "The form wasn’t sent — your message did not go through. It’s ready to send by email or WhatsApp instead:",
     "f_fail_email": "Send by email",
     "f_fail_wa": "Send via WhatsApp",
@@ -744,7 +754,7 @@ EN = {
     "mail_subject": "Enquiry from the Scenovis website",
     "wa_hello": "Hello, I’m writing from the Scenovis website.",
     "topics": {"general": "General enquiry", "expo": "Exhibition stand design", "3d": "3D product presentation",
-               "delivery": "Delivery coordination"},
+               "delivery": "Full trade fair service"},
     "field_names": {"contact": "Contact", "name": "Name", "message": "Message", "topic": "Topic",
                     "event": "Fair", "city": "City", "date": "Dates", "area": "Stand size",
                     "budget": "Budget", "reuse": "Reuse"},
@@ -756,12 +766,12 @@ EN = {
     "expo_crumb": "Exhibition stand design",
     "expo_eyebrow": "EXHIBITION STAND DESIGN",
     "expo_h1": "Exhibition stand design <em>with the costs in view.</em>",
-    "expo_lead": "I prepare the stand concept and layout, a 3D model and a list of elements with their costs. "
+    "expo_lead": "We prepare the stand concept and layout, a 3D model and a list of elements with their costs. "
                  "You compare solutions and make decisions before you order production.",
     "expo_points": ["Concept and functional layout", "3D model and visuals",
                     "Buy / rent / service for every element", "Options to compare before delivery"],
     "expo_cta": "Discuss your stand design",
-    "expo_cta2": "See an example",
+    "expo_cta2": "See the stand",
     "expo_get_h2": "What stand design includes",
     "expo_shots": [("standmic", "Demo station — the product displayed at eye level"),
                    ("stand", "The whole stand layout: counter, screen, kiosk and two demo stations")],
@@ -790,7 +800,7 @@ EN = {
     "p3d_points": ["Product build and components", "Animations of mechanisms at work",
                    "Touchscreen interaction", "Support for sales teams"],
     "p3d_cta": "Let’s talk about your product presentation",
-    "p3d_cta2": "See an example",
+    "p3d_cta2": "See the presentation",
     "viewer": {
         "launch": "Launch 3D model", "loading": "Loading model…", "canvas_label": "Interactive 3D model of a microscope",
         "explode": "Explode", "assemble": "Assemble", "reset": "Reset view",
@@ -805,7 +815,7 @@ EN = {
             {"node": "Illuminator_Housing", "title": "Illuminator", "text": "Light from the base passes through the condenser and the specimen into the objective."},
         ],
     },
-    "p3d_get_h2": "What I can prepare",
+    "p3d_get_h2": "What we can prepare",
     "p3d_shots": [("exploded", "Exploded view — the device built up part by part"),
                   ("kiosk", "The same presentation on a touch kiosk at the stand")],
     "p3d_get": [
@@ -834,7 +844,7 @@ EN = {
 
     "nf_title": "Page not found | Scenovis",
     "nf_h1": "This page doesn’t exist.",
-    "nf_text": "The address may have changed. Go to the home page or contact me.",
+    "nf_text": "The address may have changed. Go to the home page or contact us.",
     "nf_home": "Home page",
 }
 

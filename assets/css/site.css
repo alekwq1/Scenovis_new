@@ -238,14 +238,6 @@ p { text-wrap: pretty; }
 .tag--down::before { bottom: auto; top: 11px; }
 .tag--down .tag-label { bottom: auto; top: 44px; }
 .tag--left .tag-label { left: auto; right: -2px; }
-.tag--led   { --u: .80; --v: .26; }
-.tag--led .tag-label { left: auto; right: -2px; }
-.tag--light { --u: .40; --v: .12; }
-.tag--light .tag-label { bottom: auto; top: 44px; }
-.tag--light::before { bottom: auto; top: 11px; }
-.tag--kiosk { --u: .73; --v: .66; }
-.tag--kiosk .tag-label { left: auto; right: -2px; }
-.tag--build { --u: .31; --v: .79; }
 .variant-pill {
   position: absolute; z-index: 3; left: 14px; bottom: 14px; display: flex; align-items: center; gap: 2px;
   padding: 4px; border-radius: 999px; background: rgba(18,22,23,.82); border: 1px solid var(--line-2); font-size: .8rem;
@@ -356,8 +348,7 @@ p { text-wrap: pretty; }
 @supports (grid-template-rows: subgrid) {
   @media (min-width: 1000px) {
     .services-grid { row-gap: 0; }
-    .service { display: grid; grid-row: span 6; grid-template-rows: subgrid; row-gap: 0; }
-    .service .who { margin-top: 0; align-self: end; justify-self: start; }
+    .service { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 0; }
     .service-list { align-content: start; }
     .service-actions { align-self: start; }
   }
@@ -592,12 +583,9 @@ p { text-wrap: pretty; }
   .tag-label .chip { font-size: .75rem; padding: 2px 7px; }
   .tag::before { height: 22px; }
   .tag-label { bottom: 32px; }
-  .tag--down .tag-label, .tag--light .tag-label { top: 32px; }
-  .tag--light, .tag--build, .tag--led { display: none; }
+  .tag--down .tag-label { top: 32px; }
   .variant-pill { font-size: .75rem; left: 8px; bottom: 8px; }
   .variant-pill span { display: none; }
-  .variant-pill b { padding: 4px 8px; }
-  .concept-badge { right: 8px; top: 8px; font-size: .75rem; }
   .tldr { padding: 28px 0; }
   .tldr-list { grid-template-columns: minmax(0, 1fr); gap: 18px; }
   .section-head { margin-bottom: 30px; }
@@ -743,7 +731,7 @@ p { text-wrap: pretty; }
   .case > .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: 48px; align-items: center; }
   .case > .wrap > .section-head { grid-column: 1; grid-row: 1; margin-bottom: 0; }
   .case > .wrap > .case-stage { grid-column: 2; grid-row: 1; }
-  .case > .wrap > :not(.section-head):not(.case-stage) { grid-column: 1 / -1; }
+  .case > .wrap > :not(.section-head):not(.case-stage):not(.case-copy) { grid-column: 1 / -1; }
   .case .player.is-placeholder { aspect-ratio: 16 / 9; }
   .case .player:not(.is-placeholder) { max-width: none; }
   .costs h2 { font-size: clamp(2rem, 1.2rem + 1.7vw, 2.7rem); }
@@ -785,16 +773,6 @@ p { text-wrap: pretty; }
   .hero-figure:not(.hero-figure--plain) .annotated { --vis: 1; --off: 0; }
   .hero-figure:not(.hero-figure--plain) .annotated img { object-position: 50% 50%; }
 }
-/* współrzędne policzone z kamery CAM_EXPO_MAIN (world_to_camera_view) */
-.tag--led   { --u: .405; --v: .36; }
-.tag--light { --u: .311; --v: .219; }
-.tag--kiosk { --u: .386; --v: .645; }
-.tag--build { --u: .70;  --v: .78; }
-.tag--build .tag-label { left: auto; right: -2px; }
-.tag--light::before { top: auto; bottom: 11px; }
-.tag--light .tag-label { top: auto; bottom: 44px; left: -2px; right: auto; }
-.tag--led::before { bottom: auto; top: 11px; }
-.tag--led .tag-label { bottom: auto; top: 44px; left: -2px; right: auto; }
 
 /* ---------- interaktywny model 3D (podstrona prezentacji 3D) ---------- */
 .viewer-launch {
@@ -846,3 +824,123 @@ p { text-wrap: pretty; }
 @media (max-width: 700px) {
   .hero-figure--plain .annotated.is-3d { aspect-ratio: 4 / 5; }
 }
+
+/* ==========================================================================
+   Dopracowanie 18.10.2026: warianty w hero, kompleksowa obsługa, krótsza sekcja filmu i kosztów
+   ========================================================================== */
+
+/* ---------- hero: przełączanie wariantów Economy / Smart / Premium ---------- */
+.vimgs, .vimg { position: absolute; inset: 0; }
+.vimg { opacity: 0; transition: opacity .35s var(--ease); }
+.vimg img { width: 100%; height: 100%; }
+[data-variant="economy"] .vimg--economy, [data-variant="smart"] .vimg--smart, [data-variant="premium"] .vimg--premium { opacity: 1; }
+.hero-figure[data-variant="economy"] .tag:not(.in-economy),
+.hero-figure[data-variant="smart"] .tag:not(.in-smart),
+.hero-figure[data-variant="premium"] .tag:not(.in-premium) { display: none; }
+.variant-pill { gap: 2px; padding: 4px; }
+.variant-pill span { padding: 0 6px 0 10px; }
+.vbtn {
+  min-height: 36px; padding: 6px 14px; border: 0; border-radius: 999px; background: transparent;
+  color: var(--ink-2); font: inherit; font-weight: 640; cursor: pointer; transition: background-color .2s, color .2s;
+}
+.vbtn:hover { color: var(--ink); background: rgba(255,255,255,.08); }
+.vbtn[aria-pressed="true"] { background: var(--accent); color: var(--accent-deep); }
+.vbtn:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+/* opis zakresu: wszystkie trzy w jednej komórce — wysokość = najdłuższy, bez skoku układu */
+.variant-scopes { display: grid; margin-top: 12px; font-size: .9rem; line-height: 1.5; color: var(--ink-2); }
+.variant-scope { grid-area: 1 / 1; visibility: hidden; }
+.variant-scope strong { color: var(--ink); font-weight: 640; }
+[data-variant="economy"] .variant-scope.in-economy, [data-variant="smart"] .variant-scope.in-smart,
+[data-variant="premium"] .variant-scope.in-premium { visibility: visible; }
+
+/* punkty: współrzędne w pełnym kadrze 16:9 kamery CAM_EXPO_MAIN (world_to_camera_view, Blender) */
+.tag--screen { --u: .47;  --v: .42; }
+.tag--spots  { --u: .301; --v: .207; }
+.tag--kiosk  { --u: .386; --v: .658; }
+.tag--floor  { --u: .704; --v: .744; }
+.tag--brand  { --u: .205; --v: .55; }
+.tag--slats  { --u: .577; --v: .30; }
+.tag--ped    { --u: .569; --v: .60; }
+/* kierunek etykiet: tak, by nie zasłaniały ekranu, lady i mikroskopów */
+.tag--screen::before, .tag--kiosk::before, .tag--brand::before, .tag--ped::before, .tag--floor::before { bottom: auto; top: 11px; }
+.tag--screen .tag-label, .tag--kiosk .tag-label, .tag--brand .tag-label, .tag--ped .tag-label, .tag--floor .tag-label { bottom: auto; top: 44px; }
+.tag--kiosk .tag-label, .tag--floor .tag-label { left: auto; right: -2px; }
+@media (max-width: 700px) {
+  .tag--screen .tag-label, .tag--kiosk .tag-label, .tag--brand .tag-label, .tag--ped .tag-label, .tag--floor .tag-label { top: 32px; }
+  .tag--brand, .tag--floor, .tag--ped, .tag--slats { display: none; }
+  .vbtn { min-height: 34px; padding: 5px 10px; font-size: .78rem; }
+  .variant-scopes { font-size: .86rem; }
+}
+@media (prefers-reduced-motion: reduce) { .vimg { transition: none; } }
+
+/* ---------- oferta: kompleksowa obsługa targów ---------- */
+.full {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px 48px; align-items: center;
+  margin-top: 18px; padding: 30px 32px; border-radius: var(--radius);
+  border: 1px solid rgba(255,147,100,.35); background: linear-gradient(140deg, rgba(255,147,100,.09), rgba(255,147,100,.015));
+}
+.full .service-code { margin-bottom: 10px; color: var(--accent-ink); }
+.full h3 { font-size: 1.6rem; margin-bottom: 10px; }
+.full-note { margin: 12px 0 20px; color: var(--ink-3); font-size: .95rem; }
+.full-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; }
+.full-list li { display: flex; gap: 10px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-weight: 560; }
+.full-list .icon { color: var(--accent); margin-top: 3px; flex: none; }
+@media (max-width: 999px) {
+  .full { grid-template-columns: minmax(0, 1fr); padding: 24px; }
+}
+@media (max-width: 700px) {
+  .full { padding: 22px 18px; }
+  .full-list { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .full .button { width: 100%; }
+}
+
+/* ---------- sekcja filmu: tekst, trzy korzyści i CTA obok okna filmu (rozmiar okna bez zmian) ---------- */
+.case-copy .section-lead { margin-top: 14px; }
+.case-points { display: grid; gap: 10px; margin: 24px 0 26px; }
+.case-points li { display: flex; gap: 10px; align-items: flex-start; color: var(--ink-2); }
+.case-points .icon { color: var(--accent); margin-top: 4px; flex: none; }
+.case-points strong { color: var(--ink); font-weight: 640; }
+.player.is-cover .player-bg::after { background: linear-gradient(180deg, rgba(13,16,17,0), rgba(13,16,17,.25)); }
+.player.is-cover .player-bg img { filter: none; }
+.player.has-video video { position: absolute; inset: 0; }
+.player.has-video .player-play { z-index: 1; }
+@media (min-width: 1000px) {
+  .case > .wrap > .case-copy { grid-column: 1; grid-row: 1; }
+  .case > .wrap > .case-stage { grid-column: 2; grid-row: 1; }
+}
+@media (max-width: 999px) {
+  .case-copy { margin-bottom: 28px; }
+}
+@media (max-width: 700px) {
+  .case-cta-btn { width: 100%; }
+}
+
+/* ---------- koszty: krótkie zestawienie ---------- */
+.sheet th, .sheet td { vertical-align: middle; }
+.sheet tbody th { white-space: normal; }
+.c-type { width: 1%; white-space: nowrap; }
+.c-desc .v, .c-type .v, .sheet-more .v { display: none; }
+.sheet[data-variant="economy"] .in-economy, .sheet[data-variant="smart"] .in-smart, .sheet[data-variant="premium"] .in-premium { display: inline; }
+.sheet[data-variant="economy"] ul.in-economy, .sheet[data-variant="smart"] ul.in-smart, .sheet[data-variant="premium"] ul.in-premium { display: grid; }
+.chip--mix { color: var(--ink-2); border-color: var(--line-2); background: rgba(255,255,255,.04); }
+.sheet-more { border-top: 1px solid var(--line); }
+.sheet-more summary { display: flex; align-items: center; min-height: 46px; padding: 0 20px; cursor: pointer; color: var(--accent-ink); font-weight: 600; font-size: .93rem; }
+.more-list { gap: 6px; padding: 0 20px 16px 38px; list-style: disc; color: var(--ink-2); font-size: .92rem; }
+.sheet-note { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+.sheet-note strong { color: var(--ink); font-size: .95rem; }
+.costs .legend { margin-top: 4px; }
+.costs .legend li { font-size: 1rem; }
+@media (max-width: 700px) {
+  .sheet tbody tr { grid-template-columns: minmax(0, 1fr) auto; }
+  .sheet .c-type { width: auto; justify-self: end; }
+  .sheet .c-desc { grid-column: 1 / -1; }
+}
+@media (max-width: 700px) {
+  .sheet tbody th { grid-row: 1; grid-column: 1; }
+  .sheet .c-type { grid-row: 1; grid-column: 2; }
+  .sheet .c-desc { grid-row: 2; }
+}
+@media (max-width: 999px) {
+  .costs-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+}
+.sheet th, .sheet td { padding-top: 10px; padding-bottom: 10px; }

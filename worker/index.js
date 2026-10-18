@@ -20,7 +20,7 @@ const LIMITS = { contact: 140, name: 80, message: 2000, topic: 30, event: 120, c
 const MAX_BODY = 20000;
 const DEFAULT_TO = 'contact@scenovis.com';
 const DEFAULT_FROM = 'Scenovis <form@forms.scenovis.com>';
-const TOPICS = { general: 'Zapytanie ogólne', expo: 'Projekt stoiska', '3d': 'Prezentacja 3D', delivery: 'Realizacja' };
+const TOPICS = { general: 'Zapytanie ogólne', expo: 'Projekt stoiska', '3d': 'Prezentacja 3D', delivery: 'Kompleksowa obsługa targów' };
 const LABELS = { contact: 'Kontakt', name: 'Imię', message: 'Wiadomość', topic: 'Temat', event: 'Targi', city: 'Miasto',
   date: 'Termin', area: 'Powierzchnia (m²)', budget: 'Budżet', reuse: 'Ponowne użycie', lang: 'Język', page: 'Podstrona' };
 const REQUIRED_ENV = ['RESEND_API_KEY', 'TURNSTILE_SECRET', 'TURNSTILE_SITE_KEY'];

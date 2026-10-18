@@ -17,5 +17,10 @@
 /assets/img/*
   Cache-Control: public, max-age=2592000
 
+# Obrazy wariantów stoiska mają stałe nazwy (podmiana bez przebudowy strony) — krótki cache.
+/assets/img/warianty/*
+  ! Cache-Control
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /assets/video/*
   Cache-Control: public, max-age=2592000
