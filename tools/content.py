@@ -400,7 +400,8 @@ PL = {
     "viewer": {
         "launch": "Uruchom model 3D", "loading": "Wczytywanie modelu…", "canvas_label": "Interaktywny model 3D mikroskopu",
         "explode": "Rozłóż", "assemble": "Złóż", "reset": "Widok startowy",
-        "hint": "Przeciągnij, aby obrócić · kółko lub dwa palce — przybliżenie · numery — opisy części",
+        "tour": "Zwiedzanie", "tour_stop": "Zatrzymaj", "prev": "Poprzednia", "next": "Następna", "close": "Zamknij opis",
+        "hint": "Przeciągnij, aby obrócić · kółko lub dwa palce — przybliżenie · numery — zbliżenia części",
         "error": "Nie udało się uruchomić modelu 3D w tej przeglądarce. Poniżej zostaje render.",
         "note": "Model działa w przeglądarce (ok. 2–3 MB do pobrania).",
         "hotspots": [
@@ -810,7 +811,8 @@ EN = {
     "viewer": {
         "launch": "Launch 3D model", "loading": "Loading model…", "canvas_label": "Interactive 3D model of a microscope",
         "explode": "Explode", "assemble": "Assemble", "reset": "Reset view",
-        "hint": "Drag to rotate · scroll or pinch to zoom · numbers show part descriptions",
+        "tour": "Guided tour", "tour_stop": "Stop", "prev": "Previous", "next": "Next", "close": "Close description",
+        "hint": "Drag to rotate · scroll or pinch to zoom · numbers zoom in on parts",
         "error": "The 3D model could not start in this browser. The render stays below.",
         "note": "The model runs in your browser (about 2–3 MB to download).",
         "hotspots": [
