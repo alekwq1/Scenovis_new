@@ -1199,12 +1199,14 @@ p { text-wrap: pretty; }
 }
 
 /* Fine-pointer interactions complement the one-time scroll entrances. */
-@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+@media (any-hover: hover) and (any-pointer: fine) {
   .about-photo, .shot { overflow: hidden; }
+  .about-photo { border-radius: 16px; transition: box-shadow .35s ease; }
+  .about-photo:hover { box-shadow: 0 0 0 2px rgba(255,147,100,.65), 0 14px 36px rgba(0,0,0,.28); }
   .about-photo img, .shot img {
-    transition: transform .8s cubic-bezier(.22,1,.36,1), filter .6s ease;
+    transition: transform .45s cubic-bezier(.22,1,.36,1), filter .35s ease;
   }
-  .about-photo:hover img, .shot:hover img { transform: scale(1.035); filter: brightness(1.04); }
+  .about-photo:hover img, .shot:hover img { transform: scale(1.08); filter: brightness(1.08); }
   .service, .steps > li, .full, .hero-path, .hero-figure .annotated, .variant-figure .annotated {
     transition: border-color .35s ease, box-shadow .45s ease, background-color .35s ease;
   }
@@ -1223,4 +1225,10 @@ p { text-wrap: pretty; }
 }
 @media (prefers-reduced-motion: no-preference) and (pointer: coarse) {
   .button:active, .hero-path:active { transform: scale(.985); }
+}
+
+/* Reduced motion still gets a visible hover cue, without zoom or movement. */
+@media (prefers-reduced-motion: reduce) {
+  .about-photo:hover img, .shot:hover img,
+  .button-primary:hover, .text-link:hover .icon:last-child { transform: none; }
 }
