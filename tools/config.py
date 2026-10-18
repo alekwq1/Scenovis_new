@@ -35,11 +35,11 @@ VARIANT_RENDERS = False
 # FILM na podstronie „Prezentacje produktów 3D” (sekcja „Interaktywna prezentacja produktu”).
 # Okładka przed odtworzeniem: assets/img/scenovis-obiektywy-okladka-*.webp/.avif (klucz "cover3d" w build.py).
 VIDEO_3D = {
-    "src": "/assets/video/scenovis-mikroskop-prezentacja.mp4",   # 1728×1000, H.264, bez dźwięku, 71 s
+    "src": "/assets/video/scenovis-mikroskop-prezentacja.mp4",   # 1728×1000, H.264, bez dźwięku, montaż 24 s
     "poster": "/assets/video/scenovis-mikroskop-okladka.jpg",
     "width": 1728, "height": 1000,
-    "duration_iso": "PT1M11S",
-    "duration_label": {"pl": "1:11", "en": "1:11"},
+    "duration_iso": "PT24S",
+    "duration_label": {"pl": "0:24", "en": "0:24"},
     "upload_date": "2026-10-18T13:00:00+02:00",
     "name": {"pl": "Interaktywna prezentacja mikroskopu — Scenovis",
              "en": "Interactive microscope presentation — Scenovis"},
