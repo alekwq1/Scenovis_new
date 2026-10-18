@@ -70,26 +70,26 @@ PL = {
     "variants": {
         "economy": {
             "name": "Economy",
-            "scope": "Ściany systemowe i wykładzina z wynajmu, 4 reflektory, ekran 75″, kiosk dotykowy z wynajmu.",
+            "scope": "Ściany systemowe, wykładzina, 4 reflektory, ekran 75″ i kiosk dotykowy — wszystko z wynajmu.",
             "alt": "Stoisko w wariancie Economy: ściany systemowe, wykładzina, cztery reflektory, ekran 75 cali i kiosk dotykowy",
-            "tags": [("screen", "Ekran 75″", "zakup"), ("spots", "4 reflektory", "wynajem"),
+            "tags": [("screen", "Ekran 75″", "wynajem"), ("spots", "4 reflektory", "wynajem"),
                      ("kiosk", "Kiosk dotykowy", "wynajem"), ("floor", "Wykładzina", "wynajem")],
         },
         "smart": {
             "name": "Smart",
-            "scope": "Własna rama z grafiką tekstylną, podświetlany panel marki, 6 reflektorów i linia LED, "
-                     "ekran 98″, podłoga modułowa, własny kiosk.",
+            "scope": "Rama z grafiką tekstylną, podświetlany panel marki, 6 reflektorów i linia LED, ekran 98″, "
+                     "podłoga modułowa — z wynajmu; kiosk własny lub z wynajmu.",
             "alt": "Stoisko w wariancie Smart: podświetlany panel marki, sześć reflektorów, linia LED, ekran 98 cali, podłoga modułowa i kiosk dotykowy",
-            "tags": [("screen", "Ekran 98″", "zakup"), ("spots", "6 reflektorów", "wynajem"),
-                     ("brand", "Podświetlany panel marki", "zakup"), ("kiosk", "Kiosk dotykowy", "zakup")],
+            "tags": [("screen", "Ekran 98″", "wynajem"), ("spots", "6 reflektorów + linia LED", "wynajem"),
+                     ("brand", "Podświetlany panel marki", "wynajem"), ("kiosk", "Kiosk dotykowy", "własne")],
         },
         "premium": {
             "name": "Premium",
-            "scope": "Zakres Smart oraz trzy podświetlane pola, podświetlenie postumentów, własne reflektory "
-                     "ze sterownikiem scen i monitor profesjonalny 98″.",
-            "alt": "Stoisko w wariancie Premium: trzy podświetlane pola, podświetlone postumenty, własne reflektory, monitor profesjonalny 98 cali",
-            "tags": [("screen", "Monitor profesjonalny 98″", "zakup"), ("spots", "6 własnych reflektorów", "zakup"),
-                     ("slats", "Podświetlane pola", "zakup"), ("ped", "Podświetlane postumenty", "zakup")],
+            "scope": "Zakres Smart oraz trzy podświetlane pola, podświetlane postumenty, reflektory ze sterownikiem scen "
+                     "i monitor profesjonalny 98″ — z wynajmu, z obsługą techniczną na miejscu.",
+            "alt": "Stoisko w wariancie Premium: trzy podświetlane pola, podświetlone postumenty, reflektory ze sterownikiem scen, monitor profesjonalny 98 cali",
+            "tags": [("screen", "Monitor profesjonalny 98″", "wynajem"), ("spots", "Reflektory ze sterownikiem scen", "wynajem"),
+                     ("slats", "Podświetlane pola", "wynajem"), ("ped", "Podświetlane postumenty", "wynajem")],
         },
     },
     "hero_variant_label": "Wariant",
@@ -101,7 +101,7 @@ PL = {
                 "albo szukających czytelnego sposobu, by pokazać, jak działa ich produkt.",
     "tldr": [
         ("Projekt stoiska", "Koncepcja, układ i model 3D — oglądasz stoisko, zanim powstanie."),
-        ("Koszty pod kontrolą", "Każdy element jako zakup, wynajem lub usługa. Warianty do porównania."),
+        ("Koszty pod kontrolą", "Każdy element jako wynajem, własne wyposażenie lub usługa. Warianty do porównania."),
         ("Prezentacje produktów 3D", "Budowa, mechanizmy i działanie urządzenia — interaktywnie lub jako animacja."),
         ("Od pomysłu do realizacji", "Projekt, prezentacja produktu i organizacja udziału w targach — całość lub wybrany zakres."),
     ],
@@ -115,7 +115,7 @@ PL = {
     "video_captions_note": "Film ma napisy po polsku i angielsku. Dźwięk włącza się dopiero po kliknięciu.",
     "case_benefits": [
         ("Układ 3D", "zobacz przestrzeń i ekspozycję"),
-        ("Przejrzysty budżet", "sprawdź zakup, wynajem i usługi"),
+        ("Przejrzysty budżet", "sprawdź wynajem, własne wyposażenie i usługi"),
         ("Porównanie wariantów", "wybierz Economy, Smart lub Premium"),
     ],
     "case_cta": "Omów projekt stoiska",
@@ -141,7 +141,7 @@ PL = {
             "desc": "Przemyślana przestrzeń targowa i decyzje podjęte przed produkcją — na podstawie modelu 3D "
                     "i zestawienia kosztów.",
             "items": ["Koncepcja stoiska", "Układ funkcjonalny i ergonomia", "Model i wizualizacje 3D",
-                      "Dobór wyposażenia i technologii", "Analiza: zakup, wynajem czy własne elementy",
+                      "Dobór wyposażenia i technologii", "Analiza: wynajem czy własne elementy",
                       "Zestawienie elementów i szacunek kosztów", "Wsparcie w wyborze wykonawców"],
             "more": ("Więcej o projekcie stoiska", "expo"), "ask": "Omów projekt stoiska",
         },
@@ -214,7 +214,7 @@ PL = {
     "costs_price": "Indywidualna wycena",
     "costs_price_note": "Bez sztywnych pakietów — zakres i wycenę ustalamy dla konkretnych targów.",
     "costs_legend": [
-        ("buy", "Zakup", "zostaje na kolejne wydarzenia"),
+        ("own", "Własne", "Twoje wyposażenie, wykorzystujemy je w projekcie"),
         ("rent", "Wynajem", "na czas targów"),
         ("service", "Usługa", "transport, montaż i obsługa"),
     ],
@@ -261,13 +261,13 @@ PL = {
                     "<p>Najczęściej od: powierzchni i typu zabudowy (systemowa lub indywidualna), materiałów "
                     "i wykończenia, grafiki, oświetlenia, multimediów, mebli, transportu, montażu i demontażu "
                     "oraz opłat organizatora (np. przyłącza mediów). Dla Twojego projektu rozpisujemy to element po elemencie.</p>"),
-        "buyrent": ("Co lepiej wynająć, a co kupić?",
-                    "<p>To zależy przede wszystkim od tego, ile razy w roku się wystawiasz. Elementy używane wielokrotnie "
-                    "— np. konstrukcja systemowa, kiosk czy uniwersalna grafika — często opłaca się kupić. Sprzęt AV "
-                    "szybko się starzeje, więc zwykle lepiej go wynająć. W projekcie porównujemy oba warianty dla Twojej sytuacji.</p>"),
+        "buyrent": ("Co wynająć, a co wykorzystać z własnego wyposażenia?",
+                    "<p>Większość elementów — zabudowę, sprzęt AV, oświetlenie i meble — najlepiej wynająć na czas targów. "
+                    "Własne elementy, np. kiosk, ekran czy grafikę z poprzednich targów, uwzględniamy w projekcie "
+                    "i wyceniamy tylko wynajem tego, czego brakuje.</p>"),
         "reuse": ("Czy stoisko można wykorzystać na kolejnych targach?",
                   "<p>Tak, jeśli zaplanujemy to od początku: moduły, wymienne grafiki, transport i magazynowanie. "
-                  "Pytamy o to już na etapie briefu, bo wpływa to na wybór zakup / wynajem.</p>"),
+                  "Pytamy o to już na etapie briefu, bo wpływa to na dobór elementów.</p>"),
         "materials": ("Jakie materiały są potrzebne na start?",
                       "<p>Wystarczy: nazwa targów i termin, powierzchnia i rodzaj stoiska (wyspowe, narożne, rzędowe), "
                       "co chcesz pokazać i orientacyjny budżet. Pomocne będą też: logo lub brandbook, zdjęcia albo modele "
@@ -364,14 +364,14 @@ PL = {
     "expo_slug": "projekt-stoiska-targowego",
     "expo_title": "Projekt stoiska targowego 3D z zestawieniem kosztów | Scenovis",
     "expo_desc": "Koncepcja, układ funkcjonalny i wizualizacja 3D stoiska targowego. Zestawienie elementów "
-                 "i kosztów (zakup, wynajem, usługa) oraz porównanie wariantów przed produkcją.",
+                 "i kosztów (wynajem, własne wyposażenie, usługa) oraz porównanie wariantów przed produkcją.",
     "expo_crumb": "Projekt stoiska targowego",
     "expo_eyebrow": "PROJEKT STOISKA TARGOWEGO",
     "expo_h1": "Projekt stoiska targowego, <em>w którym widać koszty.</em>",
     "expo_lead": "Przygotowujemy koncepcję i układ stoiska, model 3D oraz zestawienie elementów z kosztami. "
                  "Porównujesz rozwiązania i podejmujesz decyzje, zanim zamówisz produkcję.",
     "expo_points": ["Koncepcja i układ funkcjonalny", "Model i wizualizacje 3D",
-                    "Zakup / wynajem / usługa przy każdym elemencie", "Warianty do porównania przed realizacją"],
+                    "Wynajem / własne / usługa przy każdym elemencie", "Warianty do porównania przed realizacją"],
     "expo_cta": "Omów projekt stoiska",
     "expo_cta2": "Zobacz stoisko",
     "expo_get_h2": "Co obejmuje projekt stoiska",
@@ -382,7 +382,7 @@ PL = {
         ("Układ i ergonomia", "Strefy pokazu, rozmów i zaplecza, ruch odwiedzających, ekspozycja produktu."),
         ("Model i wizualizacje 3D", "Widoki z różnych stron i ujęcia do omówienia projektu w firmie."),
         ("Wyposażenie i technologia", "Dobór mebli, multimediów i oświetlenia do celu stoiska."),
-        ("Zestawienie i warianty", "Elementy opisane jako zakup, wynajem lub usługa — z wariantami do porównania."),
+        ("Zestawienie i warianty", "Elementy opisane jako wynajem, własne wyposażenie lub usługa — z wariantami do porównania."),
         ("Wybór wykonawców", "Materiały do zapytań ofertowych i wsparcie przy porównaniu ofert."),
     ],
     "cross_expo_h2": "Potrzebujesz też prezentacji produktu?",
@@ -504,26 +504,26 @@ EN = {
     "variants": {
         "economy": {
             "name": "Economy",
-            "scope": "Hired system walls and carpet, 4 spotlights, a 75″ screen, a hired touch kiosk.",
+            "scope": "System walls, carpet, 4 spotlights, a 75″ screen and a touch kiosk — all rented.",
             "alt": "Stand in the Economy option: system walls, carpet, four spotlights, a 75-inch screen and a touch kiosk",
-            "tags": [("screen", "75″ screen", "buy"), ("spots", "4 spotlights", "rent"),
+            "tags": [("screen", "75″ screen", "rent"), ("spots", "4 spotlights", "rent"),
                      ("kiosk", "Touch kiosk", "rent"), ("floor", "Carpet", "rent")],
         },
         "smart": {
             "name": "Smart",
-            "scope": "Own frame with fabric graphics, a backlit brand panel, 6 spotlights and an LED line, "
-                     "a 98″ screen, modular flooring, own kiosk.",
+            "scope": "Frame with fabric graphics, a backlit brand panel, 6 spotlights and an LED line, a 98″ screen, "
+                     "modular flooring — rented; your own kiosk or a rented one.",
             "alt": "Stand in the Smart option: backlit brand panel, six spotlights, LED line, 98-inch screen, modular flooring and a touch kiosk",
-            "tags": [("screen", "98″ screen", "buy"), ("spots", "6 spotlights", "rent"),
-                     ("brand", "Backlit brand panel", "buy"), ("kiosk", "Touch kiosk", "buy")],
+            "tags": [("screen", "98″ screen", "rent"), ("spots", "6 spotlights + LED line", "rent"),
+                     ("brand", "Backlit brand panel", "rent"), ("kiosk", "Touch kiosk", "own")],
         },
         "premium": {
             "name": "Premium",
-            "scope": "The Smart scope plus three backlit panels, lit pedestals, own spotlights with a scene "
-                     "controller and a professional 98″ display.",
-            "alt": "Stand in the Premium option: three backlit panels, lit pedestals, own spotlights and a professional 98-inch display",
-            "tags": [("screen", "Professional 98″ display", "buy"), ("spots", "6 own spotlights", "buy"),
-                     ("slats", "Backlit panels", "buy"), ("ped", "Lit pedestals", "buy")],
+            "scope": "The Smart scope plus three backlit panels, lit pedestals, spotlights with a scene controller "
+                     "and a professional 98″ display — rented, with on-site technical support.",
+            "alt": "Stand in the Premium option: three backlit panels, lit pedestals, spotlights with a scene controller and a professional 98-inch display",
+            "tags": [("screen", "Professional 98″ display", "rent"), ("spots", "Spotlights with scene controller", "rent"),
+                     ("slats", "Backlit panels", "rent"), ("ped", "Lit pedestals", "rent")],
         },
     },
     "hero_variant_label": "Option",
@@ -534,7 +534,7 @@ EN = {
                 "or looking for a clear way to show how their product works.",
     "tldr": [
         ("Stand design", "Concept, layout and 3D model — see the stand before it is built."),
-        ("Costs in view", "Every element marked as buy, rent or service. Options to compare."),
+        ("Costs in view", "Every element marked as rent, own equipment or service. Options to compare."),
         ("3D product presentations", "The build, mechanisms and operation of a device — interactive or animated."),
         ("From idea to delivery", "Stand design, product presentation and trade fair organisation — all of it or a chosen part."),
     ],
@@ -547,7 +547,7 @@ EN = {
     "video_captions_note": "Captions are available in Polish and English. Sound plays only after you press play.",
     "case_benefits": [
         ("3D layout", "see the space and the display"),
-        ("A clear budget", "check what is bought, rented or a service"),
+        ("A clear budget", "check rentals, own equipment and services"),
         ("Option comparison", "choose Economy, Smart or Premium"),
     ],
     "case_cta": "Discuss your stand design",
@@ -570,7 +570,7 @@ EN = {
             "key": "expo", "code": "Service · EXPO", "title": "Exhibition stand design",
             "desc": "A well-planned stand and decisions made before production — based on a 3D model and a cost breakdown.",
             "items": ["Stand concept", "Functional layout and ergonomics", "3D model and visuals",
-                      "Choice of furniture and technology", "Analysis: buy, rent or use your own elements",
+                      "Choice of furniture and technology", "Analysis: rent or use your own elements",
                       "List of elements and cost estimate", "Help choosing contractors"],
             "more": ("More about stand design", "expo"), "ask": "Discuss your stand design",
         },
@@ -638,7 +638,7 @@ EN = {
     "costs_price": "Individual quote",
     "costs_price_note": "No fixed packages — we agree the scope and the quote for your specific fair.",
     "costs_legend": [
-        ("buy", "Buy", "stays with you for future events"),
+        ("own", "Own", "your equipment, used in the design"),
         ("rent", "Rent", "for the time of the fair"),
         ("service", "Service", "transport, installation and staffing"),
     ],
@@ -682,13 +682,13 @@ EN = {
                     "<p>Usually: floor space and build type (modular or custom), materials and finish, graphics, lighting, "
                     "multimedia, furniture, transport, build-up and dismantling, plus organiser fees (e.g. utility connections). "
                     "For your project we break this down element by element.</p>"),
-        "buyrent": ("What is better to rent and what to buy?",
-                    "<p>Mostly it depends on how often you exhibit. Elements used repeatedly — such as a modular structure, "
-                    "a kiosk or universal graphics — are often worth buying. AV equipment dates quickly, so renting it is "
-                    "usually better. In the project we compare both options for your situation.</p>"),
+        "buyrent": ("What should be rented and what can come from your own equipment?",
+                    "<p>Most elements — the stand build, AV equipment, lighting and furniture — are best rented for the time "
+                    "of the fair. Your own elements, such as a kiosk, a screen or graphics from previous fairs, are included "
+                    "in the design, and we only quote the rental of what is missing.</p>"),
         "reuse": ("Can the stand be reused at future fairs?",
                   "<p>Yes, if we plan for it from the start: modules, replaceable graphics, transport and storage. "
-                  "We ask about it in the brief, because it affects the buy / rent decision.</p>"),
+                  "We ask about it in the brief, because it affects which elements we choose.</p>"),
         "materials": ("What is needed to start?",
                       "<p>Enough to start: the fair and its dates, floor space and stand type (island, corner, inline), "
                       "what you want to show and a rough budget. Also helpful: logo or brand guide, product photos or models "
@@ -782,14 +782,14 @@ EN = {
     "expo_slug": "exhibition-stand-design",
     "expo_title": "Exhibition stand design in 3D with cost breakdown | Scenovis",
     "expo_desc": "Exhibition stand concept, functional layout and 3D visualisation. A list of elements and costs "
-                 "(buy, rent, service) and an option comparison before production.",
+                 "(rent, own equipment, service) and an option comparison before production.",
     "expo_crumb": "Exhibition stand design",
     "expo_eyebrow": "EXHIBITION STAND DESIGN",
     "expo_h1": "Exhibition stand design <em>with the costs in view.</em>",
     "expo_lead": "We prepare the stand concept and layout, a 3D model and a list of elements with their costs. "
                  "You compare solutions and make decisions before you order production.",
     "expo_points": ["Concept and functional layout", "3D model and visuals",
-                    "Buy / rent / service for every element", "Options to compare before delivery"],
+                    "Rent / own / service for every element", "Options to compare before delivery"],
     "expo_cta": "Discuss your stand design",
     "expo_cta2": "See the stand",
     "expo_get_h2": "What stand design includes",
@@ -800,7 +800,7 @@ EN = {
         ("Layout and ergonomics", "Demo, meeting and storage zones, visitor flow, product display."),
         ("3D model and visuals", "Views from every side and shots for discussing the project internally."),
         ("Furniture and technology", "Choosing furniture, multimedia and lighting to fit the stand’s purpose."),
-        ("Breakdown and options", "Elements described as buy, rent or service — with options to compare."),
+        ("Breakdown and options", "Elements described as rent, own equipment or service — with options to compare."),
         ("Choosing contractors", "Material for requests for quotation and help comparing quotes."),
     ],
     "cross_expo_h2": "Need a product presentation too?",

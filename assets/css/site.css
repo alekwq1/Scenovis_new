@@ -1072,3 +1072,4 @@ p { text-wrap: pretty; }
 .variant-figure .tag--slats .tag-label { bottom: auto; top: 44px; left: -2px; right: auto; }
 .variant-figure .tag--spots::before { height: 18px; }
 .variant-figure .tag--spots .tag-label { bottom: 28px; }
+.chip--own { color: var(--buy); border-color: rgba(255,178,142,.4); background: rgba(255,147,100,.08); }

@@ -316,7 +316,7 @@ def section_head(label, h2, lead=None, h2_id=None, extra=""):
 def variant_figure(lang, sizes="(min-width: 1000px) 52vw, 100vw"):
     """Okno stoiska z przełącznikiem Economy / Smart / Premium i punktami wyposażenia danego wariantu."""
     t = CONTENT[lang]
-    types = {"wynajem": "rent", "rent": "rent", "zakup": "buy", "buy": "buy", "usługa": "service", "service": "service"}
+    types = {"wynajem": "rent", "rent": "rent", "własne": "own", "own": "own", "usługa": "service", "service": "service"}
     pics, tags, scopes, buttons = [], [], [], []
     for v in VARIANTS:
         d = t["variants"][v]
