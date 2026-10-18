@@ -1017,3 +1017,58 @@ p { text-wrap: pretty; }
 .hero-video-toggle:hover { border-color: var(--accent); }
 .hero-video-toggle:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
 .hero-video-toggle { top: auto; bottom: 10px; right: 10px; width: 34px; height: 34px; }
+
+/* ---------- okno wariantów w sekcji „Zobacz stoisko” (18.10.2026) ---------- */
+.variant-figure { margin: 0; }
+.variant-figure .annotated { --vis: 1; --off: 0; aspect-ratio: 16 / 9; }
+.variant-figure .annotated img { object-position: 50% 50%; }
+[data-variant="economy"] .tag:not(.in-economy),
+[data-variant="smart"] .tag:not(.in-smart),
+[data-variant="premium"] .tag:not(.in-premium) { display: none; }
+/* punkty pojawiają się kolejno przy każdej zmianie wariantu (animacja startuje po zmianie display) */
+@media (prefers-reduced-motion: no-preference) {
+  .variant-figure .tag { animation: tagIn .45s var(--ease) both; }
+  .variant-figure .tag.ti-0 { animation-delay: .05s; } .variant-figure .tag.ti-1 { animation-delay: .17s; }
+  .variant-figure .tag.ti-2 { animation-delay: .29s; } .variant-figure .tag.ti-3 { animation-delay: .41s; }
+  .variant-figure .tag::after { content: ""; position: absolute; inset: -6px; border-radius: 50%;
+    border: 2px solid rgba(255,147,100,.7); animation: tagPing 1.1s var(--ease) .2s 1 both; pointer-events: none; }
+}
+@keyframes tagIn { from { opacity: 0; transform: scale(.4); } 60% { opacity: 1; transform: scale(1.15); } to { opacity: 1; transform: none; } }
+@keyframes tagPing { from { opacity: .9; transform: scale(.6); } to { opacity: 0; transform: scale(2.2); } }
+.variant-figure .tag-label { font-size: .8rem; padding: 4px 7px 4px 10px; gap: 6px; }
+.variant-figure .tag-label .chip { font-size: .72rem; padding: 2px 7px; }
+.variant-figure .variant-pill { left: 12px; bottom: 12px; }
+/* hero strony głównej: zdjęcie kiosku / wideo w całości 16:9 */
+.hero-figure--media .annotated { --vis: 1; --off: 0; aspect-ratio: 16 / 9; }
+.hero-figure--media .annotated img { object-position: 50% 50%; }
+.hero-figure--media .annotated::after { display: none; }
+/* punkty dopasowane do renderu scenovis-stoisko (pełny kadr 16:9) */
+.variant-figure .tag--screen { --u: .45; --v: .36; }
+.variant-figure .tag--spots  { --u: .302; --v: .205; }
+.variant-figure .tag--kiosk  { --u: .38;  --v: .655; }
+.variant-figure .tag--floor  { --u: .78;  --v: .70; }
+.variant-figure .tag--brand  { --u: .205; --v: .33; }
+.variant-figure .tag--slats  { --u: .563; --v: .30; }
+.variant-figure .tag--ped    { --u: .58;  --v: .595; }
+.variant-figure .tag--screen .tag-label { left: -2px; right: auto; }
+.variant-figure .tag--slats::before { bottom: auto; top: 11px; }
+.variant-figure .tag--slats .tag-label { bottom: auto; top: 44px; left: -2px; right: auto; }
+.variant-figure .tag--ped .tag-label { left: -2px; right: auto; }
+.variant-figure .tag--screen::before { top: auto; bottom: 11px; }
+.variant-figure .tag--screen .tag-label { top: auto; bottom: 44px; left: -2px; right: auto; }
+.variant-figure .tag--slats::before { top: auto; bottom: 11px; }
+.variant-figure .tag--slats .tag-label { top: auto; bottom: 44px; left: -2px; right: auto; }
+/* telefon: same punkty (opisy w podpisie pod oknem) */
+@media (max-width: 700px) {
+  .variant-figure .tag { display: block; }
+  [data-variant="economy"] .variant-figure .tag:not(.in-economy), .variant-figure[data-variant="economy"] .tag:not(.in-economy),
+  .variant-figure[data-variant="smart"] .tag:not(.in-smart),
+  .variant-figure[data-variant="premium"] .tag:not(.in-premium) { display: none; }
+  .variant-figure .tag-label, .variant-figure .tag::before { display: none; }
+  .variant-figure .tag { width: 10px; height: 10px; margin: -5px 0 0 -5px; }
+  .variant-figure .variant-pill { left: 8px; bottom: 8px; }
+}
+.variant-figure .tag--slats::before { bottom: auto; top: 11px; }
+.variant-figure .tag--slats .tag-label { bottom: auto; top: 44px; left: -2px; right: auto; }
+.variant-figure .tag--spots::before { height: 18px; }
+.variant-figure .tag--spots .tag-label { bottom: 28px; }

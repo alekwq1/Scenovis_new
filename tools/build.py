@@ -313,22 +313,56 @@ def section_head(label, h2, lead=None, h2_id=None, extra=""):
 
 
 # ---------------------------------------------------------------- sekcje
-def hero_home(lang):
+def variant_figure(lang, sizes="(min-width: 1000px) 52vw, 100vw"):
+    """Okno stoiska z przełącznikiem Economy / Smart / Premium i punktami wyposażenia danego wariantu."""
     t = CONTENT[lang]
-    ids = IDS[lang]
     types = {"wynajem": "rent", "rent": "rent", "zakup": "buy", "buy": "buy", "usługa": "service", "service": "service"}
     pics, tags, scopes, buttons = [], [], [], []
     for v in VARIANTS:
         d = t["variants"][v]
         if C.VARIANT_RENDERS:
-            pics.append(variant_picture(lang, v, "(min-width: 1000px) 58vw, 100vw"))
-        for key, name, typ in (d["tags"] if C.VARIANT_RENDERS else []):
-            tags.append(f'<li class="tag tag--{key} in-{v}"><span class="tag-label"><span class="tag-name">{esc(name)}</span>'
+            pics.append(variant_picture(lang, v, sizes))
+        for n, (key, name, typ) in enumerate(d["tags"]):
+            tags.append(f'<li class="tag tag--{key} in-{v} ti-{n}"><span class="tag-label"><span class="tag-name">{esc(name)}</span>'
                         f'<span class="chip chip--{types[typ]}">{esc(typ)}</span></span></li>')
         scopes.append(f'<p class="variant-scope in-{v}"><strong>{esc(d["name"])}:</strong> {esc(d["scope"])}</p>')
         on = v == "smart"
         buttons.append(f'<button type="button" class="vbtn" data-set-variant="{v}" aria-pressed="{str(on).lower()}">'
                        f'{esc(d["name"])}</button>')
+    pic = ('<div class="vimgs">' + ''.join(pics) + '</div>') if pics else img(lang, 'stand', sizes, cls='annotated-img')
+    return f"""<figure class="variant-figure" data-variant-scope data-variant="smart">
+<div class="annotated">
+{pic}
+<ul class="tags" aria-label="{esc(t['hero_figure_label'])}">{''.join(tags)}</ul>
+<div class="variant-pill" role="group" aria-label="{esc(t['costs_variant_label'])}"><span aria-hidden="true">{esc(t['hero_variant_label'])}</span>{''.join(buttons)}</div>
+</div>
+<figcaption class="variant-scopes" aria-live="polite">{''.join(scopes)}</figcaption>
+</figure>"""
+
+
+def hero_video(lang, hv, label):
+    """Zapętlone wideo bez dźwięku z przyciskiem pauzy (hero strony głównej i podstrony stoiska)."""
+    htracks = "".join(
+        f'<track kind="captions" srclang="{l}" label="{esc(CONTENT[l]["lang_name"])}" '
+        f'src="{img_url(hv["captions"][l])}"{" default" if l == lang else ""}>'
+        for l in LANGS if hv.get("captions", {}).get(l))
+    t = CONTENT[lang]
+    return (f'<video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="{img_url(hv["poster"])}" '
+            f'width="{hv.get("width", 1920)}" height="{hv.get("height", 1080)}" aria-label="{esc(label)}">'
+            f'<source src="{img_url(hv["src"])}" type="video/mp4">{htracks}</video>'
+            f'<button class="hero-video-toggle" type="button" data-hero-video-toggle aria-pressed="false" '
+            f'aria-label="{esc(t["video_pause"])}" data-label-pause="{esc(t["video_pause"])}" '
+            f'data-label-play="{esc(t["video_play"])}"><span aria-hidden="true"></span></button>')
+
+
+def hero_home(lang):
+    t = CONTENT[lang]
+    ids = IDS[lang]
+    hv = getattr(C, "HOME_HERO_VIDEO", None)
+    if hv:
+        media = hero_video(lang, hv, t["alt"]["kioskscreen"])
+    else:
+        media = img(lang, "kioskscreen", "(min-width: 1000px) 58vw, 100vw", eager=True, cls="annotated-img")
     paths = "".join(f'<li><a class="hero-path" href="{page_path(lang, key)}" data-track="hero_service_{key}">'
                     f'<span>{esc(label)}</span>{icon("arrow")}</a></li>' for key, label in t["hero_paths"])
     return f"""<section class="hero" aria-labelledby="hero-title">
@@ -343,13 +377,8 @@ def hero_home(lang):
 <nav class="hero-paths" aria-label="{esc(t['hero_paths_label'])}"><ul>{paths}</ul></nav>
 <p class="hero-note">{todo(esc(t['hero_note']))}</p>
 </div>
-<figure class="hero-figure" data-variant-scope data-variant="smart">
-<div class="annotated">
-{('<div class="vimgs">' + ''.join(pics) + '</div>') if pics else img(lang, 'stand', '(min-width: 1000px) 58vw, 100vw', eager=True, cls='annotated-img')}
-{('<ul class="tags" aria-label="' + esc(t['hero_figure_label']) + '">' + ''.join(tags) + '</ul>') if tags else ''}
-<div class="variant-pill" role="group" aria-label="{esc(t['costs_variant_label'])}"><span aria-hidden="true">{esc(t['hero_variant_label'])}</span>{''.join(buttons)}</div>
-</div>
-<figcaption class="variant-scopes" aria-live="polite">{''.join(scopes)}</figcaption>
+<figure class="hero-figure hero-figure--media{' has-hero-video' if hv else ''}">
+<div class="annotated">{media}</div>
 </figure>
 </div>
 </section>"""
@@ -362,16 +391,7 @@ def hero_landing(lang, kind):
     points = "".join(f'<li>{icon("check")}{esc(x)}</li>' for x in t[f"{p}_points"])
     if kind == "expo" and C.EXPO_HERO_VIDEO:
         hv = C.EXPO_HERO_VIDEO
-        htracks = "".join(
-            f'<track kind="captions" srclang="{l}" label="{esc(CONTENT[l]["lang_name"])}" '
-            f'src="{img_url(hv["captions"][l])}"{" default" if l == lang else ""}>'
-            for l in LANGS if hv.get("captions", {}).get(l))
-        pic = (f'<video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="{img_url(hv["poster"])}" '
-               f'width="{hv.get("width", 1920)}" height="{hv.get("height", 1080)}" aria-label="{esc(t["alt"]["visitor"])}">'
-               f'<source src="{img_url(hv["src"])}" type="video/mp4">{htracks}</video>'
-               f'<button class="hero-video-toggle" type="button" data-hero-video-toggle aria-pressed="false" '
-               f'aria-label="{esc(t["video_pause"])}" data-label-pause="{esc(t["video_pause"])}" '
-               f'data-label-play="{esc(t["video_play"])}"><span aria-hidden="true"></span></button>')
+        pic = hero_video(lang, hv, t["alt"]["visitor"])
     elif kind == "expo":
         pic = img(lang, 'visitor', '(min-width: 1000px) 55vw, 100vw', eager=True)
     else:
@@ -482,7 +502,7 @@ def case(lang, kind="expo"):
 <a class="button button-primary case-cta-btn" href="#{ids['contact']}" data-topic="{kind}" data-track="case_cta_click">{esc(t[k + '_cta'])}</a>
 </div>
 <div class="case-stage">
-{player(lang, kind)}
+{variant_figure(lang)}
 </div>
 </div>
 </section>"""

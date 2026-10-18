@@ -49,6 +49,9 @@ VIDEO_3D = {
     "muted": True,
 }
 
+# WIDEO w oknie hero STRONY GŁÓWNEJ (zamiast zdjęcia kiosku). Format jak EXPO_HERO_VIDEO poniżej.
+HOME_HERO_VIDEO = None
+
 # WIDEO w oknie hero na podstronie „Projekt stoiska targowego” (zamiast renderu).
 # Krótka pętla bez dźwięku, odtwarzana automatycznie. Przykład:
 # EXPO_HERO_VIDEO = {"src": "/assets/video/stoisko-hero.mp4", "poster": "/assets/video/stoisko-hero.jpg",
