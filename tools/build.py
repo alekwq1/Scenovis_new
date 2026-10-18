@@ -422,8 +422,8 @@ def player(lang, kind="expo"):
              if v.get("cover") else "")
     muted = " muted" if v.get("muted") else ""
     return f"""<div class="player is-placeholder has-video">
-<video id="case-video" controls preload="none" playsinline{muted} poster="{v['poster']}" width="{v['width']}" height="{v['height']}" data-video-name="{kind}_case">
-{webm}<source src="{v['src']}" type="video/mp4">{tracks}
+<video id="case-video" controls preload="none" playsinline{muted} poster="{img_url(v['poster'])}" width="{v['width']}" height="{v['height']}" data-video-name="{kind}_case">
+{webm}<source src="{img_url(v['src'])}" type="video/mp4">{tracks}
 </video>{cover}
 <button class="player-play" type="button" aria-label="{esc(t['video_play'])}">{icon('play')}<span>{esc(t['video_play'])}{(' · ' + esc(dur)) if dur else ''}</span></button>
 </div>"""
