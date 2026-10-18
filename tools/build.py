@@ -350,9 +350,16 @@ def hero_landing(lang, kind):
     points = "".join(f'<li>{icon("check")}{esc(x)}</li>' for x in t[f"{p}_points"])
     if kind == "expo" and C.EXPO_HERO_VIDEO:
         hv = C.EXPO_HERO_VIDEO
-        pic = (f'<video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="{hv["poster"]}" '
+        htracks = "".join(
+            f'<track kind="captions" srclang="{l}" label="{esc(CONTENT[l]["lang_name"])}" '
+            f'src="{img_url(hv["captions"][l])}"{" default" if l == lang else ""}>'
+            for l in LANGS if hv.get("captions", {}).get(l))
+        pic = (f'<video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="{img_url(hv["poster"])}" '
                f'width="{hv.get("width", 1920)}" height="{hv.get("height", 1080)}" aria-label="{esc(t["alt"]["visitor"])}">'
-               f'<source src="{hv["src"]}" type="video/mp4"></video>')
+               f'<source src="{img_url(hv["src"])}" type="video/mp4">{htracks}</video>'
+               f'<button class="hero-video-toggle" type="button" data-hero-video-toggle aria-pressed="false" '
+               f'aria-label="{esc(t["video_pause"])}" data-label-pause="{esc(t["video_pause"])}" '
+               f'data-label-play="{esc(t["video_play"])}"><span aria-hidden="true"></span></button>')
     elif kind == "expo":
         pic = img(lang, 'visitor', '(min-width: 1000px) 55vw, 100vw', eager=True)
     else:
@@ -381,7 +388,7 @@ def hero_landing(lang, kind):
 <a class="button button-ghost" href="#{ids['case']}" data-track="hero_cta_case">{esc(t[p + '_cta2'])}</a>
 </div>
 </div>
-<figure class="hero-figure hero-figure--plain">
+<figure class="hero-figure hero-figure--plain{' has-hero-video' if (kind == 'expo' and C.EXPO_HERO_VIDEO) else ''}">
 <div class="annotated"{viewer_attr}>{pic}{viewer_btn}</div>
 {('<figcaption>' + viewer_note + '</figcaption>') if viewer_note else ''}
 {viewer_json}

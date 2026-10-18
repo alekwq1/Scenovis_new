@@ -105,6 +105,7 @@ PL = {
     "case_h2": "Zobacz stoisko. Porównaj możliwości.",
     "case_lead": "Obejrzyj układ, sprawdź wyposażenie i porównaj warianty przed realizacją.",
     "video_play": "Odtwórz film",
+    "video_pause": "Zatrzymaj film",
     "video_duration": "Czas trwania",
     "video_captions_note": "Film ma napisy po polsku i angielsku. Dźwięk włącza się dopiero po kliknięciu.",
     "case_benefits": [
@@ -532,6 +533,7 @@ EN = {
     "case_h2": "See the stand. Compare the options.",
     "case_lead": "Explore the layout, check the equipment and compare options before delivery.",
     "video_play": "Play video",
+    "video_pause": "Pause video",
     "video_duration": "Duration",
     "video_captions_note": "Captions are available in Polish and English. Sound plays only after you press play.",
     "case_benefits": [

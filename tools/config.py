@@ -53,7 +53,12 @@ VIDEO_3D = {
 # Krótka pętla bez dźwięku, odtwarzana automatycznie. Przykład:
 # EXPO_HERO_VIDEO = {"src": "/assets/video/stoisko-hero.mp4", "poster": "/assets/video/stoisko-hero.jpg",
 #                    "width": 1920, "height": 1080}
-EXPO_HERO_VIDEO = None
+EXPO_HERO_VIDEO = {
+    "src": "/assets/video/stoisko-hero.mp4",       # 1728×972, 21,5 s, bez dźwięku, kwoty rozmyte
+    "poster": "/assets/video/stoisko-hero.jpg",
+    "width": 1728, "height": 972,
+    "captions": {"pl": "/assets/video/stoisko-hero.pl.vtt", "en": "/assets/video/stoisko-hero.en.vtt"},
+}
 
 # FILM w sekcji „Zobacz stoisko. Porównaj możliwości.”
 # Dopóki VIDEO = None, okno filmu pokazuje okładkę (kadr z kiosku) bez przycisku odtwarzania

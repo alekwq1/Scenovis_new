@@ -1003,3 +1003,17 @@ p { text-wrap: pretty; }
   .case--3d .case-get { margin-top: 22px; }
   .case--3d .case-get li { padding-top: 13px; padding-bottom: 13px; }
 }
+/* wideo w hero podstrony stoiska: proporcje 16:9 nagrania, bez czarnych pasów */
+.has-hero-video .annotated { aspect-ratio: 16 / 9; background: #0d1011; }
+.has-hero-video .annotated::after { display: none; }
+.hero-video::cue { font-size: .82em; background: rgba(12,15,16,.78); color: #f3efe9; }
+.hero-video-toggle {
+  position: absolute; z-index: 3; right: 12px; top: 12px; width: 38px; height: 38px; border-radius: 50%;
+  border: 1px solid var(--line-2); background: rgba(18,22,23,.72); cursor: pointer; display: grid; place-items: center;
+}
+.hero-video-toggle span { width: 12px; height: 14px; border-left: 4px solid var(--ink); border-right: 4px solid var(--ink); }
+.hero-video-toggle[aria-pressed="true"] span { width: 0; height: 0; border: 0; border-left: 13px solid var(--ink);
+  border-top: 8px solid transparent; border-bottom: 8px solid transparent; margin-left: 4px; }
+.hero-video-toggle:hover { border-color: var(--accent); }
+.hero-video-toggle:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 2px; }
+.hero-video-toggle { top: auto; bottom: 10px; right: 10px; width: 34px; height: 34px; }

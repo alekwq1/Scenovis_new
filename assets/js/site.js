@@ -143,6 +143,20 @@
     document.querySelectorAll('.vimg img').forEach(function (im) { if (im.decode) im.decode().catch(function () {}); });
   });
 
+  /* ---------- wideo w hero: pauza/odtwarzanie, bez autoodtwarzania przy ograniczonym ruchu ---------- */
+  document.querySelectorAll('[data-hero-video-toggle]').forEach(function (btn) {
+    var v = btn.parentNode.querySelector('video');
+    if (!v) return;
+    function sync() {
+      var paused = v.paused;
+      btn.setAttribute('aria-pressed', String(paused));
+      btn.setAttribute('aria-label', btn.getAttribute(paused ? 'data-label-play' : 'data-label-pause'));
+    }
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { v.removeAttribute('autoplay'); v.pause(); }
+    btn.addEventListener('click', function () { if (v.paused) v.play(); else v.pause(); });
+    v.addEventListener('play', sync); v.addEventListener('pause', sync); sync();
+  });
+
   /* ---------- film: start, 25%, 50%, koniec + CTA po filmie ---------- */
   document.querySelectorAll('.player video').forEach(function (video) {
     var wrap = video.closest('.player');
