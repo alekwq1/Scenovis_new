@@ -837,3 +837,12 @@ p { text-wrap: pretty; }
   .viewer-hint { display: none; }
   .viewer-launch { bottom: 12px; font-size: .92rem; }
 }
+.viewer-launch[hidden], .viewer-spot[hidden] { display: none; }
+@media (max-width: 700px) {
+  .viewer-card { left: 8px; right: 8px; top: auto; bottom: 58px; max-width: none; padding: 8px 10px; font-size: .82rem; }
+  .viewer-spot { width: 26px; height: 26px; margin: -13px 0 0 -13px; font-size: .74rem; }
+  .viewer-btn { min-height: 38px; padding: 6px 12px; font-size: .85rem; }
+}
+@media (max-width: 700px) {
+  .hero-figure--plain .annotated.is-3d { aspect-ratio: 4 / 5; }
+}

@@ -49,7 +49,22 @@ export async function start(host, T, onProgress) {
     fetch(META).then(r => r.json()).catch(() => ({ explode: {} }))
   ]);
   const model = gltf.scene;
-  model.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  // Materiały: eksport z Blendera zawiera niebieską emisję i przezroczystość z efektu podświetlenia w prezentacji.
+  const ROUGH = { M_Paint_Lacquer_White: 0.32, M_Paint_Lacquer_Grey: 0.38, M_Plastic_Tech_Black: 0.5,
+    M_Rubber_Grip: 0.85, M_Metal_Brushed_Steel: 0.32 };
+  const fixed = new Set();
+  model.traverse(o => {
+    if (!o.isMesh) return;
+    o.castShadow = true; o.receiveShadow = true;
+    for (const m of [].concat(o.material)) {
+      if (fixed.has(m)) continue; fixed.add(m);
+      m.emissive && m.emissive.setRGB(0, 0, 0);
+      const glass = m.transmission > 0;
+      if (!glass) { m.transparent = false; m.opacity = 1; m.depthWrite = true; }
+      if (ROUGH[m.name] !== undefined) m.roughness = ROUGH[m.name];
+      m.needsUpdate = true;
+    }
+  });
   scene.add(model);
 
   // Wyśrodkowanie i kadr
@@ -73,6 +88,7 @@ export async function start(host, T, onProgress) {
     if (node) parts.push({ node, rest: node.position.clone(), delta: new THREE.Vector3(...d) });
   }
   let explode = 0, explodeTarget = 0;
+  const exTarget = target.clone().add(new THREE.Vector3(0, size.y * 0.12, 0));
   function applyExplode() {
     const e = explode < 0.5 ? 4 * explode ** 3 : 1 - (-2 * explode + 2) ** 3 / 2;
     for (const p of parts) p.node.position.copy(p.rest).addScaledVector(p.delta, e);
@@ -112,12 +128,17 @@ export async function start(host, T, onProgress) {
   const bar = document.createElement('div'); bar.className = 'viewer-bar';
   const bExplode = button(T.explode, () => {
     explodeTarget = explodeTarget ? 0 : 1; bExplode.textContent = explodeTarget ? T.assemble : T.explode;
+    // kamera odsuwa się przy rozłożeniu, żeby wszystkie części zostały w kadrze
+    const dir = camera.position.clone().sub(controls.target).normalize();
+    const dist = camera.position.distanceTo(controls.target) * (explodeTarget ? 1.4 : 1 / 1.4);
+    const tgt = explodeTarget ? exTarget : home.target;
+    tween = { t0: performance.now(), from: camera.position.clone(), to: tgt.clone().addScaledVector(dir, Math.min(controls.maxDistance, dist)), target: tgt };
     bExplode.setAttribute('aria-pressed', String(!!explodeTarget));
     if (reduce) { explode = explodeTarget; applyExplode(); }
     track('viewer_explode', { state: explodeTarget ? 'open' : 'closed' });
   });
   bExplode.setAttribute('aria-pressed', 'false');
-  const bReset = button(T.reset, () => { tween = { t0: performance.now(), from: camera.position.clone(), to: home.pos.clone() }; controls.autoRotate = !reduce; });
+  const bReset = button(T.reset, () => { tween = { t0: performance.now(), from: camera.position.clone(), to: (explodeTarget ? home.pos.clone().sub(home.target).multiplyScalar(1.4).add(exTarget) : home.pos.clone()), target: explodeTarget ? exTarget : home.target }; controls.autoRotate = !reduce; });
   const hint = document.createElement('span'); hint.className = 'viewer-hint'; hint.textContent = T.hint;
   bar.append(bExplode, bReset, hint); host.appendChild(bar);
   function button(label, fn) { const b = document.createElement('button'); b.type = 'button'; b.className = 'viewer-btn'; b.textContent = label; b.addEventListener('click', fn); return b; }
@@ -138,14 +159,16 @@ export async function start(host, T, onProgress) {
   function loop() {
     if (running) return; running = true;
     requestAnimationFrame(function frame(now) {
-      const dt = Math.min(0.05, (now - last) / 1000); last = now;
+      const raw = (now - last) / 1000; last = now;
+      const dt = Math.min(0.05, raw);
       if (explode !== explodeTarget) {
-        explode += Math.sign(explodeTarget - explode) * dt / 0.9;
+        // czas rzeczywisty (do 0,25 s na klatkę) — animacja trwa ~0,9 s także na wolnych urządzeniach
+        explode += Math.sign(explodeTarget - explode) * Math.min(0.25, raw) / 0.9;
         explode = Math.max(0, Math.min(1, explode)); applyExplode();
       }
       if (tween) {
         const u = Math.min(1, (now - tween.t0) / 700), e = u * u * (3 - 2 * u);
-        camera.position.lerpVectors(tween.from, tween.to, e); controls.target.lerp(home.target, e);
+        camera.position.lerpVectors(tween.from, tween.to, e); controls.target.lerp(tween.target || home.target, e);
         if (u >= 1) tween = null;
       }
       controls.update(dt); renderer.render(scene, camera); placeSpots();
