@@ -1115,3 +1115,39 @@ p { text-wrap: pretty; }
   body[data-page="home"] .about-photo { max-width: 120px; }
   body[data-page="home"] .about-body p { margin-bottom: 12px; }
 }
+
+/* Smaller mobile typography and a compact form at the contact anchor. */
+.about-body--short { display: none; }
+@media (max-width: 700px) {
+  html:has(body[data-page="home"]) { --header-h: 112px; }
+  body[data-page="home"] .header-inner { height: 54px; }
+  body[data-page="home"] .mobile-contact-bar { padding-bottom: 10px; }
+  body { font-size: 15px; line-height: 1.5; }
+  body[data-page="home"] .hero h1 { font-size: clamp(26px, 7.8vw, 38px); line-height: 1.12; }
+  h2, .section h2 { font-size: 25px; line-height: 1.2; }
+  h3, .service h3, .full h3 { font-size: 19px; line-height: 1.3; }
+  .hero .lead, .section-lead, .service-desc { font-size: 16px; line-height: 1.5; }
+  .hero-note, .section-label, .eyebrow, .full-note { font-size: 13px; }
+  .button, .hero-path, .text-link { font-size: 14px; }
+  .button { min-height: 44px; padding: 10px 14px; }
+  body[data-page="home"] .section { padding-block: 24px; }
+  .section-head, .contact .section-head { margin-bottom: 16px; }
+  .about-body--full { display: none; }
+  .about-body--short { display: block; margin: 12px 0; }
+  body[data-page="home"] .about-photo { max-width: 84px; }
+  .contact-grid { gap: 24px; }
+  .contact .form-panel { order: -1; padding: 16px; }
+  .form-title { font-size: 19px; margin-bottom: 12px; }
+  .field { margin-bottom: 10px; }
+  .field label { font-size: 13px; margin-bottom: 4px; }
+  .field input, .field select, .field textarea { font-size: 16px; min-height: 44px; padding: 9px 10px; }
+  .field textarea { min-height: 64px; height: 64px; }
+  .hint, .form-note { font-size: 12px; line-height: 1.4; }
+  .hint { margin-top: 4px; }
+  .form-note { margin-top: 10px; }
+  .more-fields { margin: 0 0 10px; }
+  .more-fields summary { min-height: 44px; font-size: 13px; }
+  .more-fields .field-row { grid-column: 1 / -1; }
+  .direct strong { font-size: 15px; }
+  .direct a { padding: 10px 0; }
+}

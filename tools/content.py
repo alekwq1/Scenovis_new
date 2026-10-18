@@ -223,6 +223,7 @@ PL = {
     # ---------- o mnie ----------
     "about_label": "O mnie",
     "about_h2": "Cześć, jestem Aleks.",
+    "about_short": "Tworzę projekty stoisk i prezentacje 3D. Łączę doświadczenie BIM z analizą kosztów. Rozmawiasz bezpośrednio ze mną, a do realizacji dobieram wykonawców do projektu.",
     "about_body": [
         "Scenovis prowadzę osobiście. Mam doświadczenie w BIM, koordynacji modeli 3D, wizualizacji "
         "i procesach technicznych — przy projektach budowlanych i przemysłowych.",
@@ -647,6 +648,7 @@ EN = {
 
     "about_label": "About",
     "about_h2": "Hi, I’m Aleks.",
+    "about_short": "I design exhibition stands and 3D presentations. I combine BIM experience with cost planning. You work directly with me, and I bring in partners for delivery.",
     "about_body": [
         "I run Scenovis myself. My background is in BIM, 3D model coordination, visualisation and technical "
         "processes — on construction and industrial projects.",
