@@ -187,7 +187,7 @@ def head(lang, page, title, desc, alternates, robots="index,follow", jsonld=None
         for l in LANGS:
             links.append(f'<link rel="alternate" hreflang="{l}" href="{abs_url(alternates[l])}">')
         links.append(f'<link rel="alternate" hreflang="x-default" href="{abs_url(alternates["en"])}">')
-    og_img = abs_url(f"/assets/og/og-{lang}.jpg")
+    og_img = abs_url(img_url(f"/assets/og/og-{lang}.jpg"))  # ?v= — komunikatory pobiorą nowy obrazek
     og = [
         '<meta property="og:type" content="website">',
         '<meta property="og:site_name" content="Scenovis">',
@@ -460,7 +460,7 @@ def player(lang, kind="expo"):
     cover = (f'<div class="player-bg player-cover">{img(lang, v["cover"], "(min-width: 1000px) 58vw, 100vw")}</div>'
              if v.get("cover") else "")
     muted = " muted" if v.get("muted") else ""
-    return f"""<div class="player is-placeholder has-video">
+    return f"""<div class="player is-placeholder has-video" data-replay="{esc(t['video_replay'])}">
 <video id="case-video" controls preload="none" playsinline{muted} poster="{img_url(v['poster'])}" width="{v['width']}" height="{v['height']}" data-video-name="{kind}_case">
 {webm}<source src="{img_url(v['src'])}" type="video/mp4">{tracks}
 </video>{cover}

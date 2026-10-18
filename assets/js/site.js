@@ -210,7 +210,16 @@
         if (!cta) return;
         end = document.createElement('div');
         end.className = 'player-end';
-        end.innerHTML = '<div>' + cta.outerHTML + '</div>';
+        var box = document.createElement('div'); box.className = 'player-end-actions';
+        var again = document.createElement('button');
+        again.type = 'button'; again.className = 'button button-ghost player-replay';
+        again.textContent = wrap.getAttribute('data-replay') || 'Replay';
+        again.addEventListener('click', function () {
+          wrap.classList.remove('is-ended'); video.currentTime = 0; video.play(); track('video_replay', { video_name: name });
+        });
+        box.appendChild(again);
+        box.insertAdjacentHTML('beforeend', cta.outerHTML);
+        end.appendChild(box);
         wrap.appendChild(end);
       }
       var btn = end.querySelector('a, button');

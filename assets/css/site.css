@@ -1073,3 +1073,9 @@ p { text-wrap: pretty; }
 .variant-figure .tag--spots::before { height: 18px; }
 .variant-figure .tag--spots .tag-label { bottom: 28px; }
 .chip--own { color: var(--buy); border-color: rgba(255,178,142,.4); background: rgba(255,147,100,.08); }
+/* ekran końcowy filmu: obejrzyj ponownie + rozmowa */
+.player-end { z-index: 3; }
+.player-end-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center; }
+.player-replay { background: rgba(18,22,23,.6); }
+@media (max-width: 700px) { .player-end-actions { flex-direction: column; } .player-end-actions .button { width: 100%; } }
+.player.is-ended .player-play, .player.is-ended .player-cover { display: none; }
