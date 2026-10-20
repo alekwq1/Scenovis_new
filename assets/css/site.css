@@ -1232,3 +1232,35 @@ p { text-wrap: pretty; }
   .about-photo:hover img, .shot:hover img,
   .button-primary:hover, .text-link:hover .icon:last-child { transform: none; }
 }
+
+/* Portrait interaction works with both a cursor and a tap. */
+button.about-photo {
+  display: block; width: 100%; padding: 0; border: 0; border-radius: 16px;
+  background: transparent; overflow: hidden; text-align: left; cursor: zoom-in;
+}
+.about-photo picture { display: block; }
+.about-photo img { transition: transform .4s ease, filter .3s ease; }
+.about-photo.is-zoomed { cursor: zoom-out; box-shadow: 0 0 0 2px var(--accent); }
+.about-photo.is-zoomed img { transform: scale(1.12); filter: brightness(1.06); }
+.about-photo:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+.footer-meta-short { display: none; }
+@media (max-width: 700px) {
+  body[data-page="home"] .about-photo { width: 160px; max-width: 52vw; }
+  body[data-page="home"] .about-grid { gap: 14px; }
+  .about-copy .section-label { margin-bottom: 8px; }
+  .about-body--short { margin: 10px 0 12px; }
+  .site-footer { padding: 22px 0 24px; }
+  .footer-inner { gap: 12px; }
+  .footer-brand img { width: 112px; height: auto; }
+  .footer-brand p { display: none; }
+  .footer-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 12px; }
+  .footer-links li { min-width: 0; }
+  .footer-links a { min-height: 44px; font-size: 13px; line-height: 1.35; padding: 4px 0; }
+  .footer-links li:last-child { grid-column: 1 / -1; }
+  .footer-meta { font-size: 12px; line-height: 1.4; }
+  .footer-meta-full { display: none; }
+  .footer-meta-short { display: inline; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-photo.is-zoomed img { transform: none; }
+}

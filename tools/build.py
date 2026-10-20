@@ -304,7 +304,7 @@ def footer(lang):
 <li><a href="mailto:{C.EMAIL}" data-track="email_click">{esc(C.EMAIL)}</a></li>
 <li><a href="{page_path(lang, 'privacy')}">{esc(t['footer_privacy'])}</a></li>
 </ul>
-<p class="footer-meta">{esc(t['footer_location'])} · {esc(t['footer_lang'])} · © {year} Scenovis</p>
+<p class="footer-meta"><span class="footer-meta-full">{esc(t['footer_location'])} · {esc(t['footer_lang'])} · © {year} Scenovis</span><span class="footer-meta-short">Gdańsk · PL / EN · © {year} Scenovis</span></p>
 </div>
 </footer>
 </body>
@@ -632,7 +632,7 @@ def about(lang):
     return f"""<section class="section about" id="{ids['about']}" aria-labelledby="about-title">
 <div class="wrap">
 <div class="about-grid">
-<div class="about-photo">{pic}</div>
+<button type="button" class="about-photo" data-photo-zoom aria-pressed="false" aria-label="{esc(t['about_photo_zoom'])}">{pic}</button>
 <div class="about-copy">
 <p class="section-label">{esc(t['about_label'])}</p>
 <h2 id="about-title">{esc(t['about_h2'])}</h2>
