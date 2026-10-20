@@ -732,7 +732,7 @@ def contact(lang, page, topic="general"):
     return f"""<section class="section contact" id="{ids['contact']}" aria-labelledby="contact-title">
 <div class="wrap contact-grid">
 <div class="contact-copy">
-{section_head(t['contact_label'], esc(h2), t['contact_lead'], 'contact-title')}
+{section_head(t['contact_label'], '<span class="contact-title-full">' + esc(h2) + '</span><span class="contact-title-mobile">' + esc(t['contact_label']) + '</span>', t['contact_lead'], 'contact-title')}
 <p class="direct-title">{esc(t['contact_direct'])}</p>
 <ul class="direct">
 <li><a href="tel:{C.PHONE_TEL}" data-track="phone_click">{icon('phone')}<span><strong>{esc(C.PHONE_DISPLAY)}</strong><small>{esc(t['contact_phone_sub'])}</small></span></a></li>

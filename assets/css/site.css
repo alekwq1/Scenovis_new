@@ -1288,3 +1288,22 @@ button.about-photo {
   .contact .turnstile-holder { min-height: 0; margin: 0; }
   .contact .form-note { margin-top: 8px; }
 }
+
+/* Contact opens with direct contact details, followed by the optional enquiry form. */
+.contact-title-mobile { display: none; }
+@media (max-width: 700px) {
+  html:has(body[data-page="home"]) { --header-h: 100px; }
+  body[data-page="home"] .header-inner { height: 48px; }
+  body[data-page="home"] .mobile-contact-bar { padding-bottom: 8px; }
+  .contact-grid > .contact-copy { display: block; order: 0; }
+  .contact-grid > .form-panel { order: 1; margin: 0; }
+  .contact-title-full, .contact-copy .section-label,
+  .contact-copy .section-lead, .contact-copy .direct-title,
+  .contact-copy .direct small, .contact-copy .contact-small { display: none; }
+  .contact-title-mobile { display: inline; }
+  .contact .section-head { margin-bottom: 8px; }
+  .contact .direct a { padding-block: 6px; min-height: 44px; }
+  .contact .direct a[href^="tel:"] strong { font-size: 18px; letter-spacing: .01em; }
+  .contact .wa-line { margin-top: 0; }
+  .contact .wa-line a { min-height: 44px; }
+}
