@@ -1264,3 +1264,27 @@ button.about-photo {
 @media (prefers-reduced-motion: reduce) {
   .about-photo.is-zoomed img { transform: none; }
 }
+
+/* Keep contact copy grouped: display:contents was adding a grid gap to every paragraph. */
+@media (max-width: 700px) {
+  body[data-page] .contact { padding-block: 16px; }
+  .contact-grid { gap: 16px; }
+  .contact-copy { display: block; }
+  .contact .section-head { margin: 0 0 10px; }
+  .contact .section-label { margin-bottom: 6px; }
+  .contact .section-lead { margin-top: 8px; }
+  .contact .direct-title { margin: 0 0 4px; }
+  .contact .direct { margin: 0; }
+  .contact .direct a { gap: 10px; padding-block: 8px; min-height: 44px; }
+  .contact .direct a .icon { width: 32px; height: 32px; padding: 6px; }
+  .contact .wa-line { margin: 4px 0 0; }
+  .contact .wa-line a { display: inline-flex; align-items: center; min-height: 44px; }
+  .contact .contact-small { margin-top: 4px; }
+  .contact .form-panel { padding: 14px; }
+  .contact .form-title { margin-bottom: 10px; }
+  .contact .field { margin-bottom: 8px; }
+  .contact .more-fields { margin-bottom: 8px; }
+  /* Automatic verification needs no reserved space; a visible challenge keeps its natural height. */
+  .contact .turnstile-holder { min-height: 0; margin: 0; }
+  .contact .form-note { margin-top: 8px; }
+}
