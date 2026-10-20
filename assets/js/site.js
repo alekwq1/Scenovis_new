@@ -492,3 +492,12 @@
   window.addEventListener('pagehide', finishActive);
   start();
 })();
+
+// A real button supports mouse, touch and keyboard without relying on hover.
+document.querySelectorAll('[data-photo-zoom]').forEach(function (photo) {
+  photo.addEventListener('click', function () {
+    var zoomed = photo.getAttribute('aria-pressed') !== 'true';
+    photo.setAttribute('aria-pressed', String(zoomed));
+    photo.classList.toggle('is-zoomed', zoomed);
+  });
+});

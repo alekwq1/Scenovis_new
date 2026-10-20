@@ -234,6 +234,7 @@ PL = {
         "dopasowujemy do zakresu.",
     ],
     "about_photo_alt": "Aleks — Scenovis",
+    "about_photo_zoom": "Powiększenie zdjęcia Aleksa",
     "about_linkedin": "Profil na LinkedIn",
 
     # ---------- proces ----------
@@ -659,6 +660,7 @@ EN = {
         "to the scope.",
     ],
     "about_photo_alt": "Aleks — Scenovis",
+    "about_photo_zoom": "Zoom Aleks’s photo",
     "about_linkedin": "LinkedIn profile",
 
     "process_label": "Process",
